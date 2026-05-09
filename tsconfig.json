@@ -1,18 +1,39 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
-  },
-  "files": [
-    "index.d.ts",
-    "typings/test-typings.ts"
-  ]
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "NodeNext",
+		"rootDir": "./",
+		"moduleResolution": "nodenext",
+		"resolveJsonModule": true,
+		"declaration": false,
+		"removeComments": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"inlineSourceMap": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"strictBuiltinIteratorReturn": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"exactOptionalPropertyTypes": false,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+		"allowJs": false,
+		"skipLibCheck": true,
+		"noUncheckedIndexedAccess": true,
+		"pretty": true
+	},
+	"include": [
+		"./typings/"
+	],
 }
