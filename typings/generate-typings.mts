@@ -1,15 +1,18 @@
 import example from "./example.json" with { type: "json" };
-import { writeFileSync } from "fs";
+import { writeFileSync, rmSync, readdirSync } from "fs";
 
 import { parseContainer } from "./modules/parseContainer.mjs";
 import { parseEnum } from "./modules/parseEnum.mjs";
 
 
+for (const filePath of readdirSync("./typings/output"))
+	rmSync("./typings/output/" + filePath);
+
+
 // switch cannot be a type, and void is already a ts type
 const ignoredTypes = new Set(["switch", "void"]);
-// idk what to name it, and it is hardcoded but I cant think of another way to do this
 // No types in ignoredTypes should be present in someTypes
-const someTypes = {
+const baseTypes = {
 	varint: "number",
 	varlong: "bigint",
 	optvarint: "number | null",
@@ -45,6 +48,23 @@ const someTypes = {
 
 
 for (const [sectionName, data] of Object.entries(example)) {
+	console.log("section", sectionName);
+	generateTypes(sectionName, sectionName, data);
+}
+
+/**
+ * @param sectionNameHistory The names of the items the function traversed over to reach the current status, used for the file name. eg handshaking_toClient
+ */
+function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example]) {
+
+	if (sectionName !== "types") {
+		for (const [subSectionName, subData] of Object.entries(data)) {
+			generateTypes(`${sectionNameHistory}_${subSectionName}`, subSectionName, subData);
+		}
+		return;
+	}
+
+
 	let typesOutput = "";
 
 	function unhandledType(name: string, type: unknown) {
@@ -58,24 +78,39 @@ for (const [sectionName, data] of Object.entries(example)) {
 			continue;
 
 		if (type === "native") {
-			if (name in someTypes)
-				typesOutput += `type ${name} = ${someTypes[name]};\n`;
+			if (name in baseTypes)
+				typesOutput += `type ${name} = ${baseTypes[name]};\n`;
 			else
 				unhandledType(name, type);
 		}
 
 		else if (Array.isArray(type)) {
-			const realType = type[0];
+			const subTypeName = type[0];
 
 
 			// todo, handle other types of type[1]
-			if (realType === "container" && Array.isArray(type[1])) {
+			if (subTypeName === "container" && Array.isArray(type[1])) {
 				// parseContainer only returns object, does not declare interface or type
 				typesOutput += `interface ${name} ${parseContainer(type[1])}`;
 			}
 
+			// object can be array too, so check for that
+			else if (subTypeName === "switch" && !Array.isArray(type[1]) && typeof type[1] === "object") {
+				/*
+				Not sure how to interpret this
+				{
+					"compareTo": "flags",
+					"fields": {
+						"1": "varint",
+						"3": "varint"
+					},
+					"default": "void"
+				}
+				*/
+			}
+
 			// mapper is a enum
-			else if (realType === "mapper") {
+			else if (subTypeName === "mapper") {
 				// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
 				if (!("type" in type) || !("mapping" in type) || typeof type.mapping !== "object" || !type.mapping) {
 					unhandledType(name, type);
@@ -91,7 +126,7 @@ for (const [sectionName, data] of Object.entries(example)) {
 			}
 
 			else {
-				console.error("unimplemented");
+				console.error(`Unimplemented!\n realType: ${subTypeName}\n value: `, type);
 			}
 		}
 
@@ -103,10 +138,10 @@ for (const [sectionName, data] of Object.entries(example)) {
 		// eg "ContainerID": "varint"
 		else {
 			// no types in someTypes are part of ignoredTypes, therefore if someTypes[type] is defined, we can assume type is not part of ignoredTypes
-			typesOutput += `type ${name} = ${type in someTypes ? type : "unknown"};\n`;
+			typesOutput += `type ${name} = ${type in baseTypes ? type : "unknown"};\n`;
+			console.error(`Unimplemented!\n name: ${name}\n value: `, type);
 		}
 	}
 
-	writeFileSync(`./typings/output/${sectionName}.d.ts`, typesOutput, "utf8");
-
+	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput, "utf8");
 }
