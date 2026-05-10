@@ -65,15 +65,21 @@ interface vec3i32 {
 }
 
 type ContainerID = varint;
-interface SlotComponent {
+// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
+type SlotComponentType = unknown;interface SlotComponent {
     type: SlotComponentType;
+    data: undefined;
 }
 
 interface ItemSoundEvent {
     soundName: string;
+    fixedRange: undefined;
 }
 
 interface ItemFireworkExplosion {
+    shape: undefined;
+    colors: undefined;
+    fadeColors: undefined;
     hasTrail: bool;
     hasTwinkle: bool;
 }
@@ -84,6 +90,7 @@ interface ItemEffectDetail {
     ambient: bool;
     showParticles: bool;
     showIcon: bool;
+    hiddenEffect: undefined;
 }
 
 interface ItemPotionEffect {
@@ -94,19 +101,24 @@ interface ItemPotionEffect {
 interface ItemBlockProperty {
     name: string;
     isExactMatch: bool;
+    value: undefined;
 }
 
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
+    partialMatchers: undefined;
 }
 
 interface ItemBlockPredicate {
+    blockSet: undefined;
+    properties: undefined;
     nbt: anonOptionalNbt;
     components: DataComponentMatchers;
 }
 
 interface ItemBookPage {
     content: string;
+    filteredContent: undefined;
 }
 
 interface ItemWrittenBookPage {
@@ -115,10 +127,12 @@ interface ItemWrittenBookPage {
 }
 
 interface ItemConsumeEffect {
+    type: undefined;
 }
 
 interface ArmorTrimMaterial {
     assetBase: string;
+    overrideArmorAssets: undefined;
     description: anonymousNbt;
 }
 
@@ -148,12 +162,16 @@ interface BannerPattern {
 }
 
 interface BannerPatternLayer {
+    pattern: undefined;
     colorId: varint;
 }
 
 interface DamageTypeData {
     msgId: string;
+    scaling: undefined;
     exhaustion: f32;
+    effects: undefined;
+    deathMessageType: undefined;
 }
 
 interface KineticWeaponCondition {
@@ -178,6 +196,8 @@ interface Slot {
 interface HashedSlot {
     itemId: varint;
     itemCount: varint;
+    components: undefined;
+    removeComponents: undefined;
 }
 
 interface RespawnData {
@@ -194,6 +214,7 @@ interface GlobalPos {
 interface DebugStructureInfo {
     boundingBoxMin: position;
     boundingBoxMax: position;
+    pieces: undefined;
 }
 
 interface Node {
@@ -201,43 +222,57 @@ interface Node {
     walkedDistance: f32;
     costMalus: f32;
     closed: bool;
+    type: undefined;
     f: f32;
 }
 
 interface PathDebugData {
+    openSet: undefined;
+    closedSet: undefined;
+    targetNodes: undefined;
 }
 
 interface Path {
     reached: bool;
     nextNodeIndex: i32;
     target: position;
+    nodes: undefined;
     debugData: PathDebugData;
 }
 
-interface DebugSubscriptionUpdate {
+// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
+type DebugSubscriptionDataType = unknown;interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
 }
 
 interface DebugSubscriptionEvent {
     type: DebugSubscriptionDataType;
+    value: undefined;
 }
 
 interface Particle {
+    type: undefined;
+    data: undefined;
 }
 
-interface packedChunkPos {
+// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
+type soundSource = unknown;interface packedChunkPos {
     z: i32;
     x: i32;
 }
 
 interface entityMetadataEntry {
     key: u8;
+    type: undefined;
+    value: undefined;
 }
 
 interface EntityMetadataPaintingVariant {
     width: i32;
     height: i32;
     assetId: string;
+    title: undefined;
+    author: undefined;
 }
 
 interface chunkBlockEntity {
@@ -248,29 +283,44 @@ interface chunkBlockEntity {
 
 interface game_profile_name_prop {
     name: string;
+    properties: undefined;
 }
 
 interface GameProfile {
     uuid: UUID;
     name: string;
+    properties: undefined;
 }
 
 interface PartialResolvableProfile {
+    name: undefined;
+    uuid: undefined;
+    properties: undefined;
 }
 
 interface GameProfileProperty {
     name: string;
     value: string;
+    signature: undefined;
 }
 
 interface ResolvableProfile {
+    type: undefined;
     skinPatch: PlayerSkinPatch;
 }
 
 interface PlayerSkinPatch {
+    body: undefined;
+    cape: undefined;
+    elytra: undefined;
+    model: undefined;
 }
 
 interface command_node {
+    flags: undefined;
+    children: undefined;
+    redirectNode: undefined;
+    extraNodeData: undefined;
 }
 
 interface packet_common_settings {
@@ -282,6 +332,7 @@ interface packet_common_settings {
     mainHand: varint;
     enableTextFiltering: bool;
     enableServerListing: bool;
+    particleStatus: undefined;
 }
 
 interface packet_common_cookie_request {
@@ -300,15 +351,19 @@ interface packet_common_transfer {
 
 interface packet_common_cookie_response {
     key: string;
+    value: undefined;
 }
 
 interface packet_common_select_known_packs {
+    packs: undefined;
 }
 
 interface packet_common_custom_report_details {
+    details: undefined;
 }
 
 interface packet_common_remove_resource_pack {
+    uuid: undefined;
 }
 
 interface packet_common_add_resource_pack {
@@ -316,9 +371,12 @@ interface packet_common_add_resource_pack {
     url: string;
     hash: string;
     forced: bool;
+    promptMessage: undefined;
 }
 
-interface packet_common_server_links {
+// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
+type ServerLinkType = unknown;interface packet_common_server_links {
+    links: undefined;
 }
 
 interface packet_common_clear_dialog {
@@ -326,5 +384,6 @@ interface packet_common_clear_dialog {
 
 interface packet_common_custom_click_action {
     id: string;
+    nbt: undefined;
 }
 

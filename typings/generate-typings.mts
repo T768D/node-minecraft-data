@@ -42,60 +42,71 @@ const someTypes = {
 	lpVec3: "{ x: number; y: number; z: number }"
 } as Record<string, string>;
 
-let typesOutput = "";
-function unhandledType(name: string, type: unknown) {
-	console.error("Unhandled type or data structure:", type);
-	typesOutput += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
-}
 
 
-for (const [name, type] of Object.entries(example.types)) {
-	if (ignoredTypes.has(name))
-		continue;
+for (const [sectionName, data] of Object.entries(example)) {
+	let typesOutput = "";
 
-	if (type === "native") {
-		if (name in someTypes)
-			typesOutput += `type ${name} = ${someTypes[name]};\n`;
-		else
-			unhandledType(name, type);
+	function unhandledType(name: string, type: unknown) {
+		console.error("Unhandled type or data structure:", type);
+		typesOutput += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
 	}
 
-	else if (Array.isArray(type)) {
-		const realType = type[0];
 
+	for (const [name, type] of Object.entries(data)) {
+		if (ignoredTypes.has(name))
+			continue;
 
-		// todo, handle other types of type[1]
-		if (realType === "container" && Array.isArray(type[1])) {
-			// parseContainer only returns object, does not declare interface or type
-			typesOutput += `interface ${name} ${parseContainer(type[1])}`;
-		}
-
-		// mapper is a enum
-		else if (realType === "mapper") {
-			// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-			if (!("type" in type) || !("mapping" in type) || typeof type.mapping !== "object" || !type.mapping) {
+		if (type === "native") {
+			if (name in someTypes)
+				typesOutput += `type ${name} = ${someTypes[name]};\n`;
+			else
 				unhandledType(name, type);
-				continue;
-			}
-
-			else if (type.type !== "varint") {
-				unhandledType(name, type.type);
-				continue;
-			}
-
-			typesOutput += parseEnum(name, type.mapping);
 		}
 
+		else if (Array.isArray(type)) {
+			const realType = type[0];
+
+
+			// todo, handle other types of type[1]
+			if (realType === "container" && Array.isArray(type[1])) {
+				// parseContainer only returns object, does not declare interface or type
+				typesOutput += `interface ${name} ${parseContainer(type[1])}`;
+			}
+
+			// mapper is a enum
+			else if (realType === "mapper") {
+				// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
+				if (!("type" in type) || !("mapping" in type) || typeof type.mapping !== "object" || !type.mapping) {
+					unhandledType(name, type);
+					continue;
+				}
+
+				else if (type.type !== "varint") {
+					unhandledType(name, type.type);
+					continue;
+				}
+
+				typesOutput += parseEnum(name, type.mapping);
+			}
+
+			else {
+				console.error("unimplemented");
+			}
+		}
+
+		// this must come after array check as arrays are object types too
+		else if (typeof type === "object") {
+			// pass item through this for loop again, extract this for loop to a function
+		}
+
+		// eg "ContainerID": "varint"
 		else {
-			console.error("unimplemented");
+			// no types in someTypes are part of ignoredTypes, therefore if someTypes[type] is defined, we can assume type is not part of ignoredTypes
+			typesOutput += `type ${name} = ${type in someTypes ? type : "unknown"};\n`;
 		}
 	}
 
-	// eg "ContainerID": "varint"
-	else {
-		// no types in someTypes are part of ignoredTypes, therefore if someTypes[type] is defined, we can assume type is not part of ignoredTypes
-		typesOutput += `type ${name} = ${type in someTypes ? type : "unknown"};\n`;
-	}
-}
+	writeFileSync(`./typings/output/${sectionName}.d.ts`, typesOutput, "utf8");
 
-writeFileSync("./typings/output.d.ts", typesOutput, "utf8");
+}
