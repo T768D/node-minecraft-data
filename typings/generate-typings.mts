@@ -2,6 +2,7 @@ import example from "./example.json" with { type: "json" };
 import { writeFileSync } from "fs";
 
 import { parseContainer } from "./modules/parseContainer.mjs";
+import { parseEnum } from "./modules/parseEnum.mjs";
 
 
 // switch cannot be a type, and void is already a ts type
@@ -42,6 +43,12 @@ const someTypes = {
 } as Record<string, string>;
 
 let typesOutput = "";
+function unhandledType(name: string, type: unknown) {
+	console.error("Unhandled type or data structure:", type);
+	typesOutput += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
+}
+
+
 for (const [name, type] of Object.entries(example.types)) {
 	if (ignoredTypes.has(name))
 		continue;
@@ -49,20 +56,36 @@ for (const [name, type] of Object.entries(example.types)) {
 	if (type === "native") {
 		if (name in someTypes)
 			typesOutput += `type ${name} = ${someTypes[name]};\n`;
-		else {
-			console.error(`Unhandled type: ${type}`);
-			typesOutput += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
-		}
+		else
+			unhandledType(name, type);
 	}
 
 	else if (Array.isArray(type)) {
 		const realType = type[0];
+
 
 		// todo, handle other types of type[1]
 		if (realType === "container" && Array.isArray(type[1])) {
 			// parseContainer only returns object, does not declare interface or type
 			typesOutput += `interface ${name} ${parseContainer(type[1])}`;
 		}
+
+		// mapper is a enum
+		else if (realType === "mapper") {
+			// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
+			if (!("type" in type) || !("mapping" in type) || typeof type.mapping !== "object" || !type.mapping) {
+				unhandledType(name, type);
+				continue;
+			}
+
+			else if (type.type !== "varint") {
+				unhandledType(name, type.type);
+				continue;
+			}
+
+			typesOutput += parseEnum(name, type.mapping);
+		}
+
 		else {
 			console.error("unimplemented");
 		}

@@ -44,6 +44,5 @@ export function parseContainer(container: Record<string, string>[]): string {
 		tempOutput += `    ${dict.name}: ${dict.type ?? "unknown"};\n`;
 	}
 
-	tempOutput += "}\n";
-	return tempOutput + "\n";
+	return tempOutput + "}\n\n";
 }

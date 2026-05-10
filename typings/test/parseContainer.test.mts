@@ -1,7 +1,3 @@
-import { parseContainer } from "../modules/parseContainer.mjs";
-import { makeAssert } from "./_globals.mjs";
-
-
 // could stick all of it into a big array but would have to deal with indentation within the strings
 
 const sample1 = [
@@ -50,15 +46,5 @@ const expected2 = `{
 	isStart: bool;
 }`;
 
-const samples = [sample1, sample2];
-const expecteds = [expected1, expected2];
-
-
-if (samples.length !== expecteds.length)
-	throw new Error("Samples and Expecteds are not the same length");
-
-const assert = makeAssert(parseContainer);
-for (let x = 0; x < samples.length; x++) {
-	// replaces all tabs with spaces for consistancy, newline at end as func adds one
-	assert(samples[x], expecteds[x]!.replaceAll("	", "    ") + "\n");
-}
+export const samples = [sample1, sample2];
+export const expecteds = [expected1, expected2];
