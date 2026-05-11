@@ -1,0 +1,19 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Current file",
+			"program": "${file}",
+			"request": "launch",
+			"type": "bun",
+			"cwd": "${workspaceFolder}/${relativeFileDirname}"
+		},
+		{
+			"name": "Generate Types",
+			"program": "${workspaceFolder}/typings/generate-typings.mts",
+			"request": "launch",
+			"type": "bun",
+			"cwd": "${workspaceFolder}"
+		}
+	]
+}
