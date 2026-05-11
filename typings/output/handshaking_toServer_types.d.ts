@@ -10,7 +10,6 @@ interface packet_legacy_server_list_ping {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

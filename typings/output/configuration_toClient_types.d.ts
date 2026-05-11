@@ -27,15 +27,12 @@ interface packet_reset_chat {
 
 interface packet_registry_data {
     id: string;
-    entries: undefined;
 }
 
 interface packet_feature_flags {
-    features: undefined;
 }
 
 interface packet_tags {
-    tags: undefined;
 }
 
 interface packet_show_dialog {
@@ -43,7 +40,6 @@ interface packet_show_dialog {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

@@ -13,11 +13,11 @@ interface packet_select_bundle_item {
 }
 
 interface packet_set_difficulty {
-    newDifficulty: undefined;
+    newDifficulty: packet_set_difficulty_newDifficulty
 }
 
 interface packet_change_gamemode {
-    mode: undefined;
+    mode: packet_change_gamemode_mode
 }
 
 interface packet_message_acknowledgement {
@@ -32,9 +32,7 @@ interface packet_chat_command_signed {
     command: string;
     timestamp: i64;
     salt: i64;
-    argumentSignatures: undefined;
     messageCount: varint;
-    acknowledged: undefined;
     checksum: i8;
 }
 
@@ -42,9 +40,7 @@ interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-    signature: undefined;
     offset: varint;
-    acknowledged: undefined;
     checksum: u8;
 }
 
@@ -85,8 +81,6 @@ interface packet_window_click {
     slot: i16;
     mouseButton: i8;
     mode: varint;
-    changedSlots: undefined;
-    cursorItem: undefined;
 }
 
 interface packet_close_window {
@@ -105,13 +99,10 @@ interface packet_custom_payload {
 }
 
 interface packet_debug_subscription_request {
-    subscriptions: undefined;
 }
 
 interface packet_edit_book {
     hand: varint;
-    pages: undefined;
-    title: undefined;
 }
 
 interface packet_query_entity_nbt {
@@ -122,10 +113,6 @@ interface packet_query_entity_nbt {
 interface packet_use_entity {
     target: varint;
     mouse: varint;
-    x: undefined;
-    y: undefined;
-    z: undefined;
-    hand: undefined;
     sneaking: bool;
 }
 
@@ -216,12 +203,11 @@ interface packet_block_dig {
 
 interface packet_entity_action {
     entityId: varint;
-    actionId: undefined;
+    actionId: packet_entity_action_actionId
     jumpBoost: varint;
 }
 
 interface packet_player_input {
-    inputs: undefined;
 }
 
 interface packet_player_loaded {
@@ -252,7 +238,6 @@ interface packet_resource_pack_receive {
 
 interface packet_advancement_tab {
     action: varint;
-    tabId: undefined;
 }
 
 interface packet_select_trade {
@@ -260,8 +245,6 @@ interface packet_select_trade {
 }
 
 interface packet_set_beacon_effect {
-    primary_effect: undefined;
-    secondary_effect: undefined;
 }
 
 interface packet_held_item_slot {
@@ -313,7 +296,6 @@ interface packet_update_structure_block {
     metadata: string;
     integrity: f32;
     seed: varint;
-    flags: undefined;
 }
 
 interface packet_set_test_block {
@@ -342,7 +324,13 @@ interface packet_spectate {
 interface packet_test_instance_block_action {
     pos: position;
     action: varint;
-    data: undefined;
+interface data {
+    size: vec3i;
+    rotation: varint;
+    ignoreEntities: bool;
+    status: varint;
+}
+
 }
 
 interface packet_block_place {
@@ -364,7 +352,6 @@ interface packet_use_item {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

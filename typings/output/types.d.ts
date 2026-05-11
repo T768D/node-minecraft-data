@@ -65,127 +65,16 @@ interface vec3i32 {
 }
 
 type ContainerID = varint;
-const enum SlotComponentType {
-    custom_data = 0,
-    max_stack_size = 1,
-    max_damage = 2,
-    damage = 3,
-    unbreakable = 4,
-    use_effects = 5,
-    custom_name = 6,
-    minimum_attack_charge = 7,
-    damage_type = 8,
-    item_name = 9,
-    item_model = 10,
-    lore = 11,
-    rarity = 12,
-    enchantments = 13,
-    can_place_on = 14,
-    can_break = 15,
-    attribute_modifiers = 16,
-    custom_model_data = 17,
-    tooltip_display = 18,
-    repair_cost = 19,
-    creative_slot_lock = 20,
-    enchantment_glint_override = 21,
-    intangible_projectile = 22,
-    food = 23,
-    consumable = 24,
-    use_remainder = 25,
-    use_cooldown = 26,
-    damage_resistant = 27,
-    tool = 28,
-    weapon = 29,
-    attack_range = 30,
-    enchantable = 31,
-    equippable = 32,
-    repairable = 33,
-    glider = 34,
-    tooltip_style = 35,
-    death_protection = 36,
-    blocks_attacks = 37,
-    piercing_weapon = 38,
-    kinetic_weapon = 39,
-    swing_animation = 40,
-    stored_enchantments = 41,
-    dyed_color = 42,
-    map_color = 43,
-    map_id = 44,
-    map_decorations = 45,
-    map_post_processing = 46,
-    charged_projectiles = 47,
-    bundle_contents = 48,
-    potion_contents = 49,
-    potion_duration_scale = 50,
-    suspicious_stew_effects = 51,
-    writable_book_content = 52,
-    written_book_content = 53,
-    trim = 54,
-    debug_stick_state = 55,
-    entity_data = 56,
-    bucket_entity_data = 57,
-    block_entity_data = 58,
-    instrument = 59,
-    provides_trim_material = 60,
-    ominous_bottle_amplifier = 61,
-    jukebox_playable = 62,
-    provides_banner_patterns = 63,
-    recipes = 64,
-    lodestone_tracker = 65,
-    firework_explosion = 66,
-    fireworks = 67,
-    profile = 68,
-    note_block_sound = 69,
-    banner_patterns = 70,
-    base_color = 71,
-    pot_decorations = 72,
-    container = 73,
-    block_state = 74,
-    bees = 75,
-    lock = 76,
-    container_loot = 77,
-    break_sound = 78,
-    villager_variant = 79,
-    wolf_variant = 80,
-    wolf_sound_variant = 81,
-    wolf_collar = 82,
-    fox_variant = 83,
-    salmon_size = 84,
-    parrot_variant = 85,
-    tropical_fish_pattern = 86,
-    tropical_fish_base_color = 87,
-    tropical_fish_pattern_color = 88,
-    mooshroom_variant = 89,
-    rabbit_variant = 90,
-    pig_variant = 91,
-    cow_variant = 92,
-    chicken_variant = 93,
-    zombie_nautilus_variant = 94,
-    frog_variant = 95,
-    horse_variant = 96,
-    painting_variant = 97,
-    llama_variant = 98,
-    axolotl_variant = 99,
-    cat_variant = 100,
-    cat_collar = 101,
-    sheep_color = 102,
-    shulker_color = 103,
-}
-
 interface SlotComponent {
     type: SlotComponentType;
-    data: undefined;
 }
 
 interface ItemSoundEvent {
     soundName: string;
-    fixedRange: undefined;
 }
 
 interface ItemFireworkExplosion {
-    shape: undefined;
-    colors: undefined;
-    fadeColors: undefined;
+    shape: ItemFireworkExplosion_shape
     hasTrail: bool;
     hasTwinkle: bool;
 }
@@ -196,7 +85,6 @@ interface ItemEffectDetail {
     ambient: bool;
     showParticles: bool;
     showIcon: bool;
-    hiddenEffect: undefined;
 }
 
 interface ItemPotionEffect {
@@ -207,24 +95,19 @@ interface ItemPotionEffect {
 interface ItemBlockProperty {
     name: string;
     isExactMatch: bool;
-    value: undefined;
 }
 
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
-    partialMatchers: undefined;
 }
 
 interface ItemBlockPredicate {
-    blockSet: undefined;
-    properties: undefined;
     nbt: anonOptionalNbt;
     components: DataComponentMatchers;
 }
 
 interface ItemBookPage {
     content: string;
-    filteredContent: undefined;
 }
 
 interface ItemWrittenBookPage {
@@ -233,12 +116,11 @@ interface ItemWrittenBookPage {
 }
 
 interface ItemConsumeEffect {
-    type: undefined;
+    type: ItemConsumeEffect_type
 }
 
 interface ArmorTrimMaterial {
     assetBase: string;
-    overrideArmorAssets: undefined;
     description: anonymousNbt;
 }
 
@@ -268,16 +150,15 @@ interface BannerPattern {
 }
 
 interface BannerPatternLayer {
-    pattern: undefined;
     colorId: varint;
 }
 
 interface DamageTypeData {
     msgId: string;
-    scaling: undefined;
+    scaling: DamageTypeData_scaling
     exhaustion: f32;
-    effects: undefined;
-    deathMessageType: undefined;
+    effects: DamageTypeData_effects
+    deathMessageType: DamageTypeData_deathMessageType
 }
 
 interface KineticWeaponCondition {
@@ -302,8 +183,6 @@ interface Slot {
 interface HashedSlot {
     itemId: varint;
     itemCount: varint;
-    components: undefined;
-    removeComponents: undefined;
 }
 
 interface RespawnData {
@@ -320,7 +199,6 @@ interface GlobalPos {
 interface DebugStructureInfo {
     boundingBoxMin: position;
     boundingBoxMax: position;
-    pieces: undefined;
 }
 
 interface Node {
@@ -328,41 +206,18 @@ interface Node {
     walkedDistance: f32;
     costMalus: f32;
     closed: bool;
-    type: undefined;
+    type: Node_type
     f: f32;
 }
 
 interface PathDebugData {
-    openSet: undefined;
-    closedSet: undefined;
-    targetNodes: undefined;
 }
 
 interface Path {
     reached: bool;
     nextNodeIndex: i32;
     target: position;
-    nodes: undefined;
     debugData: PathDebugData;
-}
-
-const enum DebugSubscriptionDataType {
-    DedicatedServerTickTime = 0,
-    Bees = 1,
-    Brains = 2,
-    Breezes = 3,
-    GoalSelectors = 4,
-    EntityPaths = 5,
-    EntityBlockIntersections = 6,
-    BeeHives = 7,
-    Pois = 8,
-    RedstoneWireOrientations = 9,
-    VillageSections = 10,
-    Raids = 11,
-    Structures = 12,
-    GameEventListeners = 13,
-    NeighborUpdates = 14,
-    GameEvents = 15,
 }
 
 interface DebugSubscriptionUpdate {
@@ -371,26 +226,10 @@ interface DebugSubscriptionUpdate {
 
 interface DebugSubscriptionEvent {
     type: DebugSubscriptionDataType;
-    value: undefined;
 }
 
 interface Particle {
-    type: undefined;
-    data: undefined;
-}
-
-const enum soundSource {
-    master = 0,
-    music = 1,
-    record = 2,
-    weather = 3,
-    block = 4,
-    hostile = 5,
-    neutral = 6,
-    player = 7,
-    ambient = 8,
-    voice = 9,
-    ui = 10,
+    type: Particle_type
 }
 
 interface packedChunkPos {
@@ -400,16 +239,13 @@ interface packedChunkPos {
 
 interface entityMetadataEntry {
     key: u8;
-    type: undefined;
-    value: undefined;
+    type: entityMetadataEntry_type
 }
 
 interface EntityMetadataPaintingVariant {
     width: i32;
     height: i32;
     assetId: string;
-    title: undefined;
-    author: undefined;
 }
 
 interface chunkBlockEntity {
@@ -420,44 +256,30 @@ interface chunkBlockEntity {
 
 interface game_profile_name_prop {
     name: string;
-    properties: undefined;
 }
 
 interface GameProfile {
     uuid: UUID;
     name: string;
-    properties: undefined;
 }
 
 interface PartialResolvableProfile {
-    name: undefined;
-    uuid: undefined;
-    properties: undefined;
 }
 
 interface GameProfileProperty {
     name: string;
     value: string;
-    signature: undefined;
 }
 
 interface ResolvableProfile {
-    type: undefined;
+    type: ResolvableProfile_type
     skinPatch: PlayerSkinPatch;
 }
 
 interface PlayerSkinPatch {
-    body: undefined;
-    cape: undefined;
-    elytra: undefined;
-    model: undefined;
 }
 
 interface command_node {
-    flags: undefined;
-    children: undefined;
-    redirectNode: undefined;
-    extraNodeData: undefined;
 }
 
 interface packet_common_settings {
@@ -469,7 +291,7 @@ interface packet_common_settings {
     mainHand: varint;
     enableTextFiltering: bool;
     enableServerListing: bool;
-    particleStatus: undefined;
+    particleStatus: packet_common_settings_particleStatus
 }
 
 interface packet_common_cookie_request {
@@ -488,19 +310,15 @@ interface packet_common_transfer {
 
 interface packet_common_cookie_response {
     key: string;
-    value: undefined;
 }
 
 interface packet_common_select_known_packs {
-    packs: undefined;
 }
 
 interface packet_common_custom_report_details {
-    details: undefined;
 }
 
 interface packet_common_remove_resource_pack {
-    uuid: undefined;
 }
 
 interface packet_common_add_resource_pack {
@@ -508,24 +326,9 @@ interface packet_common_add_resource_pack {
     url: string;
     hash: string;
     forced: bool;
-    promptMessage: undefined;
-}
-
-const enum ServerLinkType {
-    bug_report = 0,
-    community_guidelines = 1,
-    support = 2,
-    status = 3,
-    feedback = 4,
-    community = 5,
-    website = 6,
-    forums = 7,
-    news = 8,
-    announcements = 9,
 }
 
 interface packet_common_server_links {
-    links: undefined;
 }
 
 interface packet_common_clear_dialog {
@@ -533,6 +336,5 @@ interface packet_common_clear_dialog {
 
 interface packet_common_custom_click_action {
     id: string;
-    nbt: undefined;
 }
 

@@ -23,7 +23,6 @@ interface packet_resource_pack_receive {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

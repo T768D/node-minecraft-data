@@ -6,7 +6,6 @@ interface packet_ping {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

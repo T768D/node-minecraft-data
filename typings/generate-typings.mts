@@ -2,7 +2,7 @@ import example from "./example.json" with { type: "json" };
 import { writeFileSync, rmSync, readdirSync } from "fs";
 
 import { parseContainer } from "./modules/parseContainer.mjs";
-import { parseEnum } from "./modules/parseEnum.mjs";
+import { hoistedEnums, parseEnum } from "./modules/parseEnum.mjs";
 
 
 for (const filePath of readdirSync("./typings/output"))
@@ -47,17 +47,23 @@ const baseTypes = {
 
 
 
-for (const [sectionName, data] of Object.entries(example)) {
-	console.log("section", sectionName);
+for (const [sectionName, data] of Object.entries(example))
 	generateTypes(sectionName, sectionName, data);
-}
+
 
 /**
  * @param sectionNameHistory The names of the items the function traversed over to reach the current status, used for the file name. eg handshaking_toClient
  */
-function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example]) {
+export function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example], returnInsteadOfWritingToFile?: false): void;
+export function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example], returnInsteadOfWritingToFile: true): string;
+export function generateTypes(
+	sectionNameHistory: string,
+	sectionName: string,
+	data: typeof example[keyof typeof example],
+	returnInsteadOfWritingToFile?: boolean,
+): string | void {
 
-	if (sectionName !== "types") {
+	if (!returnInsteadOfWritingToFile && sectionName !== "types") {
 		for (const [subSectionName, subData] of Object.entries(data)) {
 			generateTypes(`${sectionNameHistory}_${subSectionName}`, subSectionName, subData);
 		}
@@ -67,8 +73,8 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 
 	let typesOutput = "";
 
-	function unhandledType(name: string, type: unknown) {
-		console.error("Unhandled type or data structure:", type);
+	function unhandledType(name: string, type: unknown, msg: string) {
+		console.error(msg + ". Unhandled type or data structure:", type);
 		typesOutput += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
 	}
 
@@ -81,54 +87,16 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 			if (name in baseTypes)
 				typesOutput += `type ${name} = ${baseTypes[name]};\n`;
 			else
-				unhandledType(name, type);
+				unhandledType(name, type, "Invalid type when type is native");
 		}
 
 		else if (Array.isArray(type)) {
-			const subTypeName = type[0];
-			const subTypeType = type[1];
-
-
-			// todo, handle other types of type[1]
-			if (subTypeName === "container" && Array.isArray(subTypeType)) {
-				// parseContainer only returns object, does not declare interface or type
-				typesOutput += `interface ${name} ${parseContainer(subTypeType)}`;
+			if (type.length !== 2) {
+				unhandledType(name, type, "Invalid subarray length");
+				continue;
 			}
 
-			// object can be array too, so check for that
-			else if (subTypeName === "switch" && !Array.isArray(subTypeType) && typeof subTypeType === "object") {
-				/*
-				Not sure how to interpret this
-				{
-					"compareTo": "flags",
-					"fields": {
-						"1": "varint",
-						"3": "varint"
-					},
-					"default": "void"
-				}
-				*/
-			}
-
-			// mapper is a enum
-			else if (subTypeName === "mapper") {
-				// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-				if (!("type" in subTypeType) || !("mappings" in subTypeType) || typeof subTypeType.mappings !== "object") {
-					unhandledType(name, type);
-					continue;
-				}
-
-				else if (subTypeType.type !== "varint") {
-					unhandledType(name, subTypeType.type);
-					continue;
-				}
-
-				typesOutput += parseEnum(name, subTypeType.mappings);
-			}
-
-			else {
-				console.error(`Unimplemented!\n realType: ${subTypeName}\n value: `, type);
-			}
+			typesOutput += subArrayHandling(name, type[0], type[1], true);
 		}
 
 		// this must come after array check as arrays are object types too
@@ -144,5 +112,71 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 		}
 	}
 
+
+	if (returnInsteadOfWritingToFile)
+		return typesOutput;
+
 	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput, "utf8");
 }
+
+
+// add jsdoc later
+export function subArrayHandling(name: string, subTypeName: string, subTypeType: unknown, calledFromMain: boolean, longNameForEnum: string = name): string {
+	let output = "";
+
+	function unhandledType(name: string, type: unknown, msg: string) {
+		console.error(msg + ". Unhandled type or data structure:", type);
+		output += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
+	}
+
+	// todo, handle other types of type[1]
+	if (subTypeName === "container" && Array.isArray(subTypeType)) {
+		// parseContainer only returns object, does not declare interface or type
+		output += `interface ${name} ${parseContainer(subTypeType, name)}`;
+	}
+
+	// object can be array too, so check for that
+	else if (subTypeName === "switch" && !Array.isArray(subTypeType) && typeof subTypeType === "object") {
+		/*
+		Not sure how to interpret this
+		{
+			"compareTo": "flags",
+			"fields": {
+				"1": "varint",
+				"3": "varint"
+			},
+			"default": "void"
+		}
+		*/
+	}
+
+	// mapper is a enum
+	else if (subTypeName === "mapper") {
+		// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
+		if (typeof subTypeType !== "object" || !("type" in subTypeType!) || !("mappings" in subTypeType) || typeof subTypeType.mappings !== "object") {
+			unhandledType(subTypeName, subTypeType, "");
+			return "";
+		}
+
+		else if (subTypeType.type !== "varint") {
+			unhandledType(subTypeName, subTypeType.type, "");
+			return "";
+		}
+
+		// if not called from main, it means its a nested enum which needs to be refrenced
+		// otherwise the enum is just being declared
+		if (!calledFromMain)
+			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeType.mappings!)}\n`;
+		else
+			parseEnum(longNameForEnum, subTypeType.mappings!);
+	}
+
+	else {
+		console.error(`Unimplemented!\n realType: ${subTypeName}\n value: `, subTypeType);
+	}
+
+	return output;
+}
+
+
+writeFileSync("./typings/output/hoistedTypes.d.ts", hoistedEnums, "utf8");

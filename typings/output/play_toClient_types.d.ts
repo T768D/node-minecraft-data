@@ -1,22 +1,18 @@
 interface SlotDisplay {
-    type: undefined;
-    data: undefined;
+    type: SlotDisplay_type
 }
 
 interface RecipeDisplay {
-    type: undefined;
-    data: undefined;
+    type: RecipeDisplay_type
 }
 
 interface SpawnInfo {
     dimension: varint;
     name: string;
     hashedSeed: i64;
-    gamemode: undefined;
     previousGamemode: u8;
     isDebug: bool;
     isFlat: bool;
-    death: undefined;
     portalCooldown: varint;
     seaLevel: varint;
 }
@@ -41,7 +37,6 @@ interface packet_animation {
 }
 
 interface packet_statistics {
-    entries: undefined;
 }
 
 interface packet_acknowledge_player_digging {
@@ -75,15 +70,10 @@ interface packet_block_change {
 interface packet_boss_bar {
     entityUUID: UUID;
     action: varint;
-    title: undefined;
-    health: undefined;
-    color: undefined;
-    dividers: undefined;
-    flags: undefined;
 }
 
 interface packet_difficulty {
-    difficulty: undefined;
+    difficulty: packet_difficulty_difficulty
     difficultyLocked: bool;
 }
 
@@ -95,7 +85,6 @@ interface packet_chunk_batch_start {
 }
 
 interface packet_chunk_biomes {
-    biomes: undefined;
 }
 
 interface packet_clear_titles {
@@ -106,11 +95,9 @@ interface packet_tab_complete {
     transactionId: varint;
     start: varint;
     length: varint;
-    matches: undefined;
 }
 
 interface packet_declare_commands {
-    nodes: undefined;
     rootIndex: varint;
 }
 
@@ -121,7 +108,6 @@ interface packet_close_window {
 interface packet_window_items {
     windowId: ContainerID;
     stateId: varint;
-    items: undefined;
     carriedItem: Slot;
 }
 
@@ -145,7 +131,6 @@ interface packet_set_cooldown {
 
 interface packet_chat_suggestions {
     action: varint;
-    entries: undefined;
 }
 
 interface packet_custom_payload {
@@ -158,7 +143,6 @@ interface packet_damage_event {
     sourceTypeId: varint;
     sourceCauseId: varint;
     sourceDirectId: varint;
-    sourcePosition: undefined;
 }
 
 interface packet_debug_block_value {
@@ -181,28 +165,19 @@ interface packet_debug_event {
 }
 
 interface packet_debug_sample {
-    sample: undefined;
     type: varint;
 }
 
 interface packet_hide_message {
     id: varint;
-    signature: undefined;
 }
 
 interface packet_kick_disconnect {
     reason: anonymousNbt;
 }
 
-const enum ChatTypeParameterType {
-    content = 0,
-    sender = 1,
-    target = 2,
-}
-
 interface ChatType {
     translationKey: string;
-    parameters: undefined;
     style: anonymousNbt;
 }
 
@@ -215,7 +190,6 @@ interface packet_profileless_chat {
     message: anonymousNbt;
     type: ChatTypesHolder;
     name: anonymousNbt;
-    target: undefined;
 }
 
 interface packet_entity_status {
@@ -251,10 +225,8 @@ interface packet_explosion {
     center: vec3f64;
     radius: f32;
     blockCount: i32;
-    playerKnockback: undefined;
     explosionParticle: Particle;
     sound: ItemSoundHolder;
-    blockParticles: undefined;
 }
 
 interface packet_unload_chunk {
@@ -263,7 +235,6 @@ interface packet_unload_chunk {
 }
 
 interface packet_game_state_change {
-    reason: undefined;
     gameMode: f32;
 }
 
@@ -301,15 +272,7 @@ interface packet_keep_alive {
 interface packet_map_chunk {
     x: i32;
     z: i32;
-    heightmaps: undefined;
     chunkData: ByteArray;
-    blockEntities: undefined;
-    skyLightMask: undefined;
-    blockLightMask: undefined;
-    emptySkyLightMask: undefined;
-    emptyBlockLightMask: undefined;
-    skyLight: undefined;
-    blockLight: undefined;
 }
 
 interface packet_world_event {
@@ -336,18 +299,11 @@ interface packet_world_particles {
 interface packet_update_light {
     chunkX: varint;
     chunkZ: varint;
-    skyLightMask: undefined;
-    blockLightMask: undefined;
-    emptySkyLightMask: undefined;
-    emptyBlockLightMask: undefined;
-    skyLight: undefined;
-    blockLight: undefined;
 }
 
 interface packet_login {
     entityId: i32;
     isHardcore: bool;
-    worldNames: undefined;
     maxPlayers: varint;
     viewDistance: varint;
     simulationDistance: varint;
@@ -362,17 +318,11 @@ interface packet_map {
     itemDamage: varint;
     scale: i8;
     locked: bool;
-    icons: undefined;
     columns: u8;
-    rows: undefined;
-    x: undefined;
-    y: undefined;
-    data: undefined;
 }
 
 interface packet_trade_list {
     windowId: ContainerID;
-    trades: undefined;
     villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
@@ -399,7 +349,6 @@ interface packet_entity_move_look {
 
 interface packet_move_minecart {
     entityId: varint;
-    steps: undefined;
 }
 
 interface packet_entity_look {
@@ -455,17 +404,13 @@ interface packet_player_chat {
     globalIndex: varint;
     senderUuid: UUID;
     index: varint;
-    signature: undefined;
     plainMessage: string;
     timestamp: i64;
     salt: i64;
     previousMessages: previousMessages;
-    unsignedChatContent: undefined;
     filterType: varint;
-    filterTypeMask: undefined;
     type: ChatTypesHolder;
     networkName: anonymousNbt;
-    networkTargetName: undefined;
 }
 
 interface packet_end_combat_event {
@@ -481,12 +426,9 @@ interface packet_death_combat_event {
 }
 
 interface packet_player_remove {
-    players: undefined;
 }
 
 interface packet_player_info {
-    action: undefined;
-    data: undefined;
 }
 
 interface packet_face_player {
@@ -495,8 +437,6 @@ interface packet_face_player {
     y: f64;
     z: f64;
     isEntity: bool;
-    entityId: undefined;
-    entity_feet_eyes: undefined;
 }
 
 interface packet_position {
@@ -520,12 +460,10 @@ interface packet_player_rotation {
 }
 
 interface packet_recipe_book_add {
-    entries: undefined;
     replace: bool;
 }
 
 interface packet_recipe_book_remove {
-    recipeIds: undefined;
 }
 
 interface RecipeBookSetting {
@@ -541,7 +479,6 @@ interface packet_recipe_book_settings {
 }
 
 interface packet_entity_destroy {
-    entityIds: undefined;
 }
 
 interface packet_remove_entity_effect {
@@ -551,7 +488,6 @@ interface packet_remove_entity_effect {
 
 interface packet_reset_score {
     entity_name: string;
-    objective_name: undefined;
 }
 
 interface packet_respawn {
@@ -565,17 +501,13 @@ interface packet_entity_head_rotation {
 }
 
 interface packet_multi_block_change {
-    chunkCoordinates: undefined;
-    records: undefined;
 }
 
 interface packet_select_advancement_tab {
-    id: undefined;
 }
 
 interface packet_server_data {
     motd: anonymousNbt;
-    iconBytes: undefined;
 }
 
 interface packet_action_bar {
@@ -645,7 +577,6 @@ interface packet_entity_velocity {
 
 interface packet_entity_equipment {
     entityId: varint;
-    equipments: undefined;
 }
 
 interface packet_experience {
@@ -667,15 +598,10 @@ interface packet_held_item_slot {
 interface packet_scoreboard_objective {
     name: string;
     action: i8;
-    displayText: undefined;
-    type: undefined;
-    number_format: undefined;
-    styling: undefined;
 }
 
 interface packet_set_passengers {
     entityId: varint;
-    passengers: undefined;
 }
 
 interface packet_set_player_inventory {
@@ -685,17 +611,12 @@ interface packet_set_player_inventory {
 
 interface packet_teams {
     team: string;
-    mode: undefined;
-    players: undefined;
 }
 
 interface packet_scoreboard_score {
     itemName: string;
     scoreName: string;
     value: varint;
-    display_name: undefined;
-    number_format: undefined;
-    styling: undefined;
 }
 
 interface packet_simulation_distance {
@@ -747,8 +668,6 @@ interface packet_start_configuration {
 
 interface packet_stop_sound {
     flags: i8;
-    source: undefined;
-    sound: undefined;
 }
 
 interface packet_system_chat {
@@ -784,7 +703,6 @@ interface packet_entity_teleport {
 
 interface packet_test_instance_block_status {
     status: anonymousNbt;
-    size: undefined;
 }
 
 interface packet_set_ticking_state {
@@ -798,15 +716,11 @@ interface packet_step_tick {
 
 interface packet_advancements {
     reset: bool;
-    advancementMapping: undefined;
-    identifiers: undefined;
-    progressMapping: undefined;
     showAdvancements: bool;
 }
 
 interface packet_entity_update_attributes {
     entityId: varint;
-    properties: undefined;
 }
 
 interface packet_entity_effect {
@@ -818,12 +732,9 @@ interface packet_entity_effect {
 }
 
 interface packet_declare_recipes {
-    recipes: undefined;
-    stoneCutterRecipes: undefined;
 }
 
 interface packet_tags {
-    tags: undefined;
 }
 
 interface packet_set_projectile_power {
@@ -832,16 +743,22 @@ interface packet_set_projectile_power {
 }
 
 interface packet_tracked_waypoint {
-    operation: undefined;
-    waypoint: undefined;
+    operation: packet_tracked_waypoint_operation
+interface waypoint {
+    hasUUID: bool;
+interface icon {
+    style: string;
+}
+
+    type: waypoint_type
+}
+
 }
 
 interface packet_show_dialog {
-    dialog: undefined;
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 

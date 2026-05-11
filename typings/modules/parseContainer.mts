@@ -1,4 +1,4 @@
-import { parseNestedType } from "./parseNestedType.mjs";
+import { subArrayHandling } from "../generate-typings.mjs";
 
 /**
  * @param container The container object
@@ -31,32 +31,34 @@ import { parseNestedType } from "./parseNestedType.mjs";
 	}
 	```
  */
-export function parseContainer(container: Record<string, string>[]): string {
+export function parseContainer(container: { name: string, type: unknown; }[], containerName: string): string {
 	let tempOutput = "{\n";
 	for (const dict of container) {
 		if (typeof dict !== "object") {
 			console.error("Dict is not object type in parseContainer, dict parsing skipped", dict);
-			continue;
 		}
 
-		if (!dict.name) {
-			console.error("Name property of a container dict is not defined in parseContainer, property skipped");
-			continue;
+		else if (!dict.name) {
+			console.error("Name property of a container dict is not defined in parseContainer, property skipped", dict);
 		}
 
-		if (!dict.type) {
+		else if (!dict.type) {
 			console.warn("Type property of a dict is not defined in parseContainer, defaulting to unknown");
 			tempOutput += `    ${dict.name}: "unknown;\n`;
-			continue;
 		}
 
-		if (typeof dict.type !== "string") {
-			tempOutput += `    ${dict.name}: ${parseNestedType(dict.type)};\n`;
-			continue;
+		else if (Array.isArray(dict.type)) {
+			tempOutput += subArrayHandling(dict.name, dict.type[0], dict.type[1], false, `${containerName}_${dict.name}`);
 		}
 
-		// dict.type could be smth like u8 which would be defined in the outer loop
-		tempOutput += `    ${dict.name}: ${dict.type ?? "unknown"};\n`;
+		else if (typeof dict.type !== "string") {
+			tempOutput += `    ${dict.name}: unknown;\n`;
+		}
+
+		else {
+			// dict.type could be smth like u8 which would be defined in the outer loop
+			tempOutput += `    ${dict.name}: ${dict.type || "unknown"};\n`;
+		}
 	}
 
 	return tempOutput + "}\n\n";

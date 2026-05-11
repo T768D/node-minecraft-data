@@ -4,15 +4,12 @@ interface packet_disconnect {
 
 interface packet_encryption_begin {
     serverId: string;
-    publicKey: undefined;
-    verifyToken: undefined;
     shouldAuthenticate: bool;
 }
 
 interface packet_success {
     uuid: UUID;
     username: string;
-    properties: undefined;
 }
 
 interface packet_compress {
@@ -26,7 +23,6 @@ interface packet_login_plugin_request {
 }
 
 interface packet {
-    name: undefined;
-    params: undefined;
+    name: packet_name
 }
 
