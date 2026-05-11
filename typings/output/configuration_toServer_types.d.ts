@@ -23,6 +23,6 @@ interface packet_resource_pack_receive {
 }
 
 interface packet {
-    name: packet_name
+    name: packet_name;
 }
 

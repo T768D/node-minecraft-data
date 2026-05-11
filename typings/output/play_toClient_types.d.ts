@@ -1,15 +1,16 @@
 interface SlotDisplay {
-    type: SlotDisplay_type
+    type: SlotDisplay_type;
 }
 
 interface RecipeDisplay {
-    type: RecipeDisplay_type
+    type: RecipeDisplay_type;
 }
 
 interface SpawnInfo {
     dimension: varint;
     name: string;
     hashedSeed: i64;
+    gamemode: SpawnInfo_gamemode;
     previousGamemode: u8;
     isDebug: bool;
     isFlat: bool;
@@ -73,7 +74,7 @@ interface packet_boss_bar {
 }
 
 interface packet_difficulty {
-    difficulty: packet_difficulty_difficulty
+    difficulty: packet_difficulty_difficulty;
     difficultyLocked: bool;
 }
 
@@ -235,6 +236,7 @@ interface packet_unload_chunk {
 }
 
 interface packet_game_state_change {
+    reason: packet_game_state_change_reason;
     gameMode: f32;
 }
 
@@ -611,6 +613,7 @@ interface packet_set_player_inventory {
 
 interface packet_teams {
     team: string;
+    mode: packet_teams_mode;
 }
 
 interface packet_scoreboard_score {
@@ -743,22 +746,22 @@ interface packet_set_projectile_power {
 }
 
 interface packet_tracked_waypoint {
-    operation: packet_tracked_waypoint_operation
-interface waypoint {
+    operation: packet_tracked_waypoint_operation;
+    waypoint: {
     hasUUID: bool;
-interface icon {
+    icon: {
     style: string;
 }
 
-    type: waypoint_type
+;    type: packet_tracked_waypoint_waypoint_type;
 }
 
-}
+;}
 
 interface packet_show_dialog {
 }
 
 interface packet {
-    name: packet_name
+    name: packet_name;
 }
 

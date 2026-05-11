@@ -23,6 +23,6 @@ interface packet_login_plugin_request {
 }
 
 interface packet {
-    name: packet_name
+    name: packet_name;
 }
 

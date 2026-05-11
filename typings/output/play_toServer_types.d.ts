@@ -13,11 +13,11 @@ interface packet_select_bundle_item {
 }
 
 interface packet_set_difficulty {
-    newDifficulty: packet_set_difficulty_newDifficulty
+    newDifficulty: packet_set_difficulty_newDifficulty;
 }
 
 interface packet_change_gamemode {
-    mode: packet_change_gamemode_mode
+    mode: packet_change_gamemode_mode;
 }
 
 interface packet_message_acknowledgement {
@@ -203,7 +203,7 @@ interface packet_block_dig {
 
 interface packet_entity_action {
     entityId: varint;
-    actionId: packet_entity_action_actionId
+    actionId: packet_entity_action_actionId;
     jumpBoost: varint;
 }
 
@@ -296,6 +296,7 @@ interface packet_update_structure_block {
     metadata: string;
     integrity: f32;
     seed: varint;
+    flags: packet_update_structure_block_flags;
 }
 
 interface packet_set_test_block {
@@ -324,14 +325,14 @@ interface packet_spectate {
 interface packet_test_instance_block_action {
     pos: position;
     action: varint;
-interface data {
+    data: {
     size: vec3i;
     rotation: varint;
     ignoreEntities: bool;
     status: varint;
 }
 
-}
+;}
 
 interface packet_block_place {
     hand: varint;
@@ -352,6 +353,6 @@ interface packet_use_item {
 }
 
 interface packet {
-    name: packet_name
+    name: packet_name;
 }
 

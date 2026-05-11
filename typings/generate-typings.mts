@@ -132,7 +132,10 @@ export function subArrayHandling(name: string, subTypeName: string, subTypeType:
 	// todo, handle other types of type[1]
 	if (subTypeName === "container" && Array.isArray(subTypeType)) {
 		// parseContainer only returns object, does not declare interface or type
-		output += `interface ${name} ${parseContainer(subTypeType, name)}`;
+		if (calledFromMain)
+			output += `interface ${name} ${parseContainer(subTypeType, longNameForEnum)}`;
+		else
+			output += `    ${name}: ${parseContainer(subTypeType, longNameForEnum)};`
 	}
 
 	// object can be array too, so check for that

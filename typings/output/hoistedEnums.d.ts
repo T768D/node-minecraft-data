@@ -1,3 +1,5 @@
+// Because enums cannot be nested within other types, they must all be hoisted
+
 const enum SlotComponentType {
     custom_data = 0,
     max_stack_size = 1,
@@ -478,6 +480,13 @@ const enum RecipeDisplay_type {
     smithing = 4,
 }
 
+const enum SpawnInfo_gamemode {
+    survival = 0,
+    creative = 1,
+    adventure = 2,
+    spectator = 3,
+}
+
 const enum packet_difficulty_difficulty {
     peaceful = 0,
     easy = 1,
@@ -491,13 +500,38 @@ const enum ChatTypeParameterType {
     target = 2,
 }
 
+const enum packet_game_state_change_reason {
+    no_respawn_block_available = 0,
+    start_raining = 1,
+    stop_raining = 2,
+    change_game_mode = 3,
+    win_game = 4,
+    demo_event = 5,
+    play_arrow_hit_sound = 6,
+    rain_level_change = 7,
+    thunder_level_change = 8,
+    puffer_fish_sting = 9,
+    guardian_elder_effect = 10,
+    immediate_respawn = 11,
+    limited_crafting = 12,
+    level_chunks_load_start = 13,
+}
+
+const enum packet_teams_mode {
+    add = 0,
+    remove = 1,
+    change = 2,
+    join = 3,
+    leave = 4,
+}
+
 const enum packet_tracked_waypoint_operation {
     track = 0,
     untrack = 1,
     update = 2,
 }
 
-const enum waypoint_type {
+const enum packet_tracked_waypoint_waypoint_type {
     empty = 0,
     vec3i = 1,
     chunk = 2,
@@ -668,6 +702,13 @@ const enum packet_entity_action_actionId {
     stop_horse_jump = 4,
     open_vehicle_inventory = 5,
     start_elytra_flying = 6,
+}
+
+const enum packet_update_structure_block_flags {
+    ignore_entities = 0,
+    show_air = 1,
+    show_bounding_box = 2,
+    strict = 3,
 }
 
 const enum packet_name {

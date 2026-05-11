@@ -74,7 +74,7 @@ interface ItemSoundEvent {
 }
 
 interface ItemFireworkExplosion {
-    shape: ItemFireworkExplosion_shape
+    shape: ItemFireworkExplosion_shape;
     hasTrail: bool;
     hasTwinkle: bool;
 }
@@ -116,7 +116,7 @@ interface ItemWrittenBookPage {
 }
 
 interface ItemConsumeEffect {
-    type: ItemConsumeEffect_type
+    type: ItemConsumeEffect_type;
 }
 
 interface ArmorTrimMaterial {
@@ -155,10 +155,10 @@ interface BannerPatternLayer {
 
 interface DamageTypeData {
     msgId: string;
-    scaling: DamageTypeData_scaling
+    scaling: DamageTypeData_scaling;
     exhaustion: f32;
-    effects: DamageTypeData_effects
-    deathMessageType: DamageTypeData_deathMessageType
+    effects: DamageTypeData_effects;
+    deathMessageType: DamageTypeData_deathMessageType;
 }
 
 interface KineticWeaponCondition {
@@ -206,7 +206,7 @@ interface Node {
     walkedDistance: f32;
     costMalus: f32;
     closed: bool;
-    type: Node_type
+    type: Node_type;
     f: f32;
 }
 
@@ -229,7 +229,7 @@ interface DebugSubscriptionEvent {
 }
 
 interface Particle {
-    type: Particle_type
+    type: Particle_type;
 }
 
 interface packedChunkPos {
@@ -239,7 +239,7 @@ interface packedChunkPos {
 
 interface entityMetadataEntry {
     key: u8;
-    type: entityMetadataEntry_type
+    type: entityMetadataEntry_type;
 }
 
 interface EntityMetadataPaintingVariant {
@@ -272,7 +272,7 @@ interface GameProfileProperty {
 }
 
 interface ResolvableProfile {
-    type: ResolvableProfile_type
+    type: ResolvableProfile_type;
     skinPatch: PlayerSkinPatch;
 }
 
@@ -291,7 +291,7 @@ interface packet_common_settings {
     mainHand: varint;
     enableTextFiltering: bool;
     enableServerListing: bool;
-    particleStatus: packet_common_settings_particleStatus
+    particleStatus: packet_common_settings_particleStatus;
 }
 
 interface packet_common_cookie_request {

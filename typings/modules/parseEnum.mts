@@ -1,6 +1,6 @@
 
 /** Enums cannot be inside interfaces and types, therefore must be hosted */
-export let hoistedEnums = "";
+export let hoistedEnums = "// Because enums cannot be nested within other types, they must all be hoisted\n\n";
 
 /**
  * This replaces the '/' in the enum (eg villager/variant) with a -

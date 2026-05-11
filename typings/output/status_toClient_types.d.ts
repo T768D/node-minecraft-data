@@ -7,6 +7,6 @@ interface packet_ping {
 }
 
 interface packet {
-    name: packet_name
+    name: packet_name;
 }
 
