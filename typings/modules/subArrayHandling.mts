@@ -7,6 +7,28 @@ function unhandledType(type: unknown, msg: string) {
 	console.error(msg + ". Unhandled type or data structure:", type);
 }
 
+// bitfields should have only name, size and signed but no checks are made to ensure they are
+function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: boolean; }[]) {
+	let bitOffset = 0;
+	let lines = `
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+`;
+
+	for (const item of bitFieldData) {
+		if (!item.name || !item.size || !item.signed) {
+			console.error("Invalid bitfield data! ", item);
+		}
+
+
+		lines += `     * ${item.name || "Unable to parse"} : ${bitOffset}-${bitOffset + item.size - 1} : ${item.signed}\n`;
+		bitOffset += item.size;
+	}
+
+	return lines + "    */\n";
+}
+
 // add jsdoc later
 export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, calledFromTopLevel: boolean, longNameForEnum: string = name): string {
 
@@ -54,6 +76,8 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 				else
 					variations.add(value);
 			}
+
+			// TODO MAKE THIS A RECURSIVE CALL
 
 			// switches can have nested containers in them
 			else if (Array.isArray(value) && value[0] === "container")
@@ -119,6 +143,17 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		unhandledType(subTypeData, "subTypeData is not a valid array 2");
 		return `    ${name}: unknown[];\n`;
 	}
+
+
+	if (subTypeType === "bitfield") {
+		if (!Array.isArray(subTypeData)) {
+			unhandledType(subTypeData, "subTypeData is not a valid bitfield! Unable to generate comment!");
+			return `/** Unable to generate bitfield comment from data */\n    ${name}: number;\n`;
+		}
+
+		return `${getBitFieldMsg(subTypeData)}    ${name}: number;\n`;
+	}
+
 
 	console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
 	return "";

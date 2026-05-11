@@ -1,2 +1,3 @@
 - convert all outputs of void into undefined
 - a data type is null the program will probably crash
+- make switch a recursive call

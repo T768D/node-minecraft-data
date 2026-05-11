@@ -646,6 +646,15 @@ interface Particle {
 }
 
     ingredient: Slot[];
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * x : 0-25 : true
+     * z : 26-51 : true
+     * y : 52-63 : true
+    */
+    position: number;
 interface packedChunkPos {
     z: i32;
     x: i32;
@@ -686,6 +695,14 @@ interface tags {
 }
 
 interface chunkBlockEntity {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * x : 0-3 : false
+     * z : 4-7 : false
+    */
+    undefined: number;
     y: i16;
     type: varint;
     nbtData: anonOptionalNbt;
@@ -729,6 +746,18 @@ interface PlayerSkinPatch {
 }
 
 interface command_node {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-1 : false
+     * allows_restricted : 2-2 : false
+     * has_custom_suggestions : 3-3 : false
+     * has_redirect_node : 4-4 : false
+     * has_command : 5-5 : false
+     * command_node_type : 6-7 : false
+    */
+    flags: number;
     children: varint[];
     redirectNode: varint | undefined ;
     extraNodeData: undefined  | 
@@ -740,18 +769,54 @@ interface command_node {
     parser: a2_parser;
     properties: undefined  | 
 {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-5 : false
+     * max_present : 6-6 : false
+     * min_present : 7-7 : false
+    */
+    flags: number;
     min: f32 | undefined ;
     max: f32 | undefined ;
 } | 
 {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-5 : false
+     * max_present : 6-6 : false
+     * min_present : 7-7 : false
+    */
+    flags: number;
     min: f64 | undefined ;
     max: f64 | undefined ;
 } | 
 {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-5 : false
+     * max_present : 6-6 : false
+     * min_present : 7-7 : false
+    */
+    flags: number;
     min: i32 | undefined ;
     max: i32 | undefined ;
 } | 
 {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-5 : false
+     * max_present : 6-6 : false
+     * min_present : 7-7 : false
+    */
+    flags: number;
     min: i64 | undefined ;
     max: i64 | undefined ;
 } | 

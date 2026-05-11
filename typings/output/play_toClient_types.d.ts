@@ -660,6 +660,15 @@ interface packet_entity_head_rotation {
 }
 
 interface packet_multi_block_change {
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * x : 0-21 : true
+     * z : 22-43 : true
+     * y : 44-63 : true
+    */
+    chunkCoordinates: number;
     records: varint[];
 }
 
