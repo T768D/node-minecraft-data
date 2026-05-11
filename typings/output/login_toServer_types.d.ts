@@ -8,6 +8,7 @@ interface packet_encryption_begin {
 
 interface packet_login_plugin_response {
     messageId: varint;
+    data?: restBuffer;
 }
 
 interface packet_login_acknowledged {

@@ -81,6 +81,7 @@ interface packet_window_click {
     slot: i16;
     mouseButton: i8;
     mode: varint;
+    cursorItem?: HashedSlot;
 }
 
 interface packet_close_window {
@@ -103,6 +104,7 @@ interface packet_debug_subscription_request {
 
 interface packet_edit_book {
     hand: varint;
+    title?: string;
 }
 
 interface packet_query_entity_nbt {
@@ -250,6 +252,8 @@ interface packet_select_trade {
 }
 
 interface packet_set_beacon_effect {
+    primary_effect?: varint;
+    secondary_effect?: varint;
 }
 
 interface packet_held_item_slot {
@@ -331,10 +335,12 @@ interface packet_test_instance_block_action {
     pos: position;
     action: varint;
     data: {
+    test?: string;
     size: vec3i;
     rotation: varint;
     ignoreEntities: bool;
     status: varint;
+    errorMessage?: anonymousNbt;
 }
 
 ;}

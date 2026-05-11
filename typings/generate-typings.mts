@@ -125,6 +125,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 	// todo, handle other types of type[1]
 	if (subTypeType === "container" && Array.isArray(subTypeData)) {
 		// parseContainer only returns object, does not declare interface or type
+		// parseContainer already returns newlines so no need to add them
 		if (calledFromMain)
 			output += `interface ${name} ${parseContainer(subTypeData, longNameForEnum)}`;
 		else
@@ -191,6 +192,15 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
 		else
 			parseEnum(longNameForEnum, subTypeData.mappings!);
+	}
+
+	else if (subTypeType === "option") {
+		if (typeof subTypeData !== "string") {
+			unhandledType(subTypeType, subTypeData, "subTypeType is option, but subTypeData is not a string");
+			return "";
+		}
+
+		output += `    ${name}?: ${subTypeData};\n`;
 	}
 
 	else {

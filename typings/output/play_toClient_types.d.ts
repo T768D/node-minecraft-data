@@ -54,6 +54,7 @@ interface SpawnInfo {
     previousGamemode: u8;
     isDebug: bool;
     isFlat: bool;
+    death?: GlobalPos;
     portalCooldown: varint;
     seaLevel: varint;
 }
@@ -189,6 +190,7 @@ interface packet_damage_event {
     sourceTypeId: varint;
     sourceCauseId: varint;
     sourceDirectId: varint;
+    sourcePosition?: vec3f64;
 }
 
 interface packet_debug_block_value {
@@ -237,6 +239,7 @@ interface packet_profileless_chat {
     message: anonymousNbt;
     type: ChatTypesHolder;
     name: anonymousNbt;
+    target?: anonymousNbt;
 }
 
 interface packet_entity_status {
@@ -272,6 +275,7 @@ interface packet_explosion {
     center: vec3f64;
     radius: f32;
     blockCount: i32;
+    playerKnockback?: vec3f64;
     explosionParticle: Particle;
     sound: ItemSoundHolder;
 }
@@ -460,10 +464,12 @@ interface packet_player_chat {
     timestamp: i64;
     salt: i64;
     previousMessages: previousMessages;
+    unsignedChatContent?: anonymousNbt;
     filterType: varint;
     filterTypeMask: undefined ;
     type: ChatTypesHolder;
     networkName: anonymousNbt;
+    networkTargetName?: anonymousNbt;
 }
 
 interface packet_end_combat_event {
@@ -543,6 +549,7 @@ interface packet_remove_entity_effect {
 
 interface packet_reset_score {
     entity_name: string;
+    objective_name?: string;
 }
 
 interface packet_respawn {
@@ -559,10 +566,12 @@ interface packet_multi_block_change {
 }
 
 interface packet_select_advancement_tab {
+    id?: string;
 }
 
 interface packet_server_data {
     motd: anonymousNbt;
+    iconBytes?: ByteArray;
 }
 
 interface packet_action_bar {
@@ -695,6 +704,8 @@ interface packet_scoreboard_score {
     itemName: string;
     scoreName: string;
     value: varint;
+    display_name?: anonymousNbt;
+    number_format?: varint;
     styling: anonymousNbt | undefined ;
 }
 
@@ -784,6 +795,7 @@ interface packet_entity_teleport {
 
 interface packet_test_instance_block_status {
     status: anonymousNbt;
+    size?: vec3i;
 }
 
 interface packet_set_ticking_state {

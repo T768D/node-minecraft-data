@@ -99,7 +99,10 @@ interface SlotComponent {
     factor: f32;
 }
 
-;} | 
+;    bypassedBy?: string;
+    blockSound?: ItemSoundHolder;
+    disableSound?: ItemSoundHolder;
+} | 
 {
     nutrition: varint;
     saturationModifier: f32;
@@ -113,6 +116,7 @@ interface SlotComponent {
 } | 
 {
     seconds: f32;
+    cooldownGroup?: string;
 } | 
 {
     defaultMiningSpeed: f32;
@@ -134,6 +138,9 @@ interface SlotComponent {
 {
     slot: equippable_slot;
     sound: ItemSoundHolder;
+    model?: string;
+    cameraOverlay?: string;
+    allowedEntities?: IDSet;
     dispensable: bool;
     swappable: bool;
     damageable: bool;
@@ -149,12 +156,19 @@ interface SlotComponent {
 {
     dealsKnockback: bool;
     dismounts: bool;
+    sound?: ItemSoundHolder;
+    hitSound?: ItemSoundHolder;
 } | 
 {
     contactCooldownTicks: varint;
     delayTicks: varint;
+    dismountConditions?: KineticWeaponCondition;
+    knockbackConditions?: KineticWeaponCondition;
+    damageConditions?: KineticWeaponCondition;
     forwardMovement: f32;
     damageMultiplier: f32;
+    sound?: ItemSoundHolder;
+    hitSound?: ItemSoundHolder;
 } | 
 {
     type: swing_animation_type;
@@ -165,6 +179,9 @@ interface SlotComponent {
 {
 } | 
 {
+    potionId?: varint;
+    customColor?: i32;
+    customName?: string;
 } | 
 {
 } | 
@@ -172,6 +189,7 @@ interface SlotComponent {
 } | 
 {
     rawTitle: string;
+    filteredTitle?: string;
     author: string;
     generation: varint;
     resolved: bool;
@@ -199,6 +217,7 @@ interface SlotComponent {
     song: string ;
 } | 
 {
+    globalPosition?: GlobalPos;
     tracked: bool;
 } | 
 {
@@ -218,6 +237,7 @@ interface SlotComponent {
 
 interface ItemSoundEvent {
     soundName: string;
+    fixedRange?: f32;
 }
 
 interface ItemFireworkExplosion {
@@ -232,6 +252,7 @@ interface ItemEffectDetail {
     ambient: bool;
     showParticles: bool;
     showIcon: bool;
+    hiddenEffect?: ItemEffectDetail;
 }
 
 interface ItemPotionEffect {
@@ -263,6 +284,7 @@ interface ItemBlockPredicate {
 
 interface ItemBookPage {
     content: string;
+    filteredContent?: string;
 }
 
 interface ItemWrittenBookPage {
@@ -411,6 +433,8 @@ interface DebugSubscriptionEvent {
     type: DebugSubscriptionDataType;
     value: undefined  | 
 {
+    hivePos?: position;
+    flowerPos?: position;
     travelTicks: varint;
 } | 
 {
@@ -424,6 +448,8 @@ interface DebugSubscriptionEvent {
     angerLevel: i32;
 } | 
 {
+    attackTarget?: varint;
+    jumpTarget?: position;
 } | 
 {
     priority: varint;
@@ -536,6 +562,8 @@ interface EntityMetadataPaintingVariant {
     width: i32;
     height: i32;
     assetId: string;
+    title?: anonymousNbt;
+    author?: anonymousNbt;
 }
 
 interface chunkBlockEntity {
@@ -554,11 +582,14 @@ interface GameProfile {
 }
 
 interface PartialResolvableProfile {
+    name?: string;
+    uuid?: UUID;
 }
 
 interface GameProfileProperty {
     name: string;
     value: string;
+    signature?: string;
 }
 
 interface ResolvableProfile {
@@ -568,6 +599,9 @@ interface ResolvableProfile {
 }
 
 interface PlayerSkinPatch {
+    body?: string;
+    cape?: string;
+    elytra?: string;
 }
 
 interface command_node {
@@ -646,6 +680,7 @@ interface packet_common_transfer {
 
 interface packet_common_cookie_response {
     key: string;
+    value?: ByteArray;
 }
 
 interface packet_common_select_known_packs {
@@ -655,6 +690,7 @@ interface packet_common_custom_report_details {
 }
 
 interface packet_common_remove_resource_pack {
+    uuid?: UUID;
 }
 
 interface packet_common_add_resource_pack {
@@ -662,6 +698,7 @@ interface packet_common_add_resource_pack {
     url: string;
     hash: string;
     forced: bool;
+    promptMessage?: anonymousNbt;
 }
 
 interface packet_common_server_links {
@@ -672,5 +709,6 @@ interface packet_common_clear_dialog {
 
 interface packet_common_custom_click_action {
     id: string;
+    nbt?: anonymousNbt;
 }
 
