@@ -113,27 +113,27 @@ export function generateTypes(
 }
 
 
+function unhandledType(name: string, type: unknown, msg: string) {
+	console.error(msg + ". Unhandled type or data structure:", type);
+	return `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
+}
+
 // add jsdoc later
 export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, calledFromMain: boolean, longNameForEnum: string = name): string {
-	let output = "";
-
-	function unhandledType(name: string, type: unknown, msg: string) {
-		console.error(msg + ". Unhandled type or data structure:", type);
-		output += `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
-	}
 
 	// todo, handle other types of type[1]
 	if (subTypeType === "container" && Array.isArray(subTypeData)) {
 		// parseContainer only returns object, does not declare interface or type
 		// parseContainer already returns newlines so no need to add them
 		if (calledFromMain)
-			output += `interface ${name} ${parseContainer(subTypeData, longNameForEnum)}`;
+			return `interface ${name} ${parseContainer(subTypeData, longNameForEnum)}`;
 		else
-			output += `    ${name}: ${parseContainer(subTypeData, longNameForEnum)};`;
+			return `    ${name}: ${parseContainer(subTypeData, longNameForEnum)};`;
 	}
 
+
 	// object can be array too, so check for that
-	else if (subTypeType === "switch" && !Array.isArray(subTypeData) && typeof subTypeData === "object") {
+	if (subTypeType === "switch" && !Array.isArray(subTypeData) && typeof subTypeData === "object") {
 		const tempSubTypeData = subTypeData as {
 			compareTo: string;
 			fields: Record<string, unknown>;
@@ -175,39 +175,35 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		}
 
 		// order the variations the ones from parseContainer go at the bottom
-		output += `    ${name}: ${Array.from(variations).join(" | ")} ${nestedVariations};\n`;
+		return `    ${name}: ${Array.from(variations).join(" | ")} ${nestedVariations};\n`;
 	}
 
+
 	// mapper is a enum
-	else if (subTypeType === "mapper") {
+	if (subTypeType === "mapper") {
 		// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-		if (typeof subTypeData !== "object" || !("type" in subTypeData!) || !("mappings" in subTypeData) || typeof subTypeData.mappings !== "object") {
-			unhandledType(subTypeType, subTypeData, "Invalid enum type");
-			return "";
-		}
+		if (typeof subTypeData !== "object" || !("type" in subTypeData!) || !("mappings" in subTypeData) || typeof subTypeData.mappings !== "object")
+			return unhandledType(subTypeType, subTypeData, "Invalid enum type");
 
 		// if not called from main, it means its a nested enum which needs to be refrenced
 		// otherwise the enum is just being declared
 		if (!calledFromMain)
-			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
-		else
-			parseEnum(longNameForEnum, subTypeData.mappings!);
+			return `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
+
+		parseEnum(longNameForEnum, subTypeData.mappings!);
 	}
 
-	else if (subTypeType === "option") {
-		if (typeof subTypeData !== "string") {
-			unhandledType(subTypeType, subTypeData, "subTypeType is option, but subTypeData is not a string");
-			return "";
-		}
 
-		output += `    ${name}?: ${subTypeData};\n`;
+	if (subTypeType === "option") {
+		if (typeof subTypeData !== "string")
+			return unhandledType(subTypeType, subTypeData, "subTypeType is option, but subTypeData is not a string");
+
+		return `    ${name}?: ${subTypeData};\n`;
 	}
 
-	else {
-		console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
-	}
 
-	return output;
+	console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
+	return "";
 }
 
 
