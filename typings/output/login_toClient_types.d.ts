@@ -24,5 +24,10 @@ interface packet_login_plugin_request {
 
 interface packet {
     name: packet_name_5;
-}
+    params: packet_disconnect | 
+packet_encryption_begin | 
+packet_success | 
+packet_compress | 
+packet_login_plugin_request | 
+packet_common_cookie_request}
 

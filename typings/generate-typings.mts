@@ -121,7 +121,7 @@ export function generateTypes(
 
 
 // add jsdoc later
-export function subArrayHandling(name: string, subTypeName: string, subTypeType: unknown, calledFromMain: boolean, longNameForEnum: string = name): string {
+export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, calledFromMain: boolean, longNameForEnum: string = name): string {
 	let output = "";
 
 	function unhandledType(name: string, type: unknown, msg: string) {
@@ -130,47 +130,76 @@ export function subArrayHandling(name: string, subTypeName: string, subTypeType:
 	}
 
 	// todo, handle other types of type[1]
-	if (subTypeName === "container" && Array.isArray(subTypeType)) {
+	if (subTypeType === "container" && Array.isArray(subTypeData)) {
 		// parseContainer only returns object, does not declare interface or type
 		if (calledFromMain)
-			output += `interface ${name} ${parseContainer(subTypeType, longNameForEnum)}`;
+			output += `interface ${name} ${parseContainer(subTypeData, longNameForEnum)}`;
 		else
-			output += `    ${name}: ${parseContainer(subTypeType, longNameForEnum)};`;
+			output += `    ${name}: ${parseContainer(subTypeData, longNameForEnum)};`;
 	}
 
 	// object can be array too, so check for that
-	else if (subTypeName === "switch" && !Array.isArray(subTypeType) && typeof subTypeType === "object") {
-		/*
-		Not sure how to interpret this
-		{
-			"compareTo": "flags",
+	else if (subTypeType === "switch" && !Array.isArray(subTypeData) && typeof subTypeData === "object") {
+		const tempSubTypeData = subTypeData as {
+			compareTo: string;
+			fields: Record<string, unknown>;
+			default?: unknown;
+		};
+
+		if ("default" in tempSubTypeData && tempSubTypeData.default !== "void")
+			console.error("unimplemented default ", tempSubTypeData);
+
+
+		/**
+		 * Is a set so no duplicates
+		 * @example These 2 would be duplicated as we dont take compareTo into account (yet)
 			"fields": {
-				"1": "varint",
-				"3": "varint"
-			},
-			"default": "void"
+				"0": "void",
+				"false": "void"
+			}
+		 */
+		const variations = new Set<string>();
+		const fields = Object.entries(tempSubTypeData.fields);
+		// just adds the default value onto fields so it can be handled together
+		fields.push([`${name}_default`, tempSubTypeData.default]);
+
+		for (const [key, value] of fields) {
+			if (typeof value === "string") {
+				if (value === "void")
+					variations.add("undefined");
+				else
+					variations.add(value);
+			}
+
+			// switches can have nested containers in them
+			else if (Array.isArray(value) && value[0] === "container")
+				variations.add(parseContainer(value[1], key).trim());
+
+			else if (tempSubTypeData.default)
+				console.error("Unhandled subTypeData: ", tempSubTypeData);
 		}
-		*/
+
+		output += `    ${name}: ${Array.from(variations).join(" | \n")}`;
 	}
 
 	// mapper is a enum
-	else if (subTypeName === "mapper") {
+	else if (subTypeType === "mapper") {
 		// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-		if (typeof subTypeType !== "object" || !("type" in subTypeType!) || !("mappings" in subTypeType) || typeof subTypeType.mappings !== "object") {
-			unhandledType(subTypeName, subTypeType, "Invalid enum type");
+		if (typeof subTypeData !== "object" || !("type" in subTypeData!) || !("mappings" in subTypeData) || typeof subTypeData.mappings !== "object") {
+			unhandledType(subTypeType, subTypeData, "Invalid enum type");
 			return "";
 		}
 
 		// if not called from main, it means its a nested enum which needs to be refrenced
 		// otherwise the enum is just being declared
 		if (!calledFromMain)
-			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeType.mappings!)};\n`;
+			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
 		else
-			parseEnum(longNameForEnum, subTypeType.mappings!);
+			parseEnum(longNameForEnum, subTypeData.mappings!);
 	}
 
 	else {
-		console.error(`Unimplemented!\n realType: ${subTypeName}\n value: `, subTypeType);
+		console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
 	}
 
 	return output;

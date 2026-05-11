@@ -107,6 +107,37 @@ const enum SlotComponentType {
     shulker_color = 103,
 }
 
+const enum consumable_animation {
+    none = 0,
+    eat = 1,
+    drink = 2,
+    block = 3,
+    bow = 4,
+    spear = 5,
+    crossbow = 6,
+    spyglass = 7,
+    toot_horn = 8,
+    brush = 9,
+    bundle = 10,
+}
+
+const enum equippable_slot {
+    main_hand = 0,
+    off_hand = 1,
+    feet = 2,
+    legs = 3,
+    chest = 4,
+    head = 5,
+    body = 6,
+    saddle = 7,
+}
+
+const enum swing_animation_type {
+    none = 0,
+    whack = 1,
+    stab = 2,
+}
+
 const enum ItemFireworkExplosion_shape {
     small_ball = 0,
     large_ball = 1,
@@ -310,6 +341,11 @@ const enum Particle_type {
     firefly = 114,
 }
 
+const enum vibration_positionType {
+    block = 0,
+    entity = 1,
+}
+
 const enum soundSource {
     master = 0,
     music = 1,
@@ -369,6 +405,66 @@ const enum entityMetadataEntry_type {
 const enum ResolvableProfile_type {
     partial = 0,
     complete = 1,
+}
+
+const enum 2_parser {
+    brigadier:bool = 0,
+    brigadier:float = 1,
+    brigadier:double = 2,
+    brigadier:integer = 3,
+    brigadier:long = 4,
+    brigadier:string = 5,
+    minecraft:entity = 6,
+    minecraft:game_profile = 7,
+    minecraft:block_pos = 8,
+    minecraft:column_pos = 9,
+    minecraft:vec3 = 10,
+    minecraft:vec2 = 11,
+    minecraft:block_state = 12,
+    minecraft:block_predicate = 13,
+    minecraft:item_stack = 14,
+    minecraft:item_predicate = 15,
+    minecraft:color = 16,
+    minecraft:hex_color = 17,
+    minecraft:component = 18,
+    minecraft:style = 19,
+    minecraft:message = 20,
+    minecraft:nbt = 21,
+    minecraft:nbt_tag = 22,
+    minecraft:nbt_path = 23,
+    minecraft:objective = 24,
+    minecraft:objective_criteria = 25,
+    minecraft:operation = 26,
+    minecraft:particle = 27,
+    minecraft:angle = 28,
+    minecraft:rotation = 29,
+    minecraft:scoreboard_slot = 30,
+    minecraft:score_holder = 31,
+    minecraft:swizzle = 32,
+    minecraft:team = 33,
+    minecraft:item_slot = 34,
+    minecraft:item_slots = 35,
+    minecraft:resource_location = 36,
+    minecraft:function = 37,
+    minecraft:entity_anchor = 38,
+    minecraft:int_range = 39,
+    minecraft:float_range = 40,
+    minecraft:dimension = 41,
+    minecraft:gamemode = 42,
+    minecraft:time = 43,
+    minecraft:resource_or_tag = 44,
+    minecraft:resource_or_tag_key = 45,
+    minecraft:resource = 46,
+    minecraft:resource_key = 47,
+    minecraft:resource_selector = 48,
+    minecraft:template_mirror = 49,
+    minecraft:template_rotation = 50,
+    minecraft:heightmap = 51,
+    minecraft:loot_table = 52,
+    minecraft:loot_predicate = 53,
+    minecraft:loot_modifier = 54,
+    minecraft:dialog = 55,
+    minecraft:uuid = 56,
 }
 
 const enum packet_common_settings_particleStatus {
@@ -523,6 +619,34 @@ const enum packet_teams_mode {
     change = 2,
     join = 3,
     leave = 4,
+}
+
+const enum add_nameTagVisibility {
+    always = 0,
+    never = 1,
+    hide_for_other_teams = 2,
+    hide_for_own_team = 3,
+}
+
+const enum add_collisionRule {
+    always = 0,
+    never = 1,
+    push_other_teams = 2,
+    push_own_team = 3,
+}
+
+const enum change_nameTagVisibility {
+    always = 0,
+    never = 1,
+    hide_for_other_teams = 2,
+    hide_for_own_team = 3,
+}
+
+const enum change_collisionRule {
+    always = 0,
+    never = 1,
+    push_other_teams = 2,
+    push_own_team = 3,
 }
 
 const enum packet_tracked_waypoint_operation {

@@ -38,9 +38,6 @@ export function parseContainer(container: { name: string, type: unknown; }[], co
 			console.error("Dict is not object type in parseContainer, dict parsing skipped", dict);
 		}
 
-		else if (!dict.name) {
-			console.error("Name property of a container dict is not defined in parseContainer, property skipped", dict);
-		}
 
 		else if (!dict.type) {
 			console.warn("Type property of a dict is not defined in parseContainer, defaulting to unknown");
