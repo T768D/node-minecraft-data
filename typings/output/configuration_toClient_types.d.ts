@@ -40,6 +40,6 @@ interface packet_show_dialog {
 }
 
 interface packet {
-    name: packet_name;
+    name: packet_name_7;
 }
 

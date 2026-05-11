@@ -10,6 +10,6 @@ interface packet_legacy_server_list_ping {
 }
 
 interface packet {
-    name: packet_name;
+    name: packet_name_2;
 }
 

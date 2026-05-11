@@ -393,22 +393,22 @@ const enum ServerLinkType {
 const enum packet_name {
 }
 
-const enum packet_name {
+const enum packet_name_2 {
     set_protocol = 0x00,
     legacy_server_list_ping = 0xfe,
 }
 
-const enum packet_name {
+const enum packet_name_3 {
     server_info = 0x00,
     ping = 0x01,
 }
 
-const enum packet_name {
+const enum packet_name_4 {
     ping_start = 0x00,
     ping = 0x01,
 }
 
-const enum packet_name {
+const enum packet_name_5 {
     disconnect = 0x00,
     encryption_begin = 0x01,
     success = 0x02,
@@ -417,7 +417,7 @@ const enum packet_name {
     cookie_request = 0x05,
 }
 
-const enum packet_name {
+const enum packet_name_6 {
     login_start = 0x00,
     encryption_begin = 0x01,
     login_plugin_response = 0x02,
@@ -425,7 +425,7 @@ const enum packet_name {
     cookie_response = 0x04,
 }
 
-const enum packet_name {
+const enum packet_name_7 {
     cookie_request = 0x00,
     custom_payload = 0x01,
     disconnect = 0x02,
@@ -448,7 +448,7 @@ const enum packet_name {
     code_of_conduct = 0x13,
 }
 
-const enum packet_name {
+const enum packet_name_8 {
     settings = 0x00,
     cookie_response = 0x01,
     custom_payload = 0x02,
@@ -538,7 +538,7 @@ const enum packet_tracked_waypoint_waypoint_type {
     azimuth = 3,
 }
 
-const enum packet_name {
+const enum packet_name_9 {
     bundle_delimiter = 0x00,
     spawn_entity = 0x01,
     animation = 0x02,
@@ -711,7 +711,7 @@ const enum packet_update_structure_block_flags {
     strict = 3,
 }
 
-const enum packet_name {
+const enum packet_name_10 {
     teleport_confirm = 0x00,
     query_block_nbt = 0x01,
     select_bundle_item = 0x02,

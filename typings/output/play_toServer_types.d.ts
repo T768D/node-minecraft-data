@@ -353,6 +353,6 @@ interface packet_use_item {
 }
 
 interface packet {
-    name: packet_name;
+    name: packet_name_10;
 }
 

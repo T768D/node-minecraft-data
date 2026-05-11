@@ -135,7 +135,7 @@ export function subArrayHandling(name: string, subTypeName: string, subTypeType:
 		if (calledFromMain)
 			output += `interface ${name} ${parseContainer(subTypeType, longNameForEnum)}`;
 		else
-			output += `    ${name}: ${parseContainer(subTypeType, longNameForEnum)};`
+			output += `    ${name}: ${parseContainer(subTypeType, longNameForEnum)};`;
 	}
 
 	// object can be array too, so check for that

@@ -14,6 +14,6 @@ interface packet_login_acknowledged {
 }
 
 interface packet {
-    name: packet_name;
+    name: packet_name_6;
 }
 
