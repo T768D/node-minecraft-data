@@ -1,20 +1,20 @@
-import { parseContainer } from "./parseContainer.mjs";
 import { parseEnum } from "./parseEnum.mjs";
+import { parseContainer } from "./parseContainer.mjs";
 
 
-function unhandledType(name: string, type: unknown, msg: string) {
+const unhandledTypeInfo = "// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\n";
+function unhandledType(type: unknown, msg: string) {
 	console.error(msg + ". Unhandled type or data structure:", type);
-	return `// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\ntype ${name} = unknown;`;
 }
 
 // add jsdoc later
-export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, calledFromMain: boolean, longNameForEnum: string = name): string {
+export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, calledFromTopLevel: boolean, longNameForEnum: string = name): string {
 
 	// todo, handle other types of type[1]
 	if (subTypeType === "container" && Array.isArray(subTypeData)) {
 		// parseContainer only returns object, does not declare interface or type
 		// parseContainer already returns newlines so no need to add them
-		if (calledFromMain)
+		if (calledFromTopLevel)
 			return `interface ${name} ${parseContainer(subTypeData, longNameForEnum)}`;
 		else
 			return `    ${name}: ${parseContainer(subTypeData, longNameForEnum)};`;
@@ -71,12 +71,16 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 	// mapper is a enum
 	if (subTypeType === "mapper") {
 		// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-		if (typeof subTypeData !== "object" || !("type" in subTypeData!) || !("mappings" in subTypeData) || typeof subTypeData.mappings !== "object")
-			return unhandledType(subTypeType, subTypeData, "Invalid enum type");
+		if (typeof subTypeData !== "object" || !("type" in subTypeData!) || !("mappings" in subTypeData) || typeof subTypeData.mappings !== "object") {
+			unhandledType(subTypeData, "Invalid enum type");
+
+			const symbol = calledFromTopLevel ? " =" : ":";
+			return `${unhandledTypeInfo}    ${name}${symbol} unknown`;
+		}
 
 		// if not called from main, it means its a nested enum which needs to be refrenced
 		// otherwise the enum is just being declared
-		if (!calledFromMain)
+		if (!calledFromTopLevel)
 			return `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
 
 		parseEnum(longNameForEnum, subTypeData.mappings!);
@@ -84,8 +88,10 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 
 
 	if (subTypeType === "option") {
-		if (typeof subTypeData !== "string")
-			return unhandledType(subTypeType, subTypeData, "subTypeType is option, but subTypeData is not a string");
+		if (typeof subTypeData !== "string") {
+			unhandledType(subTypeData, "subTypeType is option, but subTypeData is not a string");
+			return ""; // cant be bothered
+		}
 
 		return `    ${name}?: ${subTypeData};\n`;
 	}

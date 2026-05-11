@@ -3,6 +3,7 @@
 		"target": "ESNext",
 		"module": "NodeNext",
 		"rootDir": "./",
+		"noEmit": true,
 		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
 		"declaration": false,

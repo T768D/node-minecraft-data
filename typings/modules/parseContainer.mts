@@ -1,4 +1,4 @@
-import { subArrayHandling } from "../generate-typings.mjs";
+import { subArrayHandling } from "./subArrayHandling.mjs";
 
 /**
  * @param container The container object
