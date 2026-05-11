@@ -78,22 +78,46 @@ interface SlotComponent {
     damageType: string ;
 } | 
 {
+        enchantments: {
+    id: varint;
+    level: varint;
+}
+
+;} | 
+{
+        enchantments: {
+    id: varint;
+    level: varint;
+}
+
+;} | 
+{
+    predicates: ItemBlockPredicate[];
 } | 
 {
+    predicates: ItemBlockPredicate[];
 } | 
 {
-} | 
-{
-} | 
-{
+    floats: f32[];
+    flags: bool[];
+    strings: string[];
+    colors: i32[];
 } | 
 {
     hideTooltip: bool;
+    hiddenComponents: varint[];
 } | 
 {
     blockDelaySeconds: f32;
     disableCooldownScale: f32;
-    itemDamage: {
+        damageReductions: {
+    horizontalBlockingAngle: f32;
+    type?: IDSet;
+    base: f32;
+    factor: f32;
+}
+
+;    itemDamage: {
     threshold: f32;
     base: f32;
     factor: f32;
@@ -113,13 +137,20 @@ interface SlotComponent {
     animation: consumable_animation;
     sound: ItemSoundHolder;
     makes_particles: bool;
+    effects: ItemConsumeEffect[];
 } | 
 {
     seconds: f32;
     cooldownGroup?: string;
 } | 
 {
-    defaultMiningSpeed: f32;
+        rules: {
+    blocks: IDSet;
+    speed?: f32;
+    correctDropForBlocks?: bool;
+}
+
+;    defaultMiningSpeed: f32;
     damagePerBlock: varint;
     canDestroyBlocksInCreative: bool;
 } | 
@@ -152,6 +183,7 @@ interface SlotComponent {
     items: IDSet;
 } | 
 {
+    effects: ItemConsumeEffect[];
 } | 
 {
     dealsKnockback: bool;
@@ -175,23 +207,33 @@ interface SlotComponent {
     duration: varint;
 } | 
 {
+    projectiles: Slot[];
 } | 
 {
+    contents: Slot[];
 } | 
 {
     potionId?: varint;
     customColor?: i32;
+    customEffects: ItemPotionEffect[];
     customName?: string;
 } | 
 {
-} | 
+        effects: {
+    effect: varint;
+    duration: varint;
+}
+
+;} | 
 {
+    pages: ItemBookPage[];
 } | 
 {
     rawTitle: string;
     filteredTitle?: string;
     author: string;
     generation: varint;
+    pages: ItemWrittenBookPage[];
     resolved: bool;
 } | 
 {
@@ -222,17 +264,32 @@ interface SlotComponent {
 } | 
 {
     flightDuration: varint;
+    explosions: ItemFireworkExplosion[];
 } | 
 {
+    layers: BannerPatternLayer[];
 } | 
 {
+    decorations: varint[];
 } | 
 {
+    contents: Slot[];
 } | 
 {
-} | 
+        properties: {
+    name: string;
+    value: string;
+}
+
+;} | 
 {
-};
+        bees: {
+    nbtData: anonymousNbt;
+    ticksInHive: varint;
+    minTicksInHive: varint;
+}
+
+;};
 }
 
 interface ItemSoundEvent {
@@ -242,6 +299,8 @@ interface ItemSoundEvent {
 
 interface ItemFireworkExplosion {
     shape: ItemFireworkExplosion_shape;
+    colors: i32[];
+    fadeColors: i32[];
     hasTrail: bool;
     hasTwinkle: bool;
 }
@@ -273,11 +332,15 @@ interface ItemBlockProperty {
 };
 }
 
+    ExactComponentMatcher: SlotComponent[];
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
+    partialMatchers: varint[];
 }
 
 interface ItemBlockPredicate {
+    blockSet?: unknown;
+    properties?: unknown;
     nbt: anonOptionalNbt;
     components: DataComponentMatchers;
 }
@@ -296,6 +359,7 @@ interface ItemConsumeEffect {
     type: ItemConsumeEffect_type;
     undefined: undefined  | 
 {
+    effects: ItemPotionEffect[];
     probability: f32;
 } | 
 {
@@ -311,7 +375,12 @@ interface ItemConsumeEffect {
 
 interface ArmorTrimMaterial {
     assetBase: string;
-    description: anonymousNbt;
+        overrideArmorAssets: {
+    key: string;
+    value: string;
+}
+
+;    description: anonymousNbt;
 }
 
 interface ArmorTrimPattern {
@@ -369,7 +438,12 @@ interface UntrustedSlot {
     itemId: varint;
     addedComponentCount: varint;
     removedComponentCount: varint;
-};
+    components: UntrustedSlotComponent[];
+        removeComponents: {
+    type: SlotComponentType;
+}
+
+;};
 }
 
 interface Slot {
@@ -379,13 +453,27 @@ interface Slot {
     itemId: varint;
     addedComponentCount: varint;
     removedComponentCount: varint;
-};
+    components: SlotComponent[];
+        removeComponents: {
+    type: SlotComponentType;
+}
+
+;};
 }
 
 interface HashedSlot {
     itemId: varint;
     itemCount: varint;
+        components: {
+    type: SlotComponentType;
+    hash: i32;
 }
+
+;        removeComponents: {
+    type: SlotComponentType;
+}
+
+;}
 
 interface RespawnData {
     globalPos: GlobalPos;
@@ -401,7 +489,13 @@ interface GlobalPos {
 interface DebugStructureInfo {
     boundingBoxMin: position;
     boundingBoxMax: position;
+        pieces: {
+    boundingBoxMin: position;
+    boundingBoxMax: position;
+    isStart: bool;
 }
+
+;}
 
 interface Node {
     position: vec3i32;
@@ -413,12 +507,16 @@ interface Node {
 }
 
 interface PathDebugData {
+    openSet: Node[];
+    closedSet: Node[];
+    targetNodes: Node[];
 }
 
 interface Path {
     reached: bool;
     nextNodeIndex: i32;
     target: position;
+    nodes: Node[];
     debugData: PathDebugData;
 }
 
@@ -426,6 +524,7 @@ interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
     undefined: undefined  | 
 {
+    payload?: unknown;
 };
 }
 
@@ -436,6 +535,7 @@ interface DebugSubscriptionEvent {
     hivePos?: position;
     flowerPos?: position;
     travelTicks: varint;
+    blacklistedHives: position[];
 } | 
 {
     name: string;
@@ -446,6 +546,12 @@ interface DebugSubscriptionEvent {
     inventory: string;
     wantsGolem: bool;
     angerLevel: i32;
+    activities: string[];
+    behaviors: string[];
+    memories: string[];
+    gossips: string[];
+    pois: position[];
+    potentialPois: position[];
 } | 
 {
     attackTarget?: varint;
@@ -478,8 +584,10 @@ interface DebugSubscriptionEvent {
     index: varint;
 } | 
 {
+    positions: position[];
 } | 
 {
+    structures: DebugStructureInfo[];
 } | 
 {
     listenerRadius: varint;
@@ -537,12 +645,18 @@ interface Particle {
 };
 }
 
+    ingredient: Slot[];
 interface packedChunkPos {
     z: i32;
     x: i32;
 }
 
-interface entityMetadataEntry {
+        previousMessages: {
+    id: varint;
+    signature: undefined ;
+}
+
+;interface entityMetadataEntry {
     key: u8;
     type: entityMetadataEntry_type;
     value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f | ResolvableProfile  | 
@@ -566,24 +680,33 @@ interface EntityMetadataPaintingVariant {
     author?: anonymousNbt;
 }
 
-interface chunkBlockEntity {
+        tags: {
+    tagName: string;
+    entries: varint[];
+}
+
+;interface chunkBlockEntity {
     y: i16;
     type: varint;
     nbtData: anonOptionalNbt;
 }
 
+    chat_session?: unknown;
 interface game_profile_name_prop {
     name: string;
+    properties: GameProfileProperty[];
 }
 
 interface GameProfile {
     uuid: UUID;
     name: string;
+    properties: GameProfileProperty[];
 }
 
 interface PartialResolvableProfile {
     name?: string;
     uuid?: UUID;
+    properties: GameProfileProperty[];
 }
 
 interface GameProfileProperty {
@@ -602,9 +725,11 @@ interface PlayerSkinPatch {
     body?: string;
     cape?: string;
     elytra?: string;
+    model?: unknown;
 }
 
 interface command_node {
+    children: varint[];
     redirectNode: varint | undefined ;
     extraNodeData: undefined  | 
 {
@@ -684,10 +809,21 @@ interface packet_common_cookie_response {
 }
 
 interface packet_common_select_known_packs {
+        packs: {
+    namespace: string;
+    id: string;
+    version: string;
 }
 
+;}
+
 interface packet_common_custom_report_details {
+        details: {
+    key: string;
+    value: string;
 }
+
+;}
 
 interface packet_common_remove_resource_pack {
     uuid?: UUID;
@@ -702,7 +838,14 @@ interface packet_common_add_resource_pack {
 }
 
 interface packet_common_server_links {
+        links: {
+    hasKnownType: bool;
+    knownType: ServerLinkType ;
+    unknownType: anonymousNbt ;
+    link: string;
 }
+
+;}
 
 interface packet_common_clear_dialog {
 }

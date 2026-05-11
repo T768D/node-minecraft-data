@@ -613,6 +613,31 @@ const enum packet_game_state_change_reason {
     "level_chunks_load_start" = 13,
 }
 
+const enum heightmaps_type {
+    "world_surface_wg" = 0,
+    "world_surface" = 1,
+    "ocean_floor_wg" = 2,
+    "ocean_floor" = 3,
+    "motion_blocking" = 4,
+    "motion_blocking_no_leaves" = 5,
+}
+
+const enum entries_recipe_category {
+    "crafting_building_blocks" = 0,
+    "crafting_redstone" = 1,
+    "crafting_equipment" = 2,
+    "crafting_misc" = 3,
+    "furnace_food" = 4,
+    "furnace_blocks" = 5,
+    "furnace_misc" = 6,
+    "blast_furnace_blocks" = 7,
+    "blast_furnace_misc" = 8,
+    "smoker_food" = 9,
+    "stonecutter" = 10,
+    "smithing" = 11,
+    "campfire" = 12,
+}
+
 const enum packet_teams_mode {
     "add" = 0,
     "remove" = 1,
@@ -647,6 +672,40 @@ const enum change_collisionRule {
     "never" = 1,
     "push_other_teams" = 2,
     "push_own_team" = 3,
+}
+
+const enum properties_key {
+    "generic.armor" = 0,
+    "generic.armor_toughness" = 1,
+    "generic.attack_damage" = 2,
+    "generic.attack_knockback" = 3,
+    "generic.attack_speed" = 4,
+    "player.block_break_speed" = 5,
+    "player.block_interaction_range" = 6,
+    "burning_time" = 7,
+    "camera_distance" = 8,
+    "explosion_knockback_resistance" = 9,
+    "player.entity_interaction_range" = 10,
+    "generic.fall_damage_multiplier" = 11,
+    "generic.flying_speed" = 12,
+    "generic.follow_range" = 13,
+    "generic.gravity" = 14,
+    "generic.jump_strength" = 15,
+    "generic.knockback_resistance" = 16,
+    "generic.luck" = 17,
+    "generic.max_absorption" = 18,
+    "generic.max_health" = 19,
+    "generic.movement_speed" = 20,
+    "generic.safe_fall_distance" = 21,
+    "generic.scale" = 22,
+    "zombie.spawn_reinforcements" = 23,
+    "generic.step_height" = 24,
+    "submerged_mining_speed" = 25,
+    "sweeping_damage_ratio" = 26,
+    "tempt_range" = 27,
+    "water_movement_efficiency" = 28,
+    "waypoint_transmit_range" = 29,
+    "waypoint_receive_range" = 30,
 }
 
 const enum packet_tracked_waypoint_operation {

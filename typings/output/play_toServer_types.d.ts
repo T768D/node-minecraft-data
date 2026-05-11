@@ -32,7 +32,11 @@ interface packet_chat_command_signed {
     command: string;
     timestamp: i64;
     salt: i64;
-    messageCount: varint;
+        argumentSignatures: {
+    argumentName: string;
+}
+
+;    messageCount: varint;
     checksum: i8;
 }
 
@@ -40,6 +44,7 @@ interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
+    signature?: unknown;
     offset: varint;
     checksum: u8;
 }
@@ -81,7 +86,12 @@ interface packet_window_click {
     slot: i16;
     mouseButton: i8;
     mode: varint;
-    cursorItem?: HashedSlot;
+        changedSlots: {
+    location: i16;
+    item?: HashedSlot;
+}
+
+;    cursorItem?: HashedSlot;
 }
 
 interface packet_close_window {
@@ -100,10 +110,12 @@ interface packet_custom_payload {
 }
 
 interface packet_debug_subscription_request {
+    subscriptions: DebugSubscriptionDataType[];
 }
 
 interface packet_edit_book {
     hand: varint;
+    pages: string[];
     title?: string;
 }
 

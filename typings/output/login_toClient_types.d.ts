@@ -10,7 +10,13 @@ interface packet_encryption_begin {
 interface packet_success {
     uuid: UUID;
     username: string;
+        properties: {
+    name: string;
+    value: string;
+    signature?: string;
 }
+
+;}
 
 interface packet_compress {
     threshold: varint;

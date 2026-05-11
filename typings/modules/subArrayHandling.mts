@@ -90,12 +90,30 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 	if (subTypeType === "option") {
 		if (typeof subTypeData !== "string") {
 			unhandledType(subTypeData, "subTypeType is option, but subTypeData is not a string");
-			return ""; // cant be bothered
+			return `    ${name}?: unknown;\n`;
 		}
 
 		return `    ${name}?: ${subTypeData};\n`;
 	}
 
+
+	if (subTypeType === "array") {
+		if (typeof subTypeData !== "object" || !("type" in subTypeData!)) {
+			unhandledType(subTypeData, "subTypeData is not a valid array");
+			return `    ${name}: unknown[];\n`;
+		}
+
+		if (typeof subTypeData.type === "string")
+			return `    ${name}: ${subTypeData.type}[];\n`;
+
+		if (typeof subTypeData.type === "object") {
+			if (Array.isArray(subTypeData.type))
+				return `    ${subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], false)}`;
+		}
+
+		unhandledType(subTypeData, "subTypeData is not a valid array 2");
+		return `    ${name}: unknown[];\n`;
+	}
 
 	console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
 	return "";

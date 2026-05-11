@@ -15,12 +15,14 @@ interface RecipeDisplay {
     type: RecipeDisplay_type;
     data:   | 
 {
+    ingredients: SlotDisplay[];
     result: SlotDisplay;
     craftingStation: SlotDisplay;
 } | 
 {
     width: varint;
     height: varint;
+    ingredients: SlotDisplay[];
     result: SlotDisplay;
     craftingStation: SlotDisplay;
 } | 
@@ -79,7 +81,13 @@ interface packet_animation {
 }
 
 interface packet_statistics {
+        entries: {
+    categoryId: varint;
+    statisticId: varint;
+    value: varint;
 }
+
+;}
 
 interface packet_acknowledge_player_digging {
     sequenceId: varint;
@@ -132,7 +140,12 @@ interface packet_chunk_batch_start {
 }
 
 interface packet_chunk_biomes {
+        biomes: {
+    position: packedChunkPos;
+    data: ByteArray;
 }
+
+;}
 
 interface packet_clear_titles {
     reset: bool;
@@ -142,9 +155,15 @@ interface packet_tab_complete {
     transactionId: varint;
     start: varint;
     length: varint;
+        matches: {
+    match: string;
+    tooltip?: anonymousNbt;
 }
 
+;}
+
 interface packet_declare_commands {
+    nodes: command_node[];
     rootIndex: varint;
 }
 
@@ -155,6 +174,7 @@ interface packet_close_window {
 interface packet_window_items {
     windowId: ContainerID;
     stateId: varint;
+    items: Slot[];
     carriedItem: Slot;
 }
 
@@ -178,6 +198,7 @@ interface packet_set_cooldown {
 
 interface packet_chat_suggestions {
     action: varint;
+    entries: string[];
 }
 
 interface packet_custom_payload {
@@ -213,6 +234,7 @@ interface packet_debug_event {
 }
 
 interface packet_debug_sample {
+    sample: i64[];
     type: varint;
 }
 
@@ -227,6 +249,7 @@ interface packet_kick_disconnect {
 
 interface ChatType {
     translationKey: string;
+    parameters: ChatTypeParameterType[];
     style: anonymousNbt;
 }
 
@@ -278,6 +301,7 @@ interface packet_explosion {
     playerKnockback?: vec3f64;
     explosionParticle: Particle;
     sound: ItemSoundHolder;
+    blockParticles: ExplosionParticleEntry[];
 }
 
 interface packet_unload_chunk {
@@ -324,7 +348,19 @@ interface packet_keep_alive {
 interface packet_map_chunk {
     x: i32;
     z: i32;
-    chunkData: ByteArray;
+        heightmaps: {
+    type: heightmaps_type;
+    data: i64[];
+}
+
+;    chunkData: ByteArray;
+    blockEntities: chunkBlockEntity[];
+    skyLightMask: i64[];
+    blockLightMask: i64[];
+    emptySkyLightMask: i64[];
+    emptyBlockLightMask: i64[];
+        skyLight: u8[];
+        blockLight: u8[];
 }
 
 interface packet_world_event {
@@ -351,11 +387,18 @@ interface packet_world_particles {
 interface packet_update_light {
     chunkX: varint;
     chunkZ: varint;
+    skyLightMask: i64[];
+    blockLightMask: i64[];
+    emptySkyLightMask: i64[];
+    emptyBlockLightMask: i64[];
+        skyLight: u8[];
+        blockLight: u8[];
 }
 
 interface packet_login {
     entityId: i32;
     isHardcore: bool;
+    worldNames: string[];
     maxPlayers: varint;
     viewDistance: varint;
     simulationDistance: varint;
@@ -370,6 +413,7 @@ interface packet_map {
     itemDamage: varint;
     scale: i8;
     locked: bool;
+    icons?: unknown;
     columns: u8;
     rows: undefined | u8 ;
     x: undefined | u8 ;
@@ -379,7 +423,25 @@ interface packet_map {
 
 interface packet_trade_list {
     windowId: ContainerID;
-    villagerLevel: varint;
+        trades: {
+    inputItem1: {
+    itemId: varint;
+    itemCount: varint;
+    components: ExactComponentMatcher;
+}
+
+;    outputItem: Slot;
+    inputItem2?: unknown;
+    tradeDisabled: bool;
+    nbTradeUses: i32;
+    maximumNbTradeUses: i32;
+    xp: i32;
+    specialPrice: i32;
+    priceMultiplier: f32;
+    demand: i32;
+}
+
+;    villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
     canRestock: bool;
@@ -405,7 +467,15 @@ interface packet_entity_move_look {
 
 interface packet_move_minecart {
     entityId: varint;
+        steps: {
+    position: vec3f;
+    velocity: vec3f;
+    yaw: f32;
+    pitch: f32;
+    weight: f32;
 }
+
+;}
 
 interface packet_entity_look {
     entityId: varint;
@@ -460,6 +530,7 @@ interface packet_player_chat {
     globalIndex: varint;
     senderUuid: UUID;
     index: varint;
+    signature?: unknown;
     plainMessage: string;
     timestamp: i64;
     salt: i64;
@@ -485,10 +556,23 @@ interface packet_death_combat_event {
 }
 
 interface packet_player_remove {
+    players: UUID[];
 }
 
 interface packet_player_info {
+        data: {
+    uuid: UUID;
+    player: game_profile_name_prop | undefined ;
+    chatSession: chat_session | undefined ;
+    gamemode: varint | undefined ;
+    listed: varint | undefined ;
+    latency: varint | undefined ;
+    displayName: undefined ;
+    listPriority: varint | undefined ;
+    showHat: bool | undefined ;
 }
+
+;}
 
 interface packet_face_player {
     feet_eyes: varint;
@@ -521,10 +605,22 @@ interface packet_player_rotation {
 }
 
 interface packet_recipe_book_add {
-    replace: bool;
+        entries: {
+    recipe: {
+    displayId: varint;
+    display: RecipeDisplay;
+    group: optvarint;
+    category: entries_recipe_category;
+    craftingRequirements?: unknown;
+}
+
+;}
+
+;    replace: bool;
 }
 
 interface packet_recipe_book_remove {
+    recipeIds: varint[];
 }
 
 interface RecipeBookSetting {
@@ -540,6 +636,7 @@ interface packet_recipe_book_settings {
 }
 
 interface packet_entity_destroy {
+    entityIds: varint[];
 }
 
 interface packet_remove_entity_effect {
@@ -563,6 +660,7 @@ interface packet_entity_head_rotation {
 }
 
 interface packet_multi_block_change {
+    records: varint[];
 }
 
 interface packet_select_advancement_tab {
@@ -670,6 +768,7 @@ interface packet_scoreboard_objective {
 
 interface packet_set_passengers {
     entityId: varint;
+    passengers: varint[];
 }
 
 interface packet_set_player_inventory {
@@ -809,12 +908,44 @@ interface packet_step_tick {
 
 interface packet_advancements {
     reset: bool;
-    showAdvancements: bool;
+        advancementMapping: {
+    key: string;
+    value: {
+    parentId?: string;
+    displayData?: unknown;
+        requirements: string[];
+    sendsTelemtryData: bool;
+}
+
+;}
+
+;    identifiers: string[];
+        progressMapping: {
+    key: string;
+        value: {
+    criterionIdentifier: string;
+    criterionProgress?: i64;
+}
+
+;}
+
+;    showAdvancements: bool;
 }
 
 interface packet_entity_update_attributes {
     entityId: varint;
+        properties: {
+    key: properties_key;
+    value: f64;
+        modifiers: {
+    uuid: string;
+    amount: f64;
+    operation: i8;
 }
+
+;}
+
+;}
 
 interface packet_entity_effect {
     entityId: varint;
@@ -825,10 +956,25 @@ interface packet_entity_effect {
 }
 
 interface packet_declare_recipes {
+        recipes: {
+    name: string;
+    items: varint[];
 }
 
-interface packet_tags {
+;        stoneCutterRecipes: {
+    input: IDSet;
+    slotDisplay: SlotDisplay;
 }
+
+;}
+
+interface packet_tags {
+        tags: {
+    tagType: string;
+    tags: tags;
+}
+
+;}
 
 interface packet_set_projectile_power {
     id: varint;
@@ -848,6 +994,7 @@ interface packet_tracked_waypoint {
 };
     icon: {
     style: string;
+    color?: unknown;
 }
 
 ;    type: packet_tracked_waypoint_waypoint_type;
