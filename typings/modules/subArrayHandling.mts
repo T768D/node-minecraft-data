@@ -117,12 +117,18 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 
 
 	if (subTypeType === "option") {
-		if (typeof subTypeData !== "string") {
-			unhandledType(subTypeData, "subTypeType is option, but subTypeData is not a string");
-			return `    ${name}?: unknown;\n`;
+		if (typeof subTypeData === "string")
+			return `    ${name}?: ${subTypeData};\n`;
+
+		if (typeof subTypeData === "object" && Array.isArray(subTypeData)) {
+			const parsedChild = subArrayHandling(name, subTypeData[0], subTypeData[1], calledFromTopLevel, longNameForEnum)
+				// first occurence of the : would be the outermost property
+				.replace(":", "?:");
+			return `    ${parsedChild}`;
 		}
 
-		return `    ${name}?: ${subTypeData};\n`;
+		unhandledType(subTypeData, "Invalid subTypeData when subTypeType is option");
+		return `    ${name}?: unknown;\n`;
 	}
 
 

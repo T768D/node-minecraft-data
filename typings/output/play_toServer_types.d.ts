@@ -44,8 +44,7 @@ interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-    signature?: unknown;
-    offset: varint;
+        offset: varint;
     checksum: u8;
 }
 

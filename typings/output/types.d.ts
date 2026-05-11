@@ -339,8 +339,7 @@ interface DataComponentMatchers {
 }
 
 interface ItemBlockPredicate {
-    blockSet?: unknown;
-    properties?: unknown;
+            properties?: ItemBlockProperty[];
     nbt: anonOptionalNbt;
     components: DataComponentMatchers;
 }
@@ -524,7 +523,78 @@ interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
     undefined: undefined  | 
 {
-    payload?: unknown;
+        payload?: undefined  | 
+{
+    hivePos?: position;
+    flowerPos?: position;
+    travelTicks: varint;
+    blacklistedHives: position[];
+} | 
+{
+    name: string;
+    profession: string;
+    xp: i32;
+    health: f32;
+    maxHealth: f32;
+    inventory: string;
+    wantsGolem: bool;
+    angerLevel: i32;
+    activities: string[];
+    behaviors: string[];
+    memories: string[];
+    gossips: string[];
+    pois: position[];
+    potentialPois: position[];
+} | 
+{
+    attackTarget?: varint;
+    jumpTarget?: position;
+} | 
+{
+        goals: {
+    priority: varint;
+    running: bool;
+    name: string;
+}
+
+;} | 
+{
+    path: Path;
+    maxNodeDistance: f32;
+} | 
+{
+    id: varint;
+} | 
+{
+    type: varint;
+    occupantCount: varint;
+    honeyLevel: varint;
+    sedated: bool;
+} | 
+{
+    pos: position;
+    poiType: varint;
+    freeTicketCount: varint;
+} | 
+{
+    index: varint;
+} | 
+{
+    positions: position[];
+} | 
+{
+    structures: DebugStructureInfo[];
+} | 
+{
+    listenerRadius: varint;
+} | 
+{
+    pos: position;
+} | 
+{
+    event: varint;
+    pos: vec3f64;
+};
 };
 }
 
@@ -708,7 +778,14 @@ interface chunkBlockEntity {
     nbtData: anonOptionalNbt;
 }
 
-    chat_session?: unknown;
+    interface chat_session {
+    uuid?: UUID;
+    publicKey: {
+    expireTime: i64;
+}
+
+;}
+
 interface game_profile_name_prop {
     name: string;
     properties: GameProfileProperty[];
@@ -742,7 +819,7 @@ interface PlayerSkinPatch {
     body?: string;
     cape?: string;
     elytra?: string;
-    model?: unknown;
+        model?: PlayerSkinPatch_model;
 }
 
 interface command_node {

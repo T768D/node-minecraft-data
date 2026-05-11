@@ -407,6 +407,11 @@ const enum ResolvableProfile_type {
     "complete" = 1,
 }
 
+const enum PlayerSkinPatch_model {
+    "wide" = 0,
+    "slim" = 1,
+}
+
 const enum a2_parser {
     "brigadier:bool" = 0,
     "brigadier:float" = 1,

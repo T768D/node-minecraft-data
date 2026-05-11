@@ -413,8 +413,15 @@ interface packet_map {
     itemDamage: varint;
     scale: i8;
     locked: bool;
-    icons?: unknown;
-    columns: u8;
+            icons?: {
+    type: varint;
+    x: i8;
+    z: i8;
+    direction: u8;
+    displayName?: anonymousNbt;
+}
+
+;    columns: u8;
     rows: undefined | u8 ;
     x: undefined | u8 ;
     y: undefined | u8 ;
@@ -431,8 +438,13 @@ interface packet_trade_list {
 }
 
 ;    outputItem: Slot;
-    inputItem2?: unknown;
-    tradeDisabled: bool;
+        inputItem2?: {
+    itemId: varint;
+    itemCount: varint;
+    components: ExactComponentMatcher;
+}
+
+;    tradeDisabled: bool;
     nbTradeUses: i32;
     maximumNbTradeUses: i32;
     xp: i32;
@@ -530,8 +542,7 @@ interface packet_player_chat {
     globalIndex: varint;
     senderUuid: UUID;
     index: varint;
-    signature?: unknown;
-    plainMessage: string;
+        plainMessage: string;
     timestamp: i64;
     salt: i64;
     previousMessages: previousMessages;
@@ -611,7 +622,7 @@ interface packet_recipe_book_add {
     display: RecipeDisplay;
     group: optvarint;
     category: packet_recipe_book_add_entries_recipe_category;
-    craftingRequirements?: unknown;
+        craftingRequirements?: IDSet[];
 }
 
 ;}
@@ -921,8 +932,27 @@ interface packet_advancements {
     key: string;
     value: {
     parentId?: string;
-    displayData?: unknown;
-        requirements: string[];
+        displayData?: {
+    title: anonymousNbt;
+    description: anonymousNbt;
+    icon: Slot;
+    frameType: varint;
+
+    /**
+     * This is a bitfield
+     * Format: (name : bits a-b : signed)
+     * unused : 0-28 : false
+     * hidden : 29-29 : false
+     * show_toast : 30-30 : false
+     * has_background_texture : 31-31 : false
+    */
+    flags: number;
+    backgroundTexture: string | undefined ;
+    xCord: f32;
+    yCord: f32;
+}
+
+;        requirements: string[];
     sendsTelemtryData: bool;
 }
 
@@ -1003,8 +1033,13 @@ interface packet_tracked_waypoint {
 };
     icon: {
     style: string;
-    color?: unknown;
+        color?: {
+    red: u8;
+    green: u8;
+    blue: u8;
 }
+
+;}
 
 ;    type: packet_tracked_waypoint_waypoint_type;
     data: vec3i | f32  | 
