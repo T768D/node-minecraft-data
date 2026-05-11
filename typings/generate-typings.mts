@@ -159,6 +159,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 			}
 		 */
 		const variations = new Set<string>();
+		let nestedVariations = "";
 		const fields = Object.entries(tempSubTypeData.fields);
 		// just adds the default value onto fields so it can be handled together
 		fields.push([`${name}_default`, tempSubTypeData.default]);
@@ -173,13 +174,14 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 
 			// switches can have nested containers in them
 			else if (Array.isArray(value) && value[0] === "container")
-				variations.add(parseContainer(value[1], key).trim());
+				nestedVariations += " | \n" + parseContainer(value[1], key).trim();
 
 			else if (tempSubTypeData.default)
 				console.error("Unhandled subTypeData: ", tempSubTypeData);
 		}
 
-		output += `    ${name}: ${Array.from(variations).join(" | \n")}`;
+		// order the variations the ones from parseContainer go at the bottom
+		output += `    ${name}: ${Array.from(variations).join(" | ")} ${nestedVariations};\n`;
 	}
 
 	// mapper is a enum

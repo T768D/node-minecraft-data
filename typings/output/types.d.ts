@@ -67,25 +67,29 @@ interface vec3i32 {
 type ContainerID = varint;
 interface SlotComponent {
     type: SlotComponentType;
-    data: anonymousNbt | 
-varint | 
-undefined | 
+    data: anonymousNbt | varint | undefined | f32 | string | bool | Slot | i32 | ItemFireworkExplosion | ResolvableProfile | ItemSoundHolder  | 
 {
     can_sprint: bool;
     interact_vibrations: bool;
     speed_multiplier: f32;
 } | 
-f32 | 
 {
     hasHolder: bool;
-    damageType: string} | 
-string | 
+    damageType: string ;
+} | 
+{
+} | 
+{
+} | 
+{
+} | 
+{
+} | 
 {
 } | 
 {
     hideTooltip: bool;
 } | 
-bool | 
 {
     blockDelaySeconds: f32;
     disableCooldownScale: f32;
@@ -107,7 +111,6 @@ bool |
     sound: ItemSoundHolder;
     makes_particles: bool;
 } | 
-Slot | 
 {
     seconds: f32;
 } | 
@@ -142,6 +145,8 @@ Slot |
     items: IDSet;
 } | 
 {
+} | 
+{
     dealsKnockback: bool;
     dismounts: bool;
 } | 
@@ -155,7 +160,16 @@ Slot |
     type: swing_animation_type;
     duration: varint;
 } | 
-i32 | 
+{
+} | 
+{
+} | 
+{
+} | 
+{
+} | 
+{
+} | 
 {
     rawTitle: string;
     author: string;
@@ -163,27 +177,44 @@ i32 |
     resolved: bool;
 } | 
 {
+} | 
+{
+    type: varint;
+    data: anonymousNbt;
+} | 
+{
     type: varint;
     data: anonymousNbt;
 } | 
 {
     hasHolder: bool;
-    data: string} | 
+    data: string ;
+} | 
 {
     hasHolder: bool;
-    material: string} | 
+    material: string ;
+} | 
 {
     hasHolder: bool;
-    song: string} | 
+    song: string ;
+} | 
 {
     tracked: bool;
 } | 
-ItemFireworkExplosion | 
 {
     flightDuration: varint;
 } | 
-ResolvableProfile | 
-ItemSoundHolder}
+{
+} | 
+{
+} | 
+{
+} | 
+{
+} | 
+{
+};
+}
 
 interface ItemSoundEvent {
     soundName: string;
@@ -211,13 +242,15 @@ interface ItemPotionEffect {
 interface ItemBlockProperty {
     name: string;
     isExactMatch: bool;
-    value: {
+    value:   | 
+{
     exactValue: string;
 } | 
 {
     minValue: string;
     maxValue: string;
-}}
+};
+}
 
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
@@ -239,19 +272,20 @@ interface ItemWrittenBookPage {
 
 interface ItemConsumeEffect {
     type: ItemConsumeEffect_type;
-    undefined: {
+    undefined: undefined  | 
+{
     probability: f32;
 } | 
 {
     effects: IDSet;
 } | 
-undefined | 
 {
     diameter: f32;
 } | 
 {
     sound: ItemSoundHolder;
-}}
+};
+}
 
 interface ArmorTrimMaterial {
     assetBase: string;
@@ -308,21 +342,23 @@ interface UntrustedSlotComponent {
 
 interface UntrustedSlot {
     itemCount: varint;
-    undefined: undefined | 
+    undefined: undefined  | 
 {
     itemId: varint;
     addedComponentCount: varint;
     removedComponentCount: varint;
-}}
+};
+}
 
 interface Slot {
     itemCount: varint;
-    undefined: undefined | 
+    undefined: undefined  | 
 {
     itemId: varint;
     addedComponentCount: varint;
     removedComponentCount: varint;
-}}
+};
+}
 
 interface HashedSlot {
     itemId: varint;
@@ -366,13 +402,14 @@ interface Path {
 
 interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
-    undefined: undefined | 
+    undefined: undefined  | 
 {
-}}
+};
+}
 
 interface DebugSubscriptionEvent {
     type: DebugSubscriptionDataType;
-    value: undefined | 
+    value: undefined  | 
 {
     travelTicks: varint;
 } | 
@@ -415,6 +452,10 @@ interface DebugSubscriptionEvent {
     index: varint;
 } | 
 {
+} | 
+{
+} | 
+{
     listenerRadius: varint;
 } | 
 {
@@ -423,11 +464,12 @@ interface DebugSubscriptionEvent {
 {
     event: varint;
     pos: vec3f64;
-}}
+};
+}
 
 interface Particle {
     type: Particle_type;
-    data: varint | 
+    data: varint | i32 | Slot | f32 | undefined  | 
 {
     red: f32;
     green: f32;
@@ -443,29 +485,31 @@ interface Particle {
     toGreen: f32;
     toBlue: f32;
 } | 
-i32 | 
-Slot | 
-f32 | 
 {
     positionType: vibration_positionType;
-    position: position | 
+    position: position  | 
 {
     entityId: varint;
     entityEyeHeight: f32;
-}    ticks: varint;
+};
+    ticks: varint;
 } | 
 {
     target: vec3f64;
     color: u8;
 } | 
-undefined | 
 {
     power: f32;
 } | 
 {
     color: i32;
     power: f32;
-}}
+} | 
+{
+    color: i32;
+    power: f32;
+};
+}
 
 interface packedChunkPos {
     z: i32;
@@ -475,30 +519,18 @@ interface packedChunkPos {
 interface entityMetadataEntry {
     key: u8;
     type: entityMetadataEntry_type;
-    value: i8 | 
-varint | 
-varlong | 
-f32 | 
-string | 
-anonymousNbt | 
-Slot | 
-bool | 
+    value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f | ResolvableProfile  | 
 {
     pitch: f32;
     yaw: f32;
     roll: f32;
 } | 
-position | 
-optvarint | 
-Particle | 
 {
     villagerType: varint;
     villagerProfession: varint;
     level: varint;
-} | 
-vec3f | 
-vec4f | 
-ResolvableProfile}
+};
+}
 
 interface EntityMetadataPaintingVariant {
     width: i32;
@@ -531,46 +563,60 @@ interface GameProfileProperty {
 
 interface ResolvableProfile {
     type: ResolvableProfile_type;
-    undefined: PartialResolvableProfile | 
-GameProfile    skinPatch: PlayerSkinPatch;
+    undefined: PartialResolvableProfile | GameProfile ;
+    skinPatch: PlayerSkinPatch;
 }
 
 interface PlayerSkinPatch {
 }
 
 interface command_node {
-    redirectNode: varint | 
-undefined    extraNodeData: undefined | 
+    redirectNode: varint | undefined ;
+    extraNodeData: undefined  | 
 {
     name: string;
 } | 
 {
     name: string;
     parser: a2_parser;
-    properties: undefined | 
+    properties: undefined  | 
 {
-    min: f32 | 
-undefined    max: f32 | 
-undefined} | 
+    min: f32 | undefined ;
+    max: f32 | undefined ;
+} | 
 {
-    min: f64 | 
-undefined    max: f64 | 
-undefined} | 
+    min: f64 | undefined ;
+    max: f64 | undefined ;
+} | 
 {
-    min: i32 | 
-undefined    max: i32 | 
-undefined} | 
+    min: i32 | undefined ;
+    max: i32 | undefined ;
+} | 
 {
-    min: i64 | 
-undefined    max: i64 | 
-undefined} | 
+    min: i64 | undefined ;
+    max: i64 | undefined ;
+} | 
 {
     min: i32;
 } | 
 {
     registry: string;
-}    suggestionType: string | 
-undefined}}
+} | 
+{
+    registry: string;
+} | 
+{
+    registry: string;
+} | 
+{
+    registry: string;
+} | 
+{
+    registry: string;
+};
+    suggestionType: string | undefined ;
+};
+}
 
 interface packet_common_settings {
     locale: string;

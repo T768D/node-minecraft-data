@@ -8,6 +8,6 @@ interface packet_ping {
 
 interface packet {
     name: packet_name_3;
-    params: packet_server_info | 
-packet_ping}
+    params: packet_server_info | packet_ping ;
+}
 

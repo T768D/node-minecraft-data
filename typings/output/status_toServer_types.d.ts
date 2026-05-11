@@ -7,6 +7,6 @@ interface packet_ping {
 
 interface packet {
     name: packet_name_4;
-    params: packet_ping_start | 
-packet_ping}
+    params: packet_ping_start | packet_ping ;
+}
 

@@ -1,9 +1,6 @@
 interface SlotDisplay {
     type: SlotDisplay_type;
-    data: undefined | 
-varint | 
-Slot | 
-string | 
+    data: undefined | varint | Slot | string  | 
 {
     base: SlotDisplay;
     material: SlotDisplay;
@@ -11,11 +8,13 @@ string |
 {
     input: SlotDisplay;
     remainder: SlotDisplay;
-}}
+};
+}
 
 interface RecipeDisplay {
     type: RecipeDisplay_type;
-    data: {
+    data:   | 
+{
     result: SlotDisplay;
     craftingStation: SlotDisplay;
 } | 
@@ -44,7 +43,8 @@ interface RecipeDisplay {
     addition: SlotDisplay;
     result: SlotDisplay;
     craftingStation: SlotDisplay;
-}}
+};
+}
 
 interface SpawnInfo {
     dimension: varint;
@@ -111,12 +111,12 @@ interface packet_block_change {
 interface packet_boss_bar {
     entityUUID: UUID;
     action: varint;
-    title: anonymousNbt | 
-undefined    health: f32 | 
-undefined    color: varint | 
-undefined    dividers: varint | 
-undefined    flags: u8 | 
-undefined}
+    title: anonymousNbt | undefined ;
+    health: f32 | undefined ;
+    color: varint | undefined ;
+    dividers: varint | undefined ;
+    flags: u8 | undefined ;
+}
 
 interface packet_difficulty {
     difficulty: packet_difficulty_difficulty;
@@ -216,7 +216,8 @@ interface packet_debug_sample {
 
 interface packet_hide_message {
     id: varint;
-    signature: undefined}
+    signature: undefined ;
+}
 
 interface packet_kick_disconnect {
     reason: anonymousNbt;
@@ -366,10 +367,11 @@ interface packet_map {
     scale: i8;
     locked: bool;
     columns: u8;
-    rows: undefined | 
-u8    x: undefined | 
-u8    y: undefined | 
-u8    data: undefined}
+    rows: undefined | u8 ;
+    x: undefined | u8 ;
+    y: undefined | u8 ;
+    data: undefined ;
+}
 
 interface packet_trade_list {
     windowId: ContainerID;
@@ -459,7 +461,8 @@ interface packet_player_chat {
     salt: i64;
     previousMessages: previousMessages;
     filterType: varint;
-    filterTypeMask: undefined    type: ChatTypesHolder;
+    filterTypeMask: undefined ;
+    type: ChatTypesHolder;
     networkName: anonymousNbt;
 }
 
@@ -487,9 +490,9 @@ interface packet_face_player {
     y: f64;
     z: f64;
     isEntity: bool;
-    entityId: varint | 
-undefined    entity_feet_eyes: varint | 
-undefined}
+    entityId: varint | undefined ;
+    entity_feet_eyes: varint | undefined ;
+}
 
 interface packet_position {
     teleportId: varint;
@@ -650,9 +653,11 @@ interface packet_held_item_slot {
 interface packet_scoreboard_objective {
     name: string;
     action: i8;
-    displayText: anonymousNbt | 
-undefined    type: varint | 
-undefined    number_format: undefined    styling: undefined}
+    displayText: anonymousNbt | undefined ;
+    type: varint | undefined ;
+    number_format: undefined ;
+    styling: undefined ;
+}
 
 interface packet_set_passengers {
     entityId: varint;
@@ -666,7 +671,8 @@ interface packet_set_player_inventory {
 interface packet_teams {
     team: string;
     mode: packet_teams_mode;
-    undefined: {
+    undefined: undefined  | 
+{
     name: anonymousNbt;
     nameTagVisibility: add_nameTagVisibility;
     collisionRule: add_collisionRule;
@@ -681,15 +687,16 @@ interface packet_teams {
     formatting: varint;
     prefix: anonymousNbt;
     suffix: anonymousNbt;
-} | 
-undefined    players: undefined}
+};
+    players: undefined ;
+}
 
 interface packet_scoreboard_score {
     itemName: string;
     scoreName: string;
     value: varint;
-    styling: anonymousNbt | 
-undefined}
+    styling: anonymousNbt | undefined ;
+}
 
 interface packet_simulation_distance {
     distance: varint;
@@ -740,9 +747,9 @@ interface packet_start_configuration {
 
 interface packet_stop_sound {
     flags: i8;
-    source: varint | 
-undefined    sound: string | 
-undefined}
+    source: varint | undefined ;
+    sound: string | undefined ;
+}
 
 interface packet_system_chat {
     content: anonymousNbt;
@@ -820,22 +827,24 @@ interface packet_tracked_waypoint {
     operation: packet_tracked_waypoint_operation;
     waypoint: {
     hasUUID: bool;
-    undefined: {
+    undefined:   | 
+{
     uuid: UUID;
 } | 
 {
     id: string;
-}    icon: {
+};
+    icon: {
     style: string;
 }
 
 ;    type: packet_tracked_waypoint_waypoint_type;
-    data: vec3i | 
+    data: vec3i | f32  | 
 {
     chunkX: varint;
     chunkZ: varint;
-} | 
-f32}
+};
+}
 
 ;}
 
@@ -844,143 +853,6 @@ interface packet_show_dialog {
 
 interface packet {
     name: packet_name_9;
-    params: undefined | 
-packet_spawn_entity | 
-packet_animation | 
-packet_statistics | 
-packet_acknowledge_player_digging | 
-packet_block_break_animation | 
-packet_tile_entity_data | 
-packet_block_action | 
-packet_block_change | 
-packet_boss_bar | 
-packet_difficulty | 
-packet_chunk_batch_finished | 
-packet_chunk_batch_start | 
-packet_chunk_biomes | 
-packet_clear_titles | 
-packet_tab_complete | 
-packet_declare_commands | 
-packet_close_window | 
-packet_window_items | 
-packet_craft_progress_bar | 
-packet_set_slot | 
-packet_common_cookie_request | 
-packet_set_cooldown | 
-packet_chat_suggestions | 
-packet_custom_payload | 
-packet_damage_event | 
-packet_debug_block_value | 
-packet_debug_chunk_value | 
-packet_debug_entity_value | 
-packet_debug_event | 
-packet_debug_sample | 
-packet_hide_message | 
-packet_kick_disconnect | 
-packet_profileless_chat | 
-packet_entity_status | 
-packet_sync_entity_position | 
-packet_explosion | 
-packet_unload_chunk | 
-packet_game_state_change | 
-packet_game_test_highlight_pos | 
-packet_open_horse_window | 
-packet_hurt_animation | 
-packet_initialize_world_border | 
-packet_keep_alive | 
-packet_map_chunk | 
-packet_world_event | 
-packet_world_particles | 
-packet_update_light | 
-packet_login | 
-packet_map | 
-packet_trade_list | 
-packet_rel_entity_move | 
-packet_entity_move_look | 
-packet_move_minecart | 
-packet_entity_look | 
-packet_vehicle_move | 
-packet_open_book | 
-packet_open_window | 
-packet_open_sign_entity | 
-packet_ping | 
-packet_ping_response | 
-packet_craft_recipe_response | 
-packet_abilities | 
-packet_player_chat | 
-packet_end_combat_event | 
-packet_enter_combat_event | 
-packet_death_combat_event | 
-packet_player_remove | 
-packet_player_info | 
-packet_face_player | 
-packet_position | 
-packet_player_rotation | 
-packet_recipe_book_add | 
-packet_recipe_book_remove | 
-packet_recipe_book_settings | 
-packet_entity_destroy | 
-packet_remove_entity_effect | 
-packet_reset_score | 
-packet_common_remove_resource_pack | 
-packet_common_add_resource_pack | 
-packet_respawn | 
-packet_entity_head_rotation | 
-packet_multi_block_change | 
-packet_select_advancement_tab | 
-packet_server_data | 
-packet_action_bar | 
-packet_world_border_center | 
-packet_world_border_lerp_size | 
-packet_world_border_size | 
-packet_world_border_warning_delay | 
-packet_world_border_warning_reach | 
-packet_camera | 
-packet_update_view_position | 
-packet_update_view_distance | 
-packet_set_cursor_item | 
-packet_held_item_slot | 
-packet_spawn_position | 
-packet_scoreboard_display_objective | 
-packet_entity_metadata | 
-packet_attach_entity | 
-packet_entity_velocity | 
-packet_entity_equipment | 
-packet_experience | 
-packet_update_health | 
-packet_scoreboard_objective | 
-packet_set_passengers | 
-packet_set_player_inventory | 
-packet_teams | 
-packet_scoreboard_score | 
-packet_simulation_distance | 
-packet_set_title_subtitle | 
-packet_update_time | 
-packet_set_title_text | 
-packet_set_title_time | 
-packet_entity_sound_effect | 
-packet_sound_effect | 
-packet_start_configuration | 
-packet_stop_sound | 
-packet_common_store_cookie | 
-packet_system_chat | 
-packet_playerlist_header | 
-packet_nbt_query_response | 
-packet_collect | 
-packet_entity_teleport | 
-packet_test_instance_block_status | 
-packet_set_ticking_state | 
-packet_step_tick | 
-packet_common_transfer | 
-packet_advancements | 
-packet_entity_update_attributes | 
-packet_entity_effect | 
-packet_declare_recipes | 
-packet_tags | 
-packet_set_projectile_power | 
-packet_common_custom_report_details | 
-packet_common_server_links | 
-packet_tracked_waypoint | 
-packet_common_clear_dialog | 
-packet_show_dialog}
+    params: undefined | packet_spawn_entity | packet_animation | packet_statistics | packet_acknowledge_player_digging | packet_block_break_animation | packet_tile_entity_data | packet_block_action | packet_block_change | packet_boss_bar | packet_difficulty | packet_chunk_batch_finished | packet_chunk_batch_start | packet_chunk_biomes | packet_clear_titles | packet_tab_complete | packet_declare_commands | packet_close_window | packet_window_items | packet_craft_progress_bar | packet_set_slot | packet_common_cookie_request | packet_set_cooldown | packet_chat_suggestions | packet_custom_payload | packet_damage_event | packet_debug_block_value | packet_debug_chunk_value | packet_debug_entity_value | packet_debug_event | packet_debug_sample | packet_hide_message | packet_kick_disconnect | packet_profileless_chat | packet_entity_status | packet_sync_entity_position | packet_explosion | packet_unload_chunk | packet_game_state_change | packet_game_test_highlight_pos | packet_open_horse_window | packet_hurt_animation | packet_initialize_world_border | packet_keep_alive | packet_map_chunk | packet_world_event | packet_world_particles | packet_update_light | packet_login | packet_map | packet_trade_list | packet_rel_entity_move | packet_entity_move_look | packet_move_minecart | packet_entity_look | packet_vehicle_move | packet_open_book | packet_open_window | packet_open_sign_entity | packet_ping | packet_ping_response | packet_craft_recipe_response | packet_abilities | packet_player_chat | packet_end_combat_event | packet_enter_combat_event | packet_death_combat_event | packet_player_remove | packet_player_info | packet_face_player | packet_position | packet_player_rotation | packet_recipe_book_add | packet_recipe_book_remove | packet_recipe_book_settings | packet_entity_destroy | packet_remove_entity_effect | packet_reset_score | packet_common_remove_resource_pack | packet_common_add_resource_pack | packet_respawn | packet_entity_head_rotation | packet_multi_block_change | packet_select_advancement_tab | packet_server_data | packet_action_bar | packet_world_border_center | packet_world_border_lerp_size | packet_world_border_size | packet_world_border_warning_delay | packet_world_border_warning_reach | packet_camera | packet_update_view_position | packet_update_view_distance | packet_set_cursor_item | packet_held_item_slot | packet_spawn_position | packet_scoreboard_display_objective | packet_entity_metadata | packet_attach_entity | packet_entity_velocity | packet_entity_equipment | packet_experience | packet_update_health | packet_scoreboard_objective | packet_set_passengers | packet_set_player_inventory | packet_teams | packet_scoreboard_score | packet_simulation_distance | packet_set_title_subtitle | packet_update_time | packet_set_title_text | packet_set_title_time | packet_entity_sound_effect | packet_sound_effect | packet_start_configuration | packet_stop_sound | packet_common_store_cookie | packet_system_chat | packet_playerlist_header | packet_nbt_query_response | packet_collect | packet_entity_teleport | packet_test_instance_block_status | packet_set_ticking_state | packet_step_tick | packet_common_transfer | packet_advancements | packet_entity_update_attributes | packet_entity_effect | packet_declare_recipes | packet_tags | packet_set_projectile_power | packet_common_custom_report_details | packet_common_server_links | packet_tracked_waypoint | packet_common_clear_dialog | packet_show_dialog ;
+}
 
