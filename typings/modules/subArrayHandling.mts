@@ -4,7 +4,7 @@ import { parseContainer } from "./parseContainer.mjs";
 
 const unhandledTypeInfo = "// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey\n";
 function unhandledType(type: unknown, msg: string) {
-	console.error(msg + ". Unhandled type or data structure:", type);
+	console.error(msg + ". 2 Unhandled type or data structure:", type);
 }
 
 // bitfields should have only name, size and signed but no checks are made to ensure they are
@@ -112,6 +112,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 			return `    ${name}: ${parseEnum(longNameForEnum, subTypeData.mappings!)};\n`;
 
 		parseEnum(longNameForEnum, subTypeData.mappings!);
+		return "";
 	}
 
 

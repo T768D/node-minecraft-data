@@ -10,7 +10,7 @@ for (const filePath of readdirSync("./typings/output"))
 
 
 // switch cannot be a type, and void is already a ts type
-const ignoredTypes = new Set(["switch", "void"]);
+const ignoredTypes = new Set(["switch", "void", "string"]);
 // No types in ignoredTypes should be present in someTypes
 const baseTypes = {
 	varint: "number",

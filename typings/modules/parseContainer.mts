@@ -31,13 +31,13 @@ import { subArrayHandling } from "./subArrayHandling.mjs";
 	}
 	```
  */
-export function parseContainer(container: { name: string, type: unknown; }[], containerName: string): string {
+export function parseContainer(container: { name: string, type: unknown; anon?: boolean }[], containerName: string): string {
 	let tempOutput = "{\n";
 	for (const dict of container) {
+
 		if (typeof dict !== "object") {
 			console.error("Dict is not object type in parseContainer, dict parsing skipped", dict);
 		}
-
 
 		else if (!dict.type) {
 			console.warn("Type property of a dict is not defined in parseContainer, defaulting to unknown");
