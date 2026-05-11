@@ -651,12 +651,12 @@ interface packedChunkPos {
     x: i32;
 }
 
-        previousMessages: {
+interface previousMessages {
     id: varint;
     signature: undefined ;
 }
 
-;interface entityMetadataEntry {
+interface entityMetadataEntry {
     key: u8;
     type: entityMetadataEntry_type;
     value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f | ResolvableProfile  | 
@@ -680,12 +680,12 @@ interface EntityMetadataPaintingVariant {
     author?: anonymousNbt;
 }
 
-        tags: {
+interface tags {
     tagName: string;
     entries: varint[];
 }
 
-;interface chunkBlockEntity {
+interface chunkBlockEntity {
     y: i16;
     type: varint;
     nbtData: anonOptionalNbt;
