@@ -154,19 +154,14 @@ export function subArrayHandling(name: string, subTypeName: string, subTypeType:
 	else if (subTypeName === "mapper") {
 		// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
 		if (typeof subTypeType !== "object" || !("type" in subTypeType!) || !("mappings" in subTypeType) || typeof subTypeType.mappings !== "object") {
-			unhandledType(subTypeName, subTypeType, "");
-			return "";
-		}
-
-		else if (subTypeType.type !== "varint") {
-			unhandledType(subTypeName, subTypeType.type, "");
+			unhandledType(subTypeName, subTypeType, "Invalid enum type");
 			return "";
 		}
 
 		// if not called from main, it means its a nested enum which needs to be refrenced
 		// otherwise the enum is just being declared
 		if (!calledFromMain)
-			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeType.mappings!)}\n`;
+			output += `    ${name}: ${parseEnum(longNameForEnum, subTypeType.mappings!)};\n`;
 		else
 			parseEnum(longNameForEnum, subTypeType.mappings!);
 	}
@@ -179,4 +174,4 @@ export function subArrayHandling(name: string, subTypeName: string, subTypeType:
 }
 
 
-writeFileSync("./typings/output/hoistedTypes.d.ts", hoistedEnums, "utf8");
+writeFileSync("./typings/output/hoistedEnums.d.ts", hoistedEnums, "utf8");
