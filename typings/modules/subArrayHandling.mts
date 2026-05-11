@@ -63,6 +63,10 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 				console.error("Unhandled subTypeData: ", tempSubTypeData);
 		}
 
+		// sometimes fields can be a empty object
+		if (variations.size === 0 && nestedVariations.length === 0)
+			return "";
+
 		// order the variations the ones from parseContainer go at the bottom
 		return `    ${name}: ${Array.from(variations).join(" | ")} ${nestedVariations};\n`;
 	}
