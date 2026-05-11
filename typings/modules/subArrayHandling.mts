@@ -17,9 +17,8 @@ function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: bool
 `;
 
 	for (const item of bitFieldData) {
-		if (!item.name || !item.size || !item.signed) {
+		if (!item.name || item.size === undefined || item.signed === undefined)
 			console.error("Invalid bitfield data! ", item);
-		}
 
 
 		lines += `     * ${item.name || "Unable to parse"} : ${bitOffset}-${bitOffset + item.size - 1} : ${item.signed}\n`;
@@ -62,7 +61,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 				"0": "void",
 				"false": "void"
 			}
-		 */
+		*/
 		const variations = new Set<string>();
 		let nestedVariations = "";
 		const fields = Object.entries(tempSubTypeData.fields);
