@@ -11,6 +11,10 @@ const usedNames = new Map<string, number>();
  */
 export function parseEnum(name: string, type: object) {
 
+	// enums cant start with num, quick fix
+	if (!isNaN(Number(name[0])))
+		name = "a" + name;
+
 	const used = usedNames.get(name);
 	if (used) {
 		usedNames.set(name, used + 1);
@@ -25,7 +29,7 @@ export function parseEnum(name: string, type: object) {
 	hoistedEnums += `const enum ${name} {\n`;
 
 	for (const [key, value] of Object.entries(type))
-		hoistedEnums += `    ${value.replaceAll("/", "_")} = ${key},\n`;
+		hoistedEnums += `    "${value.replaceAll("/", "_")}" = ${key},\n`;
 
 	hoistedEnums += "}\n\n";
 
