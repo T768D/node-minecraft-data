@@ -54,16 +54,13 @@ for (const [sectionName, data] of Object.entries(example))
 /**
  * @param sectionNameHistory The names of the items the function traversed over to reach the current status, used for the file name. eg handshaking_toClient
  */
-export function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example], returnInsteadOfWritingToFile?: false): void;
-export function generateTypes(sectionNameHistory: string, sectionName: string, data: typeof example[keyof typeof example], returnInsteadOfWritingToFile: true): string;
 export function generateTypes(
 	sectionNameHistory: string,
 	sectionName: string,
 	data: typeof example[keyof typeof example],
-	returnInsteadOfWritingToFile?: boolean,
 ): string | void {
 
-	if (!returnInsteadOfWritingToFile && sectionName !== "types") {
+	if (sectionName !== "types") {
 		for (const [subSectionName, subData] of Object.entries(data)) {
 			generateTypes(`${sectionNameHistory}_${subSectionName}`, subSectionName, subData);
 		}
@@ -111,10 +108,6 @@ export function generateTypes(
 			typesOutput += `type ${name} = ${type};\n`;
 		}
 	}
-
-
-	if (returnInsteadOfWritingToFile)
-		return typesOutput;
 
 	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput, "utf8");
 }
