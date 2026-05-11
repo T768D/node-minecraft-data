@@ -109,7 +109,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		if (typeof subTypeData.type === "object") {
 			if (Array.isArray(subTypeData.type))
 				// adds indent if not called from top level
-				return (calledFromTopLevel ? "" : "    ") + subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], calledFromTopLevel);
+				return (calledFromTopLevel ? "" : "    ") + subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], calledFromTopLevel, longNameForEnum);
 		}
 
 		unhandledType(subTypeData, "subTypeData is not a valid array 2");

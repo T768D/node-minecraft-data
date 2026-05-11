@@ -613,7 +613,7 @@ const enum packet_game_state_change_reason {
     "level_chunks_load_start" = 13,
 }
 
-const enum heightmaps_type {
+const enum packet_map_chunk_heightmaps_type {
     "world_surface_wg" = 0,
     "world_surface" = 1,
     "ocean_floor_wg" = 2,
@@ -622,7 +622,7 @@ const enum heightmaps_type {
     "motion_blocking_no_leaves" = 5,
 }
 
-const enum entries_recipe_category {
+const enum packet_recipe_book_add_entries_recipe_category {
     "crafting_building_blocks" = 0,
     "crafting_redstone" = 1,
     "crafting_equipment" = 2,
@@ -674,7 +674,7 @@ const enum change_collisionRule {
     "push_own_team" = 3,
 }
 
-const enum properties_key {
+const enum packet_entity_update_attributes_properties_key {
     "generic.armor" = 0,
     "generic.armor_toughness" = 1,
     "generic.attack_damage" = 2,

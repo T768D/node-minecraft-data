@@ -349,7 +349,7 @@ interface packet_map_chunk {
     x: i32;
     z: i32;
         heightmaps: {
-    type: heightmaps_type;
+    type: packet_map_chunk_heightmaps_type;
     data: i64[];
 }
 
@@ -610,7 +610,7 @@ interface packet_recipe_book_add {
     displayId: varint;
     display: RecipeDisplay;
     group: optvarint;
-    category: entries_recipe_category;
+    category: packet_recipe_book_add_entries_recipe_category;
     craftingRequirements?: unknown;
 }
 
@@ -935,7 +935,7 @@ interface packet_advancements {
 interface packet_entity_update_attributes {
     entityId: varint;
         properties: {
-    key: properties_key;
+    key: packet_entity_update_attributes_properties_key;
     value: f64;
         modifiers: {
     uuid: string;
