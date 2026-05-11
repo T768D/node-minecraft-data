@@ -194,8 +194,13 @@ interface packet_kick_disconnect {
     reason: anonymousNbt;
 }
 
-// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
-type ChatTypeParameterType = unknown;interface ChatType {
+const enum ChatTypeParameterType {
+    content = 0,
+    sender = 1,
+    target = 2,
+}
+
+interface ChatType {
     translationKey: string;
     parameters: undefined;
     style: anonymousNbt;
@@ -617,7 +622,7 @@ interface packet_set_cursor_item {
     contents: Slot;
 }
 
-type packet_spawn_position = unknown;
+type packet_spawn_position = RespawnData;
 interface packet_scoreboard_display_objective {
     position: varint;
     name: string;

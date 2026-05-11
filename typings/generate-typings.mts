@@ -86,16 +86,17 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 
 		else if (Array.isArray(type)) {
 			const subTypeName = type[0];
+			const subTypeType = type[1];
 
 
 			// todo, handle other types of type[1]
-			if (subTypeName === "container" && Array.isArray(type[1])) {
+			if (subTypeName === "container" && Array.isArray(subTypeType)) {
 				// parseContainer only returns object, does not declare interface or type
-				typesOutput += `interface ${name} ${parseContainer(type[1])}`;
+				typesOutput += `interface ${name} ${parseContainer(subTypeType)}`;
 			}
 
 			// object can be array too, so check for that
-			else if (subTypeName === "switch" && !Array.isArray(type[1]) && typeof type[1] === "object") {
+			else if (subTypeName === "switch" && !Array.isArray(subTypeType) && typeof subTypeType === "object") {
 				/*
 				Not sure how to interpret this
 				{
@@ -112,17 +113,17 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 			// mapper is a enum
 			else if (subTypeName === "mapper") {
 				// we assume all enums are numerical, for string enum handling might as well use parseContainer if there are string enums
-				if (!("type" in type) || !("mapping" in type) || typeof type.mapping !== "object" || !type.mapping) {
+				if (!("type" in subTypeType) || !("mappings" in subTypeType) || typeof subTypeType.mappings !== "object") {
 					unhandledType(name, type);
 					continue;
 				}
 
-				else if (type.type !== "varint") {
-					unhandledType(name, type.type);
+				else if (subTypeType.type !== "varint") {
+					unhandledType(name, subTypeType.type);
 					continue;
 				}
 
-				typesOutput += parseEnum(name, type.mapping);
+				typesOutput += parseEnum(name, subTypeType.mappings);
 			}
 
 			else {
@@ -133,13 +134,13 @@ function generateTypes(sectionNameHistory: string, sectionName: string, data: ty
 		// this must come after array check as arrays are object types too
 		else if (typeof type === "object") {
 			// pass item through this for loop again, extract this for loop to a function
+			console.error("unimplemented object");
 		}
 
-		// eg "ContainerID": "varint"
-		else {
-			// no types in someTypes are part of ignoredTypes, therefore if someTypes[type] is defined, we can assume type is not part of ignoredTypes
-			typesOutput += `type ${name} = ${type in baseTypes ? type : "unknown"};\n`;
-			console.error(`Unimplemented!\n name: ${name}\n value: `, type);
+		// we assume that the type is already defined somewhere else
+		// eg type packet_spawn_position = RespawnData; where RespawnData is defined in the program alraedy
+		else if (!ignoredTypes.has(type)) {
+			typesOutput += `type ${name} = ${type};\n`;
 		}
 	}
 

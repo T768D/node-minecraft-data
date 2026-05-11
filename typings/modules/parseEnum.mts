@@ -7,7 +7,7 @@ export function parseEnum(name: string, type: object): string {
 
 	let tempOutput = `const enum ${name} {\n`;
 	for (const [key, value] of Object.entries(type)) {
-		tempOutput += `${value.replaceAll("/", "_")} = ${key},\n`;
+		tempOutput += `    ${value.replaceAll("/", "_")} = ${key},\n`;
 	}
 
 	return tempOutput + "}\n\n";
