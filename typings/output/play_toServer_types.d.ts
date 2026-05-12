@@ -155,7 +155,7 @@ interface packet_lock_difficulty {
 }
 
 // Unimplemented value
-type MovementFlags= unknown;
+type MovementFlags = unknown;
 interface packet_position {
     x: f64;
     y: f64;
@@ -389,4 +389,3 @@ interface packet {
     name: packet_name_10;
     params: packet_teleport_confirm | packet_query_block_nbt | packet_select_bundle_item | packet_set_difficulty | packet_change_gamemode | packet_message_acknowledgement | packet_chat_command | packet_chat_command_signed | packet_chat_message | packet_chat_session_update | packet_chunk_batch_received | packet_client_command | packet_tick_end | packet_common_settings | packet_tab_complete | packet_configuration_acknowledged | packet_enchant_item | packet_window_click | packet_close_window | packet_set_slot_state | packet_common_cookie_response | packet_custom_payload | packet_debug_subscription_request | packet_edit_book | packet_query_entity_nbt | packet_use_entity | packet_generate_structure | packet_keep_alive | packet_lock_difficulty | packet_position | packet_position_look | packet_look | packet_flying | packet_vehicle_move | packet_steer_boat | packet_pick_item_from_block | packet_pick_item_from_entity | packet_ping_request | packet_craft_recipe_request | packet_abilities | packet_block_dig | packet_entity_action | packet_player_input | packet_player_loaded | packet_pong | packet_recipe_book | packet_displayed_recipe | packet_name_item | packet_resource_pack_receive | packet_advancement_tab | packet_select_trade | packet_set_beacon_effect | packet_held_item_slot | packet_update_command_block | packet_update_command_block_minecart | packet_set_creative_slot | packet_update_jigsaw_block | packet_update_structure_block | packet_set_test_block | packet_update_sign | packet_arm_animation | packet_spectate | packet_test_instance_block_action | packet_block_place | packet_use_item | packet_common_custom_click_action ;
 }
-

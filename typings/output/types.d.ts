@@ -29,7 +29,7 @@ type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
 type lpVec3 = { x: number; y: number; z: number };
 // Unimplemented value
-type ByteArray= unknown;
+type ByteArray = unknown;
 interface vec2f {
     x: f32;
     y: f32;
@@ -67,7 +67,7 @@ interface vec3i32 {
 }
 
 // Unimplemented value
-type IDSet= unknown;
+type IDSet = unknown;
 type ContainerID = varint;
 interface SlotComponent {
     type: SlotComponentType;
@@ -306,7 +306,7 @@ interface ItemSoundEvent {
 }
 
 // Unimplemented value
-type ItemSoundHolder= unknown;
+type ItemSoundHolder = unknown;
 interface ItemFireworkExplosion {
     shape: ItemFireworkExplosion_shape;
     colors: i32[];
@@ -342,7 +342,7 @@ interface ItemBlockProperty {
 };
 }
 
-type ExactComponentMatcher= SlotComponent[];
+type ExactComponentMatcher = SlotComponent[];
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
     partialMatchers: varint[];
@@ -728,7 +728,7 @@ interface Particle {
 };
 }
 
-type ingredient= Slot[];
+type ingredient = Slot[];
 /**
  * This is a bitfield
  * Format: (name : bits a-b : signed)
@@ -736,13 +736,13 @@ type ingredient= Slot[];
  * z : 26-51 : true
  * y : 52-63 : true
 */
-type position= number;
+type position = number;
 interface packedChunkPos {
     z: i32;
     x: i32;
 }
 
-type previousMessages= {
+type previousMessages = {
     id: varint;
     signature: undefined ;
 }
@@ -772,8 +772,8 @@ interface EntityMetadataPaintingVariant {
 }
 
 // Unimplemented value
-type entityMetadata= unknown;
-type tags= {
+type entityMetadata = unknown;
+type tags = {
     tagName: string;
     entries: varint[];
 }
@@ -791,7 +791,7 @@ interface chunkBlockEntity {
     nbtData: anonOptionalNbt;
 }
 
-type chat_session= {
+type chat_session = {
     uuid: UUID;
     publicKey: {
     expireTime: i64;
@@ -1008,4 +1008,3 @@ interface packet_common_custom_click_action {
     id: string;
     nbt?: anonymousNbt;
 }
-

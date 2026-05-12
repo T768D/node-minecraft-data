@@ -13,4 +13,3 @@ interface packet {
     name: packet_name_2;
     params: packet_set_protocol | packet_legacy_server_list_ping ;
 }
-

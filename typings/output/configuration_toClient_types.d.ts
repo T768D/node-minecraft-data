@@ -54,4 +54,3 @@ interface packet {
     name: packet_name_7;
     params: packet_common_cookie_request | packet_custom_payload | packet_disconnect | packet_finish_configuration | packet_keep_alive | packet_ping | packet_reset_chat | packet_registry_data | packet_common_remove_resource_pack | packet_common_add_resource_pack | packet_common_store_cookie | packet_common_transfer | packet_feature_flags | packet_tags | packet_common_select_known_packs | packet_common_custom_report_details | packet_common_server_links | packet_common_clear_dialog | packet_show_dialog | packet_code_of_conduct ;
 }
-

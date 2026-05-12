@@ -7,6 +7,7 @@ function unhandledType(type: unknown, msg: string) {
 	console.error(msg + ". 2 Unhandled type or data structure:", type);
 }
 
+
 // bitfields should have only name, size and signed but no checks are made to ensure they are
 function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: boolean; }[]): string[] {
 	let bitOffset = 0;
@@ -29,8 +30,15 @@ function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: bool
 	return lines;
 }
 
+
 /**
  * Helper function to format and return the values of realSubArrayHandling based on the param type
+ * @param name The name of the closest parent with a name of the current subArray being parsed
+ * @param subTypeType The type of the subArray (eg container, switch, mapper)
+ * @param subTypeData The data of the subArray
+ * @param type Where in the structure of the contents being parsed is the function being called
+ * @param longNameForEnum The full trace of all the parent's names the function has been through, only used for enums right now
+ * @returns a TypeScript type definition
  */
 export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, type: "topLevel" | "nested" | "valueOnly", longNameForEnum: string = name): string {
 
@@ -42,7 +50,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 
 	if (type === "topLevel") {
 		result.declaration ??= "type";
-		const assignSymbol = result.declaration === "type" ? "=" : "";
+		const assignSymbol = result.declaration === "type" ? " =" : "";
 
 		if (result.comment)
 			returnVal += result.comment.join("\n") + "\n";
@@ -66,7 +74,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 }
 
 
-// add jsdoc later
+/** @see subArrayHandling */
 function subArrayHandlingHelper(
 	name: string, subTypeType: string, subTypeData: unknown,
 	calledFromTopLevel: boolean, longNameForEnum: string

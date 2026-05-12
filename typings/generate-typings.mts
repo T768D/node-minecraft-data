@@ -108,7 +108,7 @@ export function generateTypes(
 		}
 	}
 
-	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput, "utf8");
+	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput.trim(), "utf8");
 }
 
 
