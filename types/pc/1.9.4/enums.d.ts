@@ -1,0 +1,152 @@
+// Because enums cannot be nested within other types, they must all be hoisted
+
+declare const enum packet_name {
+}
+
+declare const enum packet_name_2 {
+    "set_protocol" = 0x00,
+    "legacy_server_list_ping" = 0xfe,
+}
+
+declare const enum packet_name_3 {
+    "server_info" = 0x00,
+    "ping" = 0x01,
+}
+
+declare const enum packet_name_4 {
+    "ping_start" = 0x00,
+    "ping" = 0x01,
+}
+
+declare const enum packet_name_5 {
+    "disconnect" = 0x00,
+    "encryption_begin" = 0x01,
+    "success" = 0x02,
+    "compress" = 0x03,
+}
+
+declare const enum packet_name_6 {
+    "login_start" = 0x00,
+    "encryption_begin" = 0x01,
+}
+
+declare const enum packet_player_info_action {
+    "add_player" = 0,
+    "update_game_mode" = 1,
+    "update_latency" = 2,
+    "update_display_name" = 3,
+    "remove_player" = 4,
+}
+
+declare const enum packet_name_7 {
+    "spawn_entity" = 0x00,
+    "spawn_entity_experience_orb" = 0x01,
+    "spawn_entity_weather" = 0x02,
+    "spawn_entity_living" = 0x03,
+    "spawn_entity_painting" = 0x04,
+    "named_entity_spawn" = 0x05,
+    "animation" = 0x06,
+    "statistics" = 0x07,
+    "block_break_animation" = 0x08,
+    "tile_entity_data" = 0x09,
+    "block_action" = 0x0a,
+    "block_change" = 0x0b,
+    "boss_bar" = 0x0c,
+    "difficulty" = 0x0d,
+    "tab_complete" = 0x0e,
+    "chat" = 0x0f,
+    "multi_block_change" = 0x10,
+    "transaction" = 0x11,
+    "close_window" = 0x12,
+    "open_window" = 0x13,
+    "window_items" = 0x14,
+    "craft_progress_bar" = 0x15,
+    "set_slot" = 0x16,
+    "set_cooldown" = 0x17,
+    "custom_payload" = 0x18,
+    "named_sound_effect" = 0x19,
+    "kick_disconnect" = 0x1a,
+    "entity_status" = 0x1b,
+    "explosion" = 0x1c,
+    "unload_chunk" = 0x1d,
+    "game_state_change" = 0x1e,
+    "keep_alive" = 0x1f,
+    "map_chunk" = 0x20,
+    "world_event" = 0x21,
+    "world_particles" = 0x22,
+    "login" = 0x23,
+    "map" = 0x24,
+    "rel_entity_move" = 0x25,
+    "entity_move_look" = 0x26,
+    "entity_look" = 0x27,
+    "entity" = 0x28,
+    "vehicle_move" = 0x29,
+    "open_sign_entity" = 0x2a,
+    "abilities" = 0x2b,
+    "combat_event" = 0x2c,
+    "player_info" = 0x2d,
+    "position" = 0x2e,
+    "bed" = 0x2f,
+    "entity_destroy" = 0x30,
+    "remove_entity_effect" = 0x31,
+    "resource_pack_send" = 0x32,
+    "respawn" = 0x33,
+    "entity_head_rotation" = 0x34,
+    "world_border" = 0x35,
+    "camera" = 0x36,
+    "held_item_slot" = 0x37,
+    "scoreboard_display_objective" = 0x38,
+    "entity_metadata" = 0x39,
+    "attach_entity" = 0x3a,
+    "entity_velocity" = 0x3b,
+    "entity_equipment" = 0x3c,
+    "experience" = 0x3d,
+    "update_health" = 0x3e,
+    "scoreboard_objective" = 0x3f,
+    "set_passengers" = 0x40,
+    "teams" = 0x41,
+    "scoreboard_score" = 0x42,
+    "spawn_position" = 0x43,
+    "update_time" = 0x44,
+    "title" = 0x45,
+    "sound_effect" = 0x46,
+    "playerlist_header" = 0x47,
+    "collect" = 0x48,
+    "entity_teleport" = 0x49,
+    "entity_update_attributes" = 0x4a,
+    "entity_effect" = 0x4b,
+}
+
+declare const enum packet_name_8 {
+    "teleport_confirm" = 0x00,
+    "tab_complete" = 0x01,
+    "chat" = 0x02,
+    "client_command" = 0x03,
+    "settings" = 0x04,
+    "transaction" = 0x05,
+    "enchant_item" = 0x06,
+    "window_click" = 0x07,
+    "close_window" = 0x08,
+    "custom_payload" = 0x09,
+    "use_entity" = 0x0a,
+    "keep_alive" = 0x0b,
+    "position" = 0x0c,
+    "position_look" = 0x0d,
+    "look" = 0x0e,
+    "flying" = 0x0f,
+    "vehicle_move" = 0x10,
+    "steer_boat" = 0x11,
+    "abilities" = 0x12,
+    "block_dig" = 0x13,
+    "entity_action" = 0x14,
+    "steer_vehicle" = 0x15,
+    "resource_pack_receive" = 0x16,
+    "held_item_slot" = 0x17,
+    "set_creative_slot" = 0x18,
+    "update_sign" = 0x19,
+    "arm_animation" = 0x1a,
+    "spectate" = 0x1b,
+    "block_place" = 0x1c,
+    "use_item" = 0x1d,
+}
+

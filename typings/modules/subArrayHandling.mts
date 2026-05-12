@@ -39,10 +39,12 @@ function getBitFieldMsg(bitFieldData: unknown[]): string[] {
  * @param subTypeType The type of the subArray (eg container, switch, mapper)
  * @param subTypeData The data of the subArray
  * @param type Where in the structure of the contents being parsed is the function being called
+ * @param isAmbientFile Whether the file is types.d.ts, if it is it must be ambient so other files can access its contents
  * @param longNameForEnum The full trace of all the parent's names the function has been through, only used for enums right now
  * @returns a TypeScript type definition
  */
-export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, type: "topLevel" | "nested" | "valueOnly", longNameForEnum: string = name): string {
+export function subArrayHandling(name: string, subTypeType: string, subTypeData: unknown, type: "topLevel" | "nested" | "valueOnly", isAmbientFile: boolean, longNameForEnum: string = name): string {
+
 
 	const result = subArrayHandlingHelper(name, subTypeType, subTypeData, type === "topLevel", longNameForEnum);
 	if (result === "")
@@ -52,7 +54,15 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 
 	if (type === "topLevel") {
 		result.declaration ??= "type";
-		const assignSymbol = result.declaration === "type" ? " =" : "";
+
+		let assignSymbol = "";
+
+		if (result.declaration === "type")
+			assignSymbol += " =";
+
+		if (!isAmbientFile)
+			// @ts-expect-error not bothered to fix
+			result.declaration = "export " + result.declaration;
 
 		if (result.comment)
 			returnVal += result.comment.join("\n") + "\n";
@@ -82,7 +92,7 @@ function subArrayHandlingHelper(
 	name: string, subTypeType: string, subTypeData: unknown,
 	calledFromTopLevel: boolean, longNameForEnum: string
 ): "" | {
-	declaration?: "interface" | "type" | "const enum";
+	declaration?: "interface" | "type" | "declare const enum";
 	value: string;
 	isOptional?: true,
 	/** Each array item is another comment line */
@@ -161,7 +171,7 @@ function subArrayHandlingHelper(
 			unhandledType(subTypeData, "Invalid enum type");
 			return {
 				comment: [unhandledTypeInfo],
-				declaration: "const enum",
+				declaration: "declare const enum",
 				value: "unknown"
 			};
 		}
@@ -170,7 +180,7 @@ function subArrayHandlingHelper(
 		// otherwise the enum is just being declared
 		if (!calledFromTopLevel)
 			return {
-				declaration: "const enum",
+				declaration: "declare const enum",
 				value: parseEnum(longNameForEnum, subTypeData.mappings!) + ";\n"
 			};
 
@@ -189,7 +199,7 @@ function subArrayHandlingHelper(
 		if (typeof subTypeData === "object" && Array.isArray(subTypeData) && typeof subTypeData[0] === "string") {
 			return {
 				isOptional: true,
-				value: subArrayHandling(name, subTypeData[0], subTypeData[1], "valueOnly", longNameForEnum)
+				value: subArrayHandling(name, subTypeData[0], subTypeData[1], "valueOnly", false, longNameForEnum)
 			};
 		}
 
@@ -216,7 +226,7 @@ function subArrayHandlingHelper(
 
 		if (typeof subTypeData.type === "object" && Array.isArray(subTypeData.type) && typeof subTypeData.type[0] === "string")
 			return {
-				value: subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], "valueOnly", longNameForEnum)
+				value: subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], "valueOnly", false, longNameForEnum)
 			};
 
 		unhandledType(subTypeData, "subTypeData is not a valid array 2");

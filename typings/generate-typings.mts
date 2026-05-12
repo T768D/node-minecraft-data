@@ -1,80 +1,40 @@
-import example from "./example.json" with { type: "json" };
-import { writeFileSync, rmSync, readdirSync } from "fs";
+import { writeFileSync, rmSync, readdirSync, mkdirSync, readFileSync, existsSync } from "fs";
+import { ignoredTypes, baseTypes } from "./constantsAndTypes.mjs";
 
-import { hoistedEnums } from "./modules/parseEnum.mjs";
+import { clearData, hoistedEnums } from "./modules/parseEnum.mjs";
 import { subArrayHandling } from "./modules/subArrayHandling.mjs";
 
 
+if (existsSync("./types"))
+	rmSync("./types", { recursive: true });
 
-declare global {
-	interface ArrayConstructor {
-		isArray(arg: unknown): arg is unknown[];
-	}
 
-	interface ObjectConstructor {
-		entries<T>(object: T): [keyof T, T[keyof T]][];
-		keys<T>(object: T): (keyof T)[];
-		values<T>(object: T): T[keyof T];
-	}
+/*
+	enums.d.ts and types.d.ts are ambient modules
+	The rest are modules that need to be exported, this is because sometimes certain things between files will have the same name
+	And the differentiater for users is the file name
+*/
 
-	interface ReadonlyArray<T> {
-		includes(searchElement: unknown, fromIndex?: number): searchElement is T;
-	}
+const versionList = readdirSync("./minecraft-data/data/pc");
+for (const version of versionList) {
+	// ill think of a better way to implement hoisting enums later
+	clearData();
 
-	interface Array<T> {
-		includes(searchElement: unknown, fromIndex?: number): searchElement is T;
-	}
+	if (!existsSync(`./minecraft-data/data/pc/${version}/protocol.json`))
+		continue;
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	interface Set<T> {
-		has(value: unknown): boolean;
-	}
+	mkdirSync(`./types/pc/${version}`, { recursive: true });
+
+	const protocol = JSON.parse(readFileSync(`./minecraft-data/data/pc/${version}/protocol.json`, "utf8")) as Record<string, unknown>;
+
+	for (const [sectionName, data] of Object.entries(protocol))
+		generateTypes(sectionName, sectionName, data, `./types/pc/${version}`);
+
+	writeFileSync(`./types/pc/${version}/enums.d.ts`, hoistedEnums, "utf8");
+
+	// tsconfig required otherwise typescript decides it doesn't like it and starts saying types aren't found
+	writeFileSync(`./types/pc/${version}/tsconfig.json`, `{"include": [ "./**/*.d.ts" ]}`, "utf8");
 }
-
-for (const filePath of readdirSync("./typings/output"))
-	rmSync("./typings/output/" + filePath);
-
-
-// switch cannot be a type, and void is already a ts type
-const ignoredTypes = new Set(["switch", "void", "string"]);
-// No types in ignoredTypes should be present in someTypes
-const baseTypes = {
-	varint: "number",
-	varlong: "bigint",
-	optvarint: "number | null",
-	pstring: "string",
-	buffer: "Buffer",
-	u8: "number",
-	u16: "number",
-	u32: "number",
-	u64: "bigint",
-	i8: "number",
-	i16: "number",
-	i32: "number",
-	i64: "bigint",
-	bool: "boolean",
-	f32: "number",
-	f64: "number",
-	UUID: "string",
-	option: "unknown",
-	entityMetadataLoop: "unknown[]",
-	topBitSetTerminatedArray: "unknown[]",
-	bitfield: "number",
-	bitflags: "number",
-	container: "Record<string, unknown>",
-	array: "unknown[]",
-	restBuffer: "Buffer",
-	anonymousNbt: "unknown",
-	anonOptionalNbt: "unknown | null",
-	registryEntryHolder: "unknown",
-	registryEntryHolderSet: "unknown[]",
-	lpVec3: "{ x: number; y: number; z: number }"
-} as Record<string, string>;
-
-
-
-for (const [sectionName, data] of Object.entries(example))
-	generateTypes(sectionName, sectionName, data);
 
 
 /**
@@ -83,12 +43,13 @@ for (const [sectionName, data] of Object.entries(example))
 export function generateTypes(
 	sectionNameHistory: string,
 	sectionName: string,
-	data: typeof example[keyof typeof example],
+	data: unknown,
+	outDir: string,
 ): string | void {
 
 	if (sectionName !== "types") {
 		for (const [subSectionName, subData] of Object.entries(data))
-			generateTypes(`${sectionNameHistory}_${subSectionName}`, subSectionName, subData);
+			generateTypes(`${sectionNameHistory}_${subSectionName}`, subSectionName, subData, outDir);
 
 		return;
 	}
@@ -123,7 +84,7 @@ export function generateTypes(
 				continue;
 			}
 
-			typesOutput += subArrayHandling(name, type[0], type[1], "topLevel");
+			typesOutput += subArrayHandling(name, type[0], type[1], "topLevel", sectionNameHistory === "types");
 		}
 
 		// this must come after array check as arrays are object types too
@@ -143,8 +104,5 @@ export function generateTypes(
 		}
 	}
 
-	writeFileSync(`./typings/output/${sectionNameHistory}.d.ts`, typesOutput.trim(), "utf8");
+	writeFileSync(`${outDir}/${sectionNameHistory}.d.ts`, typesOutput.trim(), "utf8");
 }
-
-
-writeFileSync("./typings/output/hoistedEnums.d.ts", hoistedEnums, "utf8");
