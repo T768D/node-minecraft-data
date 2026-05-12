@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+
 import { parseContainer } from "../modules/parseContainer.mjs";
 import { readdirSync } from "fs";
 
@@ -10,7 +14,7 @@ function makeAssert(func: Function) {
 
 		let actual = func(...input);
 		if (typeof actual === "string")
-			actual = actual.trim()
+			actual = actual.trim();
 
 		console.assert(
 			actual === expected,
@@ -34,6 +38,6 @@ for (let module of readdirSync("./typings/test")) {
 	const assert = makeAssert(parseContainer);
 	for (let x = 0; x < samples.length; x++) {
 		// replaces all tabs with spaces for consistancy, newline at end as func adds one
-		assert(samples[x], expecteds[x]!.replaceAll("	", "    ") + "\n");
+		assert(samples[x], (expecteds[x] as string).replaceAll("	", "    ") + "\n");
 	}
 }

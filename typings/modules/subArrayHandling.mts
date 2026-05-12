@@ -9,7 +9,7 @@ function unhandledType(type: unknown, msg: string) {
 
 
 // bitfields should have only name, size and signed but no checks are made to ensure they are
-function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: boolean; }[]): string[] {
+function getBitFieldMsg(bitFieldData: unknown[]): string[] {
 	let bitOffset = 0;
 	const lines = [
 		"/**",
@@ -18,8 +18,10 @@ function getBitFieldMsg(bitFieldData: { name: string; size: number; signed: bool
 	];
 
 	for (const item of bitFieldData) {
-		if (!item.name || item.size === undefined || item.signed === undefined)
+		if (typeof item !== "object" || Array.isArray(item) || !item || !("name" in item) || !("size" in item) || !("signed" in item) || typeof item.name !== "string" || typeof item.size !== "number") {
 			console.error("Invalid bitfield data! ", item);
+			continue;
+		}
 
 
 		lines.push(` * ${item.name || "Unable to parse"} : ${bitOffset}-${bitOffset + item.size - 1} : ${item.signed}`);
@@ -65,6 +67,7 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		return returnVal + `    ${name}${result.isOptional ? "?" : ""}: ${result.value}`;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	else if (type === "valueOnly") {
 		return result.value;
 	}
@@ -131,7 +134,7 @@ function subArrayHandlingHelper(
 			// TODO MAKE THIS A RECURSIVE CALL
 
 			// switches can have nested containers in them
-			else if (Array.isArray(value) && value[0] === "container")
+			else if (Array.isArray(value) && value[0] === "container" && Array.isArray(value[1]))
 				nestedVariations += " | \n" + parseContainer(value[1], key).trim();
 
 			else if (tempSubTypeData.default)
@@ -183,7 +186,7 @@ function subArrayHandlingHelper(
 				value: subTypeData + ";\n"
 			};
 
-		if (typeof subTypeData === "object" && Array.isArray(subTypeData)) {
+		if (typeof subTypeData === "object" && Array.isArray(subTypeData) && typeof subTypeData[0] === "string") {
 			return {
 				isOptional: true,
 				value: subArrayHandling(name, subTypeData[0], subTypeData[1], "valueOnly", longNameForEnum)
@@ -211,12 +214,10 @@ function subArrayHandlingHelper(
 				value: `${subTypeData.type}[];\n`
 			};
 
-		if (typeof subTypeData.type === "object") {
-			if (Array.isArray(subTypeData.type))
-				return {
-					value: subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], "valueOnly", longNameForEnum)
-				};
-		}
+		if (typeof subTypeData.type === "object" && Array.isArray(subTypeData.type) && typeof subTypeData.type[0] === "string")
+			return {
+				value: subArrayHandling(name, subTypeData.type[0], subTypeData.type[1], "valueOnly", longNameForEnum)
+			};
 
 		unhandledType(subTypeData, "subTypeData is not a valid array 2");
 		return {

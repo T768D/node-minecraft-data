@@ -2,4 +2,5 @@
 - if a data type is null the program will probably crash
 - make switch recursive
 - implement bitflags and buffer
-- registryEntryHolderSet seems to be ignored by documentation website, ask?
+- registryEntryHolderSet and bitflags seems to be ignored by documentation website, ask?
+- add eslint

@@ -5,6 +5,32 @@ import { hoistedEnums } from "./modules/parseEnum.mjs";
 import { subArrayHandling } from "./modules/subArrayHandling.mjs";
 
 
+
+declare global {
+	interface ArrayConstructor {
+		isArray(arg: unknown): arg is unknown[];
+	}
+
+	interface ObjectConstructor {
+		entries<T>(object: T): [keyof T, T[keyof T]][];
+		keys<T>(object: T): (keyof T)[];
+		values<T>(object: T): T[keyof T];
+	}
+
+	interface ReadonlyArray<T> {
+		includes(searchElement: unknown, fromIndex?: number): searchElement is T;
+	}
+
+	interface Array<T> {
+		includes(searchElement: unknown, fromIndex?: number): searchElement is T;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface Set<T> {
+		has(value: unknown): boolean;
+	}
+}
+
 for (const filePath of readdirSync("./typings/output"))
 	rmSync("./typings/output/" + filePath);
 
@@ -75,7 +101,7 @@ export function generateTypes(
 	}
 
 
-	for (const [name, type] of Object.entries(data)) {
+	for (const [name, type] of Object.entries(data as Record<string, unknown>)) {
 		if (ignoredTypes.has(name))
 			continue;
 
@@ -92,6 +118,11 @@ export function generateTypes(
 				continue;
 			}
 
+			if (typeof type[0] !== "string") {
+				unhandledType(name, type, "type[0] is not string");
+				continue;
+			}
+
 			typesOutput += subArrayHandling(name, type[0], type[1], "topLevel");
 		}
 
@@ -103,8 +134,12 @@ export function generateTypes(
 
 		// we assume that the type is already defined somewhere else
 		// eg type packet_spawn_position = RespawnData; where RespawnData is defined in the program alraedy
-		else if (!ignoredTypes.has(type)) {
+		else if (!ignoredTypes.has(type) && typeof type === "string") {
 			typesOutput += `type ${name} = ${type};\n`;
+		}
+
+		else {
+			unhandledType(name, type, "fallthrough");
 		}
 	}
 

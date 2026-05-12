@@ -28,8 +28,15 @@ export function parseEnum(name: string, type: object) {
 
 	hoistedEnums += `const enum ${name} {\n`;
 
-	for (const [key, value] of Object.entries(type))
+	// json cant have objects as keys so always assume its Record<string,unknown>
+	for (const [key, value] of Object.entries(type as Record<string, unknown>)) {
+		if (typeof value !== "string") {
+			console.error("Invalid value passed into enum", value, type);
+			continue;
+		}
+
 		hoistedEnums += `    "${value.replaceAll("/", "_")}" = ${key},\n`;
+	}
 
 	hoistedEnums += "}\n\n";
 

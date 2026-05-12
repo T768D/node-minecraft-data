@@ -31,12 +31,13 @@ import { subArrayHandling } from "./subArrayHandling.mjs";
 	}
 	```
  */
-export function parseContainer(container: { name: string, type: unknown; anon?: boolean }[], containerName: string): string {
+export function parseContainer(container: unknown[], containerName: string): string {
 	let tempOutput = "{\n";
 	for (const dict of container) {
 
-		if (typeof dict !== "object") {
+		if (typeof dict !== "object" || !dict || !("type" in dict) || !("name" in dict) || typeof dict.name !== "string") {
 			console.error("Dict is not object type in parseContainer, dict parsing skipped", dict);
+			continue;
 		}
 
 		else if (!dict.type) {
@@ -44,7 +45,7 @@ export function parseContainer(container: { name: string, type: unknown; anon?: 
 			tempOutput += `    ${dict.name}: "unknown;\n`;
 		}
 
-		else if (Array.isArray(dict.type)) {
+		else if (Array.isArray(dict.type) && typeof dict.type[0] === "string") {
 			tempOutput += subArrayHandling(dict.name, dict.type[0], dict.type[1], "nested", `${containerName}_${dict.name}`);
 		}
 
