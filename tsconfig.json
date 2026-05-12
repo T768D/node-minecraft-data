@@ -36,6 +36,6 @@
 		"types": [ "node" ]
 	},
 	"include": [
-		"./typings/"
+		"generate-types"
 	],
 }

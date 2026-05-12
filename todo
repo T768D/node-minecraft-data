@@ -1,6 +1,6 @@
 - convert all outputs of void into undefined - currently seems only fields have void which is fine for now
 - if a data type is null the program will probably crash
 - make switch recursive
-- implement bitflags and buffer
-- registryEntryHolderSet and bitflags seems to be ignored by documentation website, ask?
-- add eslint
+- implement buffer and registryEntryHolderSet
+- exporting emitted types to top level based on dataPaths.json
+- support for the worser version of minecraft

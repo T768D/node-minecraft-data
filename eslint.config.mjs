@@ -52,7 +52,7 @@ export default defineConfig(
 			"id-length": ["warn", { min: 0, max: 30 }],
 			"max-depth": ["warn", { max: 5 }],
 			"max-nested-callbacks": ["warn", { max: 4 }],
-			"max-params": ["warn", { max: 5 }],
+			"max-params": ["warn", { max: 7 }],
 			"no-alert": "off",
 			"no-array-constructor": "error",
 			"no-caller": "error",
