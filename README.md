@@ -13,6 +13,11 @@ The objective of this module is to make easier to look for information in `minec
 
 This package allows the lookup of blocks, items, entities, etc. by name, id, etc., and for the easy lookup of other data.
 
+## Typings
+
+Full TypeScript support with strict typings are currently being worked on
+Currently only the 1.21.11 protocol types are mostly supported
+
 ## Example
 
 ```js

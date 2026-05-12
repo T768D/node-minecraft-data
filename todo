@@ -1,3 +1,5 @@
-- convert all outputs of void into undefined
-- a data type is null the program will probably crash
-- switch after certain char limit go to newline
+- convert all outputs of void into undefined - currently seems only fields have void which is fine for now
+- if a data type is null the program will probably crash
+- make switch recursive
+- implement bitflags and buffer
+- registryEntryHolderSet seems to be ignored by documentation website, ask?

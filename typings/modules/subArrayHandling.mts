@@ -105,9 +105,6 @@ function subArrayHandlingHelper(
 			default?: unknown;
 		};
 
-		if ("default" in tempSubTypeData && tempSubTypeData.default !== "void")
-			console.error("unimplemented default ", tempSubTypeData);
-
 
 		/**
 		 * Is a set so no duplicates
