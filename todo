@@ -4,3 +4,4 @@
 - implement buffer and registryEntryHolderSet
 - exporting emitted types to top level based on dataPaths.json
 - support for the worser version of minecraft
+- unify when ;\n should be used

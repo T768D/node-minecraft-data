@@ -10,7 +10,7 @@
 		},
 		{
 			"name": "Generate Types",
-			"program": "${workspaceFolder}/typings/generate-typings.mts",
+			"program": "${workspaceFolder}/generate-types/generate-typings.mts",
 			"request": "launch",
 			"type": "bun",
 			"cwd": "${workspaceFolder}"

@@ -299,8 +299,7 @@ export interface packet_map_chunk {
     x: i32;
     z: i32;
     heightmaps: nbt;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: chunkBlockEntity[];
     trustEdges: bool;
     skyLightMask: i64[];

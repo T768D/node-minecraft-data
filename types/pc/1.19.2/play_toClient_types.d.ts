@@ -236,8 +236,7 @@ export interface packet_named_sound_effect {
 }
 
 export interface packet_hide_message {
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
 export interface packet_kick_disconnect {
@@ -289,8 +288,7 @@ export interface packet_map_chunk {
     x: i32;
     z: i32;
     heightmaps: nbt;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: chunkBlockEntity[];
     trustEdges: bool;
     skyLightMask: i64[];
@@ -452,10 +450,9 @@ export interface packet_abilities {
 }
 
 export interface packet_player_chat {
-    previousSignature?: unknown;
+    previousSignature?: Buffer;
     senderUuid: UUID;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
     plainMessage: string;
     formattedMessage?: string;
     timestamp: i64;
@@ -849,12 +846,10 @@ export interface packet_simulation_distance {
 }
 
 export interface packet_message_header {
-    previousSignature?: unknown;
+    previousSignature?: Buffer;
     senderUuid: UUID;
-    // Unimplemented value
-    signature: unknown;
-    // Unimplemented value
-    messageHash: unknown;
+    signature: Buffer;
+    messageHash: Buffer;
 }
 
 export interface packet {

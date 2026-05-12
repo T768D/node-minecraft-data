@@ -27,8 +27,7 @@ type anonymousNbt = unknown;
 type anonOptionalNbt = unknown | null;
 type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
-// Unimplemented value
-type ByteArray = unknown;
+type ByteArray = Buffer;
 interface vec3f {
     x: f32;
     y: f32;
@@ -170,10 +169,8 @@ type chat_session = {
     uuid: UUID;
     publicKey: {
     expireTime: i64;
-    // Unimplemented value
-    keyBytes: unknown;
-    // Unimplemented value
-    keySignature: unknown;
+    keyBytes: Buffer;
+    keySignature: Buffer;
 }
 
 }

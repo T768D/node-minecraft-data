@@ -311,8 +311,7 @@ export interface packet_map_chunk {
     groundUp: bool;
     bitMap: varint;
     heightmaps: nbt;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: nbt[];
 }
 

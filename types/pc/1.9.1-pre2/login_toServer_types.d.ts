@@ -3,10 +3,8 @@ export interface packet_login_start {
 }
 
 export interface packet_encryption_begin {
-    // Unimplemented value
-    sharedSecret: unknown;
-    // Unimplemented value
-    verifyToken: unknown;
+    sharedSecret: Buffer;
+    verifyToken: Buffer;
 }
 
 export interface packet {

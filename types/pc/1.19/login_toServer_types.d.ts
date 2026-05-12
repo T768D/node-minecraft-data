@@ -2,27 +2,22 @@ export interface packet_login_start {
     username: string;
     signature?: {
     timestamp: i64;
-    // Unimplemented value
-    publicKey: unknown;
-    // Unimplemented value
-    signature: unknown;
+    publicKey: Buffer;
+    signature: Buffer;
 }
 
 }
 
 export interface packet_encryption_begin {
-    // Unimplemented value
-    sharedSecret: unknown;
+    sharedSecret: Buffer;
     hasVerifyToken: bool;
     crypto:   | 
 {
-    // Unimplemented value
-    verifyToken: unknown;
+    verifyToken: Buffer;
 } | 
 {
     salt: i64;
-    // Unimplemented value
-    messageSignature: unknown;
+    messageSignature: Buffer;
 };
 }
 

@@ -20,8 +20,7 @@ type array = unknown[];
 type restBuffer = Buffer;
 // Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type nbt = unknown;// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
-type compressedNbt = unknown;// Unimplemented value
-type ByteArray = unknown;
+type compressedNbt = unknown;type ByteArray = Buffer;
 interface vec3i16 {
     x: i16;
     y: i16;

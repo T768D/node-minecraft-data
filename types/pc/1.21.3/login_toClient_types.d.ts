@@ -4,10 +4,8 @@ export interface packet_disconnect {
 
 export interface packet_encryption_begin {
     serverId: string;
-    // Unimplemented value
-    publicKey: unknown;
-    // Unimplemented value
-    verifyToken: unknown;
+    publicKey: Buffer;
+    verifyToken: Buffer;
     shouldAuthenticate: bool;
 }
 

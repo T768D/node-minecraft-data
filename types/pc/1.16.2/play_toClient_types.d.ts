@@ -305,8 +305,7 @@ export interface packet_map_chunk {
     bitMap: varint;
     heightmaps: nbt;
     biomes: undefined ;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: nbt[];
 }
 

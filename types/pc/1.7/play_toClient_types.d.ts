@@ -239,8 +239,7 @@ export interface packet_map_chunk {
     groundUp: bool;
     bitMap: u16;
     addBitMap: u16;
-    // Unimplemented value
-    compressedChunkData: unknown;
+    compressedChunkData: Buffer;
 }
 
 export interface packet_multi_block_change {
@@ -280,8 +279,8 @@ export interface packet_map_chunk_bulk {
     // Unimplemented value
     dataLength: unknown;
     skyLightSent: bool;
-    // Unimplemented value
-    compressedChunkData: unknown;
+    // Count: dataLength
+    compressedChunkData: Buffer;
     meta: {
     x: i32;
     z: i32;
@@ -394,8 +393,7 @@ export interface packet_update_sign {
 
 export interface packet_map {
     itemDamage: varint;
-    // Unimplemented value
-    data: unknown;
+    data: Buffer;
 }
 
 export interface packet_tile_entity_data {
@@ -462,8 +460,7 @@ export interface packet_scoreboard_team {
 
 export interface packet_custom_payload {
     channel: string;
-    // Unimplemented value
-    data: unknown;
+    data: Buffer;
 }
 
 export interface packet_kick_disconnect {

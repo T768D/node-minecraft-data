@@ -546,7 +546,7 @@ export interface packet_player_chat {
     globalIndex: varint;
     senderUuid: UUID;
     index: varint;
-    signature?: unknown;
+    signature?: Buffer;
     plainMessage: string;
     timestamp: i64;
     salt: i64;

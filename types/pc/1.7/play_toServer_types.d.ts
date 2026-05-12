@@ -141,8 +141,7 @@ export interface packet_client_command {
 
 export interface packet_custom_payload {
     channel: string;
-    // Unimplemented value
-    data: unknown;
+    data: Buffer;
 }
 
 export interface packet {

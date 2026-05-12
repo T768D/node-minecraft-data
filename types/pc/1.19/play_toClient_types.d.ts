@@ -279,8 +279,7 @@ export interface packet_map_chunk {
     x: i32;
     z: i32;
     heightmaps: nbt;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: chunkBlockEntity[];
     trustEdges: bool;
     skyLightMask: i64[];
@@ -450,8 +449,7 @@ export interface packet_player_chat {
     senderTeam?: string;
     timestamp: i64;
     salt: i64;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
 export interface packet_end_combat_event {

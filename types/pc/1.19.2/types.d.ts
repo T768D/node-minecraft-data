@@ -24,8 +24,7 @@ type array = unknown[];
 type restBuffer = Buffer;
 // Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type nbt = unknown;// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
-type optionalNbt = unknown;// Unimplemented value
-type ByteArray = unknown;
+type optionalNbt = unknown;type ByteArray = Buffer;
 interface vec3i16 {
     x: i16;
     y: i16;
@@ -94,8 +93,7 @@ type ingredient = slot[];
 type position = number;
 type previousMessages = {
     messageSender: UUID;
-    // Unimplemented value
-    messageSignature: unknown;
+    messageSignature: Buffer;
 }
 
 type entityMetadataItem = i8 | varint | f32 | string | slot | bool | position | nbt | particle | optvarint  | 

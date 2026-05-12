@@ -110,6 +110,26 @@ function subArrayHandlingHelper(
 	}
 
 
+	if (subTypeType === "buffer") {
+		if (typeof subTypeData !== "object" || Array.isArray(subTypeData)) {
+			unhandledType(subTypeData, "invalid buffer object");
+			return {
+				value: "Buffer;\n"
+			};
+		}
+
+		if (subTypeData && "count" in subTypeData && typeof subTypeData.count === "string")
+			return {
+				comment: [`// Count: ${subTypeData.count}`],
+				value: "Buffer;\n"
+			};
+
+		return {
+			value: "Buffer;\n"
+		};
+	}
+
+
 	// object can be array too, so check for that
 	if (subTypeType === "switch" && !Array.isArray(subTypeData) && typeof subTypeData === "object") {
 		const tempSubTypeData = subTypeData as {

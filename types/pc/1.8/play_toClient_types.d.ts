@@ -233,8 +233,7 @@ export interface packet_map_chunk {
     z: i32;
     groundUp: bool;
     bitMap: u16;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
 }
 
 export interface packet_multi_block_change {

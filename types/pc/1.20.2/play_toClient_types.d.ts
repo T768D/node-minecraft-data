@@ -272,8 +272,7 @@ export interface packet_map_chunk {
     x: i32;
     z: i32;
     heightmaps: anonymousNbt;
-    // Unimplemented value
-    chunkData: unknown;
+    chunkData: Buffer;
     blockEntities: chunkBlockEntity[];
     skyLightMask: i64[];
     blockLightMask: i64[];
@@ -437,7 +436,7 @@ export interface packet_abilities {
 export interface packet_player_chat {
     senderUuid: UUID;
     index: varint;
-    signature?: unknown;
+    signature?: Buffer;
     plainMessage: string;
     timestamp: i64;
     salt: i64;
@@ -740,7 +739,7 @@ export interface packet_select_advancement_tab {
 
 export interface packet_server_data {
     motd: string;
-    iconBytes?: unknown;
+    iconBytes?: Buffer;
     enforcesSecureChat: bool;
 }
 
@@ -867,8 +866,7 @@ export interface packet_simulation_distance {
 export interface packet_chunk_biomes {
     biomes: {
     position: packedChunkPos;
-    // Unimplemented value
-    data: unknown;
+    data: Buffer;
 }
 
 }

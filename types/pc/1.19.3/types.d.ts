@@ -27,8 +27,7 @@ type restBuffer = Buffer;
 type nbt = unknown;// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type optionalNbt = unknown;type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
-// Unimplemented value
-type ByteArray = unknown;
+type ByteArray = Buffer;
 interface vec3i16 {
     x: i16;
     y: i16;
@@ -148,10 +147,8 @@ type chat_session = {
     uuid: UUID;
     publicKey: {
     expireTime: i64;
-    // Unimplemented value
-    keyBytes: unknown;
-    // Unimplemented value
-    keySignature: unknown;
+    keyBytes: Buffer;
+    keySignature: Buffer;
 }
 
 }

@@ -13,16 +13,14 @@ export interface packet_chat_command {
     salt: i64;
     argumentSignatures: {
     argumentName: string;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
     signedPreview: bool;
     previousMessages: previousMessages;
     lastRejectedMessage?: {
     sender: UUID;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
 }
@@ -31,14 +29,12 @@ export interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
     signedPreview: bool;
     previousMessages: previousMessages;
     lastRejectedMessage?: {
     sender: UUID;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
 }
@@ -56,8 +52,7 @@ export interface packet_message_acknowledgement {
     previousMessages: previousMessages;
     lastRejectedMessage?: {
     sender: UUID;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
 }

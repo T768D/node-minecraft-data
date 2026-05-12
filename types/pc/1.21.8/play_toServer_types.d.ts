@@ -34,13 +34,11 @@ export interface packet_chat_command_signed {
     salt: i64;
     argumentSignatures: {
     argumentName: string;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
     messageCount: varint;
-    // Unimplemented value
-    acknowledged: unknown;
+    acknowledged: Buffer;
     checksum: i8;
 }
 
@@ -48,10 +46,9 @@ export interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-    signature?: unknown;
+    signature?: Buffer;
     offset: varint;
-    // Unimplemented value
-    acknowledged: unknown;
+    acknowledged: Buffer;
     checksum: i8;
 }
 

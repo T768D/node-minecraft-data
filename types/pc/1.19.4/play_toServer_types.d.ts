@@ -13,23 +13,20 @@ export interface packet_chat_command {
     salt: i64;
     argumentSignatures: {
     argumentName: string;
-    // Unimplemented value
-    signature: unknown;
+    signature: Buffer;
 }
 
     messageCount: varint;
-    // Unimplemented value
-    acknowledged: unknown;
+    acknowledged: Buffer;
 }
 
 export interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-    signature?: unknown;
+    signature?: Buffer;
     offset: varint;
-    // Unimplemented value
-    acknowledged: unknown;
+    acknowledged: Buffer;
 }
 
 export interface packet_set_difficulty {
@@ -316,10 +313,8 @@ export interface packet_pong {
 export interface packet_chat_session_update {
     sessionUUID: UUID;
     expireTime: i64;
-    // Unimplemented value
-    publicKey: unknown;
-    // Unimplemented value
-    signature: unknown;
+    publicKey: Buffer;
+    signature: Buffer;
 }
 
 export interface packet {
