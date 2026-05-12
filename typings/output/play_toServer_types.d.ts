@@ -32,11 +32,15 @@ interface packet_chat_command_signed {
     command: string;
     timestamp: i64;
     salt: i64;
-        argumentSignatures: {
+    argumentSignatures: {
     argumentName: string;
+    // Unimplemented value
+    signature: unknown;
 }
 
-;    messageCount: varint;
+    messageCount: varint;
+    // Unimplemented value
+    acknowledged: unknown;
     checksum: i8;
 }
 
@@ -44,7 +48,10 @@ interface packet_chat_message {
     message: string;
     timestamp: i64;
     salt: i64;
-        offset: varint;
+    signature?: unknown;
+    offset: varint;
+    // Unimplemented value
+    acknowledged: unknown;
     checksum: u8;
 }
 
@@ -85,12 +92,12 @@ interface packet_window_click {
     slot: i16;
     mouseButton: i8;
     mode: varint;
-        changedSlots: {
+    changedSlots: {
     location: i16;
     item?: HashedSlot;
 }
 
-;    cursorItem?: HashedSlot;
+    cursorItem?: HashedSlot;
 }
 
 interface packet_close_window {
@@ -147,6 +154,8 @@ interface packet_lock_difficulty {
     locked: bool;
 }
 
+// Unimplemented value
+type MovementFlags= unknown;
 interface packet_position {
     x: f64;
     y: f64;
@@ -225,6 +234,8 @@ interface packet_entity_action {
 }
 
 interface packet_player_input {
+    // Unimplemented value
+    inputs: unknown;
 }
 
 interface packet_player_loaded {
@@ -354,7 +365,7 @@ interface packet_test_instance_block_action {
     errorMessage?: anonymousNbt;
 }
 
-;}
+}
 
 interface packet_block_place {
     hand: varint;

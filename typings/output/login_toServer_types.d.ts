@@ -4,6 +4,10 @@ interface packet_login_start {
 }
 
 interface packet_encryption_begin {
+    // Unimplemented value
+    sharedSecret: unknown;
+    // Unimplemented value
+    verifyToken: unknown;
 }
 
 interface packet_login_plugin_response {

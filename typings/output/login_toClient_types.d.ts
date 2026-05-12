@@ -4,19 +4,23 @@ interface packet_disconnect {
 
 interface packet_encryption_begin {
     serverId: string;
+    // Unimplemented value
+    publicKey: unknown;
+    // Unimplemented value
+    verifyToken: unknown;
     shouldAuthenticate: bool;
 }
 
 interface packet_success {
     uuid: UUID;
     username: string;
-        properties: {
+    properties: {
     name: string;
     value: string;
     signature?: string;
 }
 
-;}
+}
 
 interface packet_compress {
     threshold: varint;

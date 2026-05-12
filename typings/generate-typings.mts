@@ -92,7 +92,7 @@ export function generateTypes(
 				continue;
 			}
 
-			typesOutput += subArrayHandling(name, type[0], type[1], true);
+			typesOutput += subArrayHandling(name, type[0], type[1], "topLevel");
 		}
 
 		// this must come after array check as arrays are object types too

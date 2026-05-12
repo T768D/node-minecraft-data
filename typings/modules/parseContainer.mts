@@ -45,7 +45,7 @@ export function parseContainer(container: { name: string, type: unknown; anon?: 
 		}
 
 		else if (Array.isArray(dict.type)) {
-			tempOutput += subArrayHandling(dict.name, dict.type[0], dict.type[1], false, `${containerName}_${dict.name}`);
+			tempOutput += subArrayHandling(dict.name, dict.type[0], dict.type[1], "nested", `${containerName}_${dict.name}`);
 		}
 
 		else if (typeof dict.type !== "string") {

@@ -27,24 +27,24 @@ interface packet_reset_chat {
 
 interface packet_registry_data {
     id: string;
-        entries: {
+    entries: {
     key: string;
     value?: anonymousNbt;
 }
 
-;}
+}
 
 interface packet_feature_flags {
     features: string[];
 }
 
 interface packet_tags {
-        tags: {
+    tags: {
     tagType: string;
     tags: tags;
 }
 
-;}
+}
 
 interface packet_show_dialog {
     dialog: anonymousNbt;

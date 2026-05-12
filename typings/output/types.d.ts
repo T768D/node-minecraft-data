@@ -28,6 +28,8 @@ type anonOptionalNbt = unknown | null;
 type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
 type lpVec3 = { x: number; y: number; z: number };
+// Unimplemented value
+type ByteArray= unknown;
 interface vec2f {
     x: f32;
     y: f32;
@@ -64,6 +66,8 @@ interface vec3i32 {
     z: i32;
 }
 
+// Unimplemented value
+type IDSet= unknown;
 type ContainerID = varint;
 interface SlotComponent {
     type: SlotComponentType;
@@ -78,19 +82,19 @@ interface SlotComponent {
     damageType: string ;
 } | 
 {
-        enchantments: {
+    enchantments: {
     id: varint;
     level: varint;
 }
 
-;} | 
+} | 
 {
-        enchantments: {
+    enchantments: {
     id: varint;
     level: varint;
 }
 
-;} | 
+} | 
 {
     predicates: ItemBlockPredicate[];
 } | 
@@ -110,20 +114,20 @@ interface SlotComponent {
 {
     blockDelaySeconds: f32;
     disableCooldownScale: f32;
-        damageReductions: {
+    damageReductions: {
     horizontalBlockingAngle: f32;
     type?: IDSet;
     base: f32;
     factor: f32;
 }
 
-;    itemDamage: {
+    itemDamage: {
     threshold: f32;
     base: f32;
     factor: f32;
 }
 
-;    bypassedBy?: string;
+    bypassedBy?: string;
     blockSound?: ItemSoundHolder;
     disableSound?: ItemSoundHolder;
 } | 
@@ -144,13 +148,13 @@ interface SlotComponent {
     cooldownGroup?: string;
 } | 
 {
-        rules: {
+    rules: {
     blocks: IDSet;
     speed?: f32;
     correctDropForBlocks?: bool;
 }
 
-;    defaultMiningSpeed: f32;
+    defaultMiningSpeed: f32;
     damagePerBlock: varint;
     canDestroyBlocksInCreative: bool;
 } | 
@@ -219,12 +223,12 @@ interface SlotComponent {
     customName?: string;
 } | 
 {
-        effects: {
+    effects: {
     effect: varint;
     duration: varint;
 }
 
-;} | 
+} | 
 {
     pages: ItemBookPage[];
 } | 
@@ -237,6 +241,10 @@ interface SlotComponent {
     resolved: bool;
 } | 
 {
+    // Unimplemented value
+    material: unknown;
+    // Unimplemented value
+    pattern: unknown;
 } | 
 {
     type: varint;
@@ -276,20 +284,20 @@ interface SlotComponent {
     contents: Slot[];
 } | 
 {
-        properties: {
+    properties: {
     name: string;
     value: string;
 }
 
-;} | 
+} | 
 {
-        bees: {
+    bees: {
     nbtData: anonymousNbt;
     ticksInHive: varint;
     minTicksInHive: varint;
 }
 
-;};
+};
 }
 
 interface ItemSoundEvent {
@@ -297,6 +305,8 @@ interface ItemSoundEvent {
     fixedRange?: f32;
 }
 
+// Unimplemented value
+type ItemSoundHolder= unknown;
 interface ItemFireworkExplosion {
     shape: ItemFireworkExplosion_shape;
     colors: i32[];
@@ -332,14 +342,15 @@ interface ItemBlockProperty {
 };
 }
 
-    ExactComponentMatcher: SlotComponent[];
+type ExactComponentMatcher= SlotComponent[];
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
     partialMatchers: varint[];
 }
 
 interface ItemBlockPredicate {
-            properties?: ItemBlockProperty[];
+    blockSet?: unknown;
+    properties?: ItemBlockProperty[];
     nbt: anonOptionalNbt;
     components: DataComponentMatchers;
 }
@@ -374,12 +385,12 @@ interface ItemConsumeEffect {
 
 interface ArmorTrimMaterial {
     assetBase: string;
-        overrideArmorAssets: {
+    overrideArmorAssets: {
     key: string;
     value: string;
 }
 
-;    description: anonymousNbt;
+    description: anonymousNbt;
 }
 
 interface ArmorTrimPattern {
@@ -408,6 +419,8 @@ interface BannerPattern {
 }
 
 interface BannerPatternLayer {
+    // Unimplemented value
+    pattern: unknown;
     colorId: varint;
 }
 
@@ -438,11 +451,11 @@ interface UntrustedSlot {
     addedComponentCount: varint;
     removedComponentCount: varint;
     components: UntrustedSlotComponent[];
-        removeComponents: {
+    removeComponents: {
     type: SlotComponentType;
 }
 
-;};
+};
 }
 
 interface Slot {
@@ -453,26 +466,26 @@ interface Slot {
     addedComponentCount: varint;
     removedComponentCount: varint;
     components: SlotComponent[];
-        removeComponents: {
+    removeComponents: {
     type: SlotComponentType;
 }
 
-;};
+};
 }
 
 interface HashedSlot {
     itemId: varint;
     itemCount: varint;
-        components: {
+    components: {
     type: SlotComponentType;
     hash: i32;
 }
 
-;        removeComponents: {
+    removeComponents: {
     type: SlotComponentType;
 }
 
-;}
+}
 
 interface RespawnData {
     globalPos: GlobalPos;
@@ -488,13 +501,13 @@ interface GlobalPos {
 interface DebugStructureInfo {
     boundingBoxMin: position;
     boundingBoxMax: position;
-        pieces: {
+    pieces: {
     boundingBoxMin: position;
     boundingBoxMax: position;
     isStart: bool;
 }
 
-;}
+}
 
 interface Node {
     position: vec3i32;
@@ -523,7 +536,7 @@ interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
     undefined: undefined  | 
 {
-        payload?: undefined  | 
+    payload?: undefined  | 
 {
     hivePos?: position;
     flowerPos?: position;
@@ -551,13 +564,13 @@ interface DebugSubscriptionUpdate {
     jumpTarget?: position;
 } | 
 {
-        goals: {
+    goals: {
     priority: varint;
     running: bool;
     name: string;
 }
 
-;} | 
+} | 
 {
     path: Path;
     maxNodeDistance: f32;
@@ -715,22 +728,21 @@ interface Particle {
 };
 }
 
-    ingredient: Slot[];
-
-    /**
-     * This is a bitfield
-     * Format: (name : bits a-b : signed)
-     * x : 0-25 : true
-     * z : 26-51 : true
-     * y : 52-63 : true
-    */
-    position: number;
+type ingredient= Slot[];
+/**
+ * This is a bitfield
+ * Format: (name : bits a-b : signed)
+ * x : 0-25 : true
+ * z : 26-51 : true
+ * y : 52-63 : true
+*/
+type position= number;
 interface packedChunkPos {
     z: i32;
     x: i32;
 }
 
-interface previousMessages {
+type previousMessages= {
     id: varint;
     signature: undefined ;
 }
@@ -759,13 +771,14 @@ interface EntityMetadataPaintingVariant {
     author?: anonymousNbt;
 }
 
-interface tags {
+// Unimplemented value
+type entityMetadata= unknown;
+type tags= {
     tagName: string;
     entries: varint[];
 }
 
 interface chunkBlockEntity {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -778,13 +791,17 @@ interface chunkBlockEntity {
     nbtData: anonOptionalNbt;
 }
 
-    interface chat_session {
-    uuid?: UUID;
+type chat_session= {
+    uuid: UUID;
     publicKey: {
     expireTime: i64;
+    // Unimplemented value
+    keyBytes: unknown;
+    // Unimplemented value
+    keySignature: unknown;
 }
 
-;}
+}
 
 interface game_profile_name_prop {
     name: string;
@@ -819,11 +836,10 @@ interface PlayerSkinPatch {
     body?: string;
     cape?: string;
     elytra?: string;
-        model?: PlayerSkinPatch_model;
+    model?: PlayerSkinPatch_model;
 }
 
 interface command_node {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -846,7 +862,6 @@ interface command_node {
     parser: a2_parser;
     properties: undefined  | 
 {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -859,7 +874,6 @@ interface command_node {
     max: f32 | undefined ;
 } | 
 {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -872,7 +886,6 @@ interface command_node {
     max: f64 | undefined ;
 } | 
 {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -885,7 +898,6 @@ interface command_node {
     max: i32 | undefined ;
 } | 
 {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -951,21 +963,21 @@ interface packet_common_cookie_response {
 }
 
 interface packet_common_select_known_packs {
-        packs: {
+    packs: {
     namespace: string;
     id: string;
     version: string;
 }
 
-;}
+}
 
 interface packet_common_custom_report_details {
-        details: {
+    details: {
     key: string;
     value: string;
 }
 
-;}
+}
 
 interface packet_common_remove_resource_pack {
     uuid?: UUID;
@@ -980,14 +992,14 @@ interface packet_common_add_resource_pack {
 }
 
 interface packet_common_server_links {
-        links: {
+    links: {
     hasKnownType: bool;
     knownType: ServerLinkType ;
     unknownType: anonymousNbt ;
     link: string;
 }
 
-;}
+}
 
 interface packet_common_clear_dialog {
 }

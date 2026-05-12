@@ -4,6 +4,8 @@ interface SlotDisplay {
 {
     base: SlotDisplay;
     material: SlotDisplay;
+    // Unimplemented value
+    pattern: unknown;
 } | 
 {
     input: SlotDisplay;
@@ -81,13 +83,13 @@ interface packet_animation {
 }
 
 interface packet_statistics {
-        entries: {
+    entries: {
     categoryId: varint;
     statisticId: varint;
     value: varint;
 }
 
-;}
+}
 
 interface packet_acknowledge_player_digging {
     sequenceId: varint;
@@ -140,12 +142,12 @@ interface packet_chunk_batch_start {
 }
 
 interface packet_chunk_biomes {
-        biomes: {
+    biomes: {
     position: packedChunkPos;
     data: ByteArray;
 }
 
-;}
+}
 
 interface packet_clear_titles {
     reset: bool;
@@ -155,12 +157,12 @@ interface packet_tab_complete {
     transactionId: varint;
     start: varint;
     length: varint;
-        matches: {
+    matches: {
     match: string;
     tooltip?: anonymousNbt;
 }
 
-;}
+}
 
 interface packet_declare_commands {
     nodes: command_node[];
@@ -258,6 +260,8 @@ interface ChatTypes {
     narration: ChatType;
 }
 
+// Unimplemented value
+type ChatTypesHolder= unknown;
 interface packet_profileless_chat {
     message: anonymousNbt;
     type: ChatTypesHolder;
@@ -348,19 +352,19 @@ interface packet_keep_alive {
 interface packet_map_chunk {
     x: i32;
     z: i32;
-        heightmaps: {
+    heightmaps: {
     type: packet_map_chunk_heightmaps_type;
     data: i64[];
 }
 
-;    chunkData: ByteArray;
+    chunkData: ByteArray;
     blockEntities: chunkBlockEntity[];
     skyLightMask: i64[];
     blockLightMask: i64[];
     emptySkyLightMask: i64[];
     emptyBlockLightMask: i64[];
-        skyLight: u8[];
-        blockLight: u8[];
+    skyLight: u8[];
+    blockLight: u8[];
 }
 
 interface packet_world_event {
@@ -391,8 +395,8 @@ interface packet_update_light {
     blockLightMask: i64[];
     emptySkyLightMask: i64[];
     emptyBlockLightMask: i64[];
-        skyLight: u8[];
-        blockLight: u8[];
+    skyLight: u8[];
+    blockLight: u8[];
 }
 
 interface packet_login {
@@ -413,7 +417,7 @@ interface packet_map {
     itemDamage: varint;
     scale: i8;
     locked: bool;
-            icons?: {
+    icons?: {
     type: varint;
     x: i8;
     z: i8;
@@ -421,7 +425,7 @@ interface packet_map {
     displayName?: anonymousNbt;
 }
 
-;    columns: u8;
+    columns: u8;
     rows: undefined | u8 ;
     x: undefined | u8 ;
     y: undefined | u8 ;
@@ -430,21 +434,21 @@ interface packet_map {
 
 interface packet_trade_list {
     windowId: ContainerID;
-        trades: {
+    trades: {
     inputItem1: {
     itemId: varint;
     itemCount: varint;
     components: ExactComponentMatcher;
 }
 
-;    outputItem: Slot;
-        inputItem2?: {
+    outputItem: Slot;
+    inputItem2?: {
     itemId: varint;
     itemCount: varint;
     components: ExactComponentMatcher;
 }
 
-;    tradeDisabled: bool;
+    tradeDisabled: bool;
     nbTradeUses: i32;
     maximumNbTradeUses: i32;
     xp: i32;
@@ -453,7 +457,7 @@ interface packet_trade_list {
     demand: i32;
 }
 
-;    villagerLevel: varint;
+    villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
     canRestock: bool;
@@ -479,7 +483,7 @@ interface packet_entity_move_look {
 
 interface packet_move_minecart {
     entityId: varint;
-        steps: {
+    steps: {
     position: vec3f;
     velocity: vec3f;
     yaw: f32;
@@ -487,7 +491,7 @@ interface packet_move_minecart {
     weight: f32;
 }
 
-;}
+}
 
 interface packet_entity_look {
     entityId: varint;
@@ -542,7 +546,8 @@ interface packet_player_chat {
     globalIndex: varint;
     senderUuid: UUID;
     index: varint;
-        plainMessage: string;
+    signature?: unknown;
+    plainMessage: string;
     timestamp: i64;
     salt: i64;
     previousMessages: previousMessages;
@@ -571,7 +576,9 @@ interface packet_player_remove {
 }
 
 interface packet_player_info {
-        data: {
+    // Unimplemented value
+    action: unknown;
+    data: {
     uuid: UUID;
     player: game_profile_name_prop | undefined ;
     chatSession: chat_session | undefined ;
@@ -583,7 +590,7 @@ interface packet_player_info {
     showHat: bool | undefined ;
 }
 
-;}
+}
 
 interface packet_face_player {
     feet_eyes: varint;
@@ -595,6 +602,8 @@ interface packet_face_player {
     entity_feet_eyes: varint | undefined ;
 }
 
+// Unimplemented value
+type PositionUpdateRelatives= unknown;
 interface packet_position {
     teleportId: varint;
     x: f64;
@@ -616,18 +625,20 @@ interface packet_player_rotation {
 }
 
 interface packet_recipe_book_add {
-        entries: {
+    entries: {
     recipe: {
     displayId: varint;
     display: RecipeDisplay;
     group: optvarint;
     category: packet_recipe_book_add_entries_recipe_category;
-        craftingRequirements?: IDSet[];
+    craftingRequirements?: IDSet[];
 }
 
-;}
+    // Unimplemented value
+    flags: unknown;
+}
 
-;    replace: bool;
+    replace: bool;
 }
 
 interface packet_recipe_book_remove {
@@ -671,7 +682,6 @@ interface packet_entity_head_rotation {
 }
 
 interface packet_multi_block_change {
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -759,6 +769,8 @@ interface packet_entity_velocity {
 
 interface packet_entity_equipment {
     entityId: varint;
+    // Unimplemented value
+    equipments: unknown;
 }
 
 interface packet_experience {
@@ -802,6 +814,8 @@ interface packet_teams {
     undefined: undefined  | 
 {
     name: anonymousNbt;
+    // Unimplemented value
+    flags: unknown;
     nameTagVisibility: add_nameTagVisibility;
     collisionRule: add_collisionRule;
     formatting: varint;
@@ -810,6 +824,8 @@ interface packet_teams {
 } | 
 {
     name: anonymousNbt;
+    // Unimplemented value
+    flags: unknown;
     nameTagVisibility: change_nameTagVisibility;
     collisionRule: change_collisionRule;
     formatting: varint;
@@ -928,16 +944,15 @@ interface packet_step_tick {
 
 interface packet_advancements {
     reset: bool;
-        advancementMapping: {
+    advancementMapping: {
     key: string;
     value: {
     parentId?: string;
-        displayData?: {
+    displayData?: {
     title: anonymousNbt;
     description: anonymousNbt;
     icon: Slot;
     frameType: varint;
-
     /**
      * This is a bitfield
      * Format: (name : bits a-b : signed)
@@ -952,39 +967,39 @@ interface packet_advancements {
     yCord: f32;
 }
 
-;        requirements: string[];
+    requirements: string[];
     sendsTelemtryData: bool;
 }
 
-;}
+}
 
-;    identifiers: string[];
-        progressMapping: {
+    identifiers: string[];
+    progressMapping: {
     key: string;
-        value: {
+    value: {
     criterionIdentifier: string;
     criterionProgress?: i64;
 }
 
-;}
+}
 
-;    showAdvancements: bool;
+    showAdvancements: bool;
 }
 
 interface packet_entity_update_attributes {
     entityId: varint;
-        properties: {
+    properties: {
     key: packet_entity_update_attributes_properties_key;
     value: f64;
-        modifiers: {
+    modifiers: {
     uuid: string;
     amount: f64;
     operation: i8;
 }
 
-;}
+}
 
-;}
+}
 
 interface packet_entity_effect {
     entityId: varint;
@@ -995,25 +1010,25 @@ interface packet_entity_effect {
 }
 
 interface packet_declare_recipes {
-        recipes: {
+    recipes: {
     name: string;
     items: varint[];
 }
 
-;        stoneCutterRecipes: {
+    stoneCutterRecipes: {
     input: IDSet;
     slotDisplay: SlotDisplay;
 }
 
-;}
+}
 
 interface packet_tags {
-        tags: {
+    tags: {
     tagType: string;
     tags: tags;
 }
 
-;}
+}
 
 interface packet_set_projectile_power {
     id: varint;
@@ -1033,15 +1048,15 @@ interface packet_tracked_waypoint {
 };
     icon: {
     style: string;
-        color?: {
+    color?: {
     red: u8;
     green: u8;
     blue: u8;
 }
 
-;}
+}
 
-;    type: packet_tracked_waypoint_waypoint_type;
+    type: packet_tracked_waypoint_waypoint_type;
     data: vec3i | f32  | 
 {
     chunkX: varint;
@@ -1049,9 +1064,11 @@ interface packet_tracked_waypoint {
 };
 }
 
-;}
+}
 
 interface packet_show_dialog {
+    // Unimplemented value
+    dialog: unknown;
 }
 
 interface packet {
