@@ -32,7 +32,8 @@
 		"allowJs": false,
 		"skipLibCheck": true,
 		"noUncheckedIndexedAccess": true,
-		"pretty": true
+		"pretty": true,
+		"types": [ "node" ]
 	},
 	"include": [
 		"./typings/"

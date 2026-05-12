@@ -6,7 +6,7 @@
 			"program": "${file}",
 			"request": "launch",
 			"type": "bun",
-			"cwd": "${workspaceFolder}/${relativeFileDirname}"
+			"cwd": "${workspaceFolder}"
 		},
 		{
 			"name": "Generate Types",
