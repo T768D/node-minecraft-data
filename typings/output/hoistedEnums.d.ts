@@ -627,6 +627,29 @@ const enum packet_map_chunk_heightmaps_type {
     "motion_blocking_no_leaves" = 5,
 }
 
+const enum packet_player_info_action_bitflags {
+    add_player = 1 << 0,
+    initialize_chat = 1 << 1,
+    update_game_mode = 1 << 2,
+    update_listed = 1 << 3,
+    update_latency = 1 << 4,
+    update_display_name = 1 << 5,
+    update_hat = 1 << 6,
+    update_list_order = 1 << 7,
+}
+
+const enum PositionUpdateRelatives_bitflags {
+    x = 1 << 0,
+    y = 1 << 1,
+    z = 1 << 2,
+    yaw = 1 << 3,
+    pitch = 1 << 4,
+    dx = 1 << 5,
+    dy = 1 << 6,
+    dz = 1 << 7,
+    yawDelta = 1 << 8,
+}
+
 const enum packet_recipe_book_add_entries_recipe_category {
     "crafting_building_blocks" = 0,
     "crafting_redstone" = 1,
@@ -643,40 +666,17 @@ const enum packet_recipe_book_add_entries_recipe_category {
     "campfire" = 12,
 }
 
+const enum packet_recipe_book_add_entries_flags_bitflags {
+    notification = 1 << 0,
+    highlight = 1 << 1,
+}
+
 const enum packet_teams_mode {
     "add" = 0,
     "remove" = 1,
     "change" = 2,
     "join" = 3,
     "leave" = 4,
-}
-
-const enum add_nameTagVisibility {
-    "always" = 0,
-    "never" = 1,
-    "hide_for_other_teams" = 2,
-    "hide_for_own_team" = 3,
-}
-
-const enum add_collisionRule {
-    "always" = 0,
-    "never" = 1,
-    "push_other_teams" = 2,
-    "push_own_team" = 3,
-}
-
-const enum change_nameTagVisibility {
-    "always" = 0,
-    "never" = 1,
-    "hide_for_other_teams" = 2,
-    "hide_for_own_team" = 3,
-}
-
-const enum change_collisionRule {
-    "always" = 0,
-    "never" = 1,
-    "push_other_teams" = 2,
-    "push_own_team" = 3,
 }
 
 const enum packet_entity_update_attributes_properties_key {
@@ -882,6 +882,11 @@ const enum packet_change_gamemode_mode {
     "spectator" = 3,
 }
 
+const enum MovementFlags_bitflags {
+    onGround = 1 << 0,
+    hasHorizontalCollision = 1 << 1,
+}
+
 const enum packet_entity_action_actionId {
     "leave_bed" = 0,
     "start_sprinting" = 1,
@@ -890,6 +895,16 @@ const enum packet_entity_action_actionId {
     "stop_horse_jump" = 4,
     "open_vehicle_inventory" = 5,
     "start_elytra_flying" = 6,
+}
+
+const enum packet_player_input_inputs_bitflags {
+    forward = 1 << 0,
+    backward = 1 << 1,
+    left = 1 << 2,
+    right = 1 << 3,
+    jump = 1 << 4,
+    shift = 1 << 5,
+    sprint = 1 << 6,
 }
 
 const enum packet_update_structure_block_flags {

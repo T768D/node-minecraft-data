@@ -154,8 +154,21 @@ interface packet_lock_difficulty {
     locked: bool;
 }
 
-// Unimplemented value
-type MovementFlags = unknown;
+/**
+ * Combine values from {@link MovementFlags_bitflags} using bitwise OR.
+ * @example
+ * ```ts
+ *   const abc = MovementFlags_bitflags.a | MovementFlags_bitflags.b | MovementFlags_bitflags.c;
+ * ```
+ *
+ * Check if value contains data using bitwise AND:
+ * @example 
+ * ```ts
+ *   // This checks if the variable contains something and something2
+ *   const containsSomething = (value & (MovementFlags_bitflags.something | MovementFlags_bitflags.something2)) !== 0;
+ * ```
+*/
+type MovementFlags = MovementFlags_bitflags;
 interface packet_position {
     x: f64;
     y: f64;
@@ -234,8 +247,21 @@ interface packet_entity_action {
 }
 
 interface packet_player_input {
-    // Unimplemented value
-    inputs: unknown;
+    /**
+     * Combine values from {@link packet_player_input_inputs_bitflags} using bitwise OR.
+     * @example
+     * ```ts
+     *   const abc = packet_player_input_inputs_bitflags.a | packet_player_input_inputs_bitflags.b | packet_player_input_inputs_bitflags.c;
+     * ```
+     *
+     * Check if value contains data using bitwise AND:
+     * @example 
+     * ```ts
+     *   // This checks if the variable contains something and something2
+     *   const containsSomething = (value & (packet_player_input_inputs_bitflags.something | packet_player_input_inputs_bitflags.something2)) !== 0;
+     * ```
+    */
+    inputs: packet_player_input_inputs_bitflags;
 }
 
 interface packet_player_loaded {

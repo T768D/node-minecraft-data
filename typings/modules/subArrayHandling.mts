@@ -1,4 +1,4 @@
-import { parseEnum } from "./parseEnum.mjs";
+import { parseBitflags, parseEnum } from "./parseEnum.mjs";
 import { parseContainer } from "./parseContainer.mjs";
 
 
@@ -238,6 +238,43 @@ function subArrayHandlingHelper(
 		return {
 			comment: getBitFieldMsg(subTypeData),
 			value: "number;\n"
+		};
+	}
+
+
+	if (subTypeType === "bitflags") {
+		if (typeof subTypeData !== "object" || Array.isArray(subTypeData) || !subTypeData ||
+			!("type" in subTypeData) || !("flags" in subTypeData) ||
+			typeof subTypeData.type !== "string" || !Array.isArray(subTypeData.flags)
+		) {
+			unhandledType(subTypeData, "subTypeData is not valid bitflags");
+			return {
+				comment: ["/** Unable to generate bitflags from data */"],
+				value: "number"
+			};
+		}
+
+		const newName = longNameForEnum + "_bitflags";
+
+		parseBitflags(newName, subTypeData.flags);
+		return {
+			comment: [
+				"/**",
+				` * Combine values from {@link ${newName}} using bitwise OR.`,
+				" * @example",
+				" * ```ts",
+				` *   const abc = ${newName}.a | ${newName}.b | ${newName}.c;`,
+				" * ```",
+				" *",
+				" * Check if value contains data using bitwise AND:",
+				" * @example ",
+				" * ```ts",
+				" *   // This checks if the variable contains something and something2",
+				` *   const containsSomething = (value & (${newName}.something | ${newName}.something2)) !== 0;`,
+				" * ```",
+				"*/"
+			],
+			value: `${newName};\n`
 		};
 	}
 

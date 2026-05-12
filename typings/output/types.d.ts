@@ -367,20 +367,6 @@ interface ItemWrittenBookPage {
 
 interface ItemConsumeEffect {
     type: ItemConsumeEffect_type;
-    undefined: undefined  | 
-{
-    effects: ItemPotionEffect[];
-    probability: f32;
-} | 
-{
-    effects: IDSet;
-} | 
-{
-    diameter: f32;
-} | 
-{
-    sound: ItemSoundHolder;
-};
 }
 
 interface ArmorTrimMaterial {
@@ -445,32 +431,10 @@ interface UntrustedSlotComponent {
 
 interface UntrustedSlot {
     itemCount: varint;
-    undefined: undefined  | 
-{
-    itemId: varint;
-    addedComponentCount: varint;
-    removedComponentCount: varint;
-    components: UntrustedSlotComponent[];
-    removeComponents: {
-    type: SlotComponentType;
-}
-
-};
 }
 
 interface Slot {
     itemCount: varint;
-    undefined: undefined  | 
-{
-    itemId: varint;
-    addedComponentCount: varint;
-    removedComponentCount: varint;
-    components: SlotComponent[];
-    removeComponents: {
-    type: SlotComponentType;
-}
-
-};
 }
 
 interface HashedSlot {
@@ -534,81 +498,6 @@ interface Path {
 
 interface DebugSubscriptionUpdate {
     type: DebugSubscriptionDataType;
-    undefined: undefined  | 
-{
-    payload?: undefined  | 
-{
-    hivePos?: position;
-    flowerPos?: position;
-    travelTicks: varint;
-    blacklistedHives: position[];
-} | 
-{
-    name: string;
-    profession: string;
-    xp: i32;
-    health: f32;
-    maxHealth: f32;
-    inventory: string;
-    wantsGolem: bool;
-    angerLevel: i32;
-    activities: string[];
-    behaviors: string[];
-    memories: string[];
-    gossips: string[];
-    pois: position[];
-    potentialPois: position[];
-} | 
-{
-    attackTarget?: varint;
-    jumpTarget?: position;
-} | 
-{
-    goals: {
-    priority: varint;
-    running: bool;
-    name: string;
-}
-
-} | 
-{
-    path: Path;
-    maxNodeDistance: f32;
-} | 
-{
-    id: varint;
-} | 
-{
-    type: varint;
-    occupantCount: varint;
-    honeyLevel: varint;
-    sedated: bool;
-} | 
-{
-    pos: position;
-    poiType: varint;
-    freeTicketCount: varint;
-} | 
-{
-    index: varint;
-} | 
-{
-    positions: position[];
-} | 
-{
-    structures: DebugStructureInfo[];
-} | 
-{
-    listenerRadius: varint;
-} | 
-{
-    pos: position;
-} | 
-{
-    event: varint;
-    pos: vec3f64;
-};
-};
 }
 
 interface DebugSubscriptionEvent {
@@ -779,13 +668,6 @@ type tags = {
 }
 
 interface chunkBlockEntity {
-    /**
-     * This is a bitfield
-     * Format: (name : bits a-b : signed)
-     * x : 0-3 : false
-     * z : 4-7 : false
-    */
-    undefined: number;
     y: i16;
     type: varint;
     nbtData: anonOptionalNbt;
@@ -828,7 +710,6 @@ interface GameProfileProperty {
 
 interface ResolvableProfile {
     type: ResolvableProfile_type;
-    undefined: PartialResolvableProfile | GameProfile ;
     skinPatch: PlayerSkinPatch;
 }
 

@@ -576,8 +576,21 @@ interface packet_player_remove {
 }
 
 interface packet_player_info {
-    // Unimplemented value
-    action: unknown;
+    /**
+     * Combine values from {@link packet_player_info_action_bitflags} using bitwise OR.
+     * @example
+     * ```ts
+     *   const abc = packet_player_info_action_bitflags.a | packet_player_info_action_bitflags.b | packet_player_info_action_bitflags.c;
+     * ```
+     *
+     * Check if value contains data using bitwise AND:
+     * @example 
+     * ```ts
+     *   // This checks if the variable contains something and something2
+     *   const containsSomething = (value & (packet_player_info_action_bitflags.something | packet_player_info_action_bitflags.something2)) !== 0;
+     * ```
+    */
+    action: packet_player_info_action_bitflags;
     data: {
     uuid: UUID;
     player: game_profile_name_prop | undefined ;
@@ -602,8 +615,21 @@ interface packet_face_player {
     entity_feet_eyes: varint | undefined ;
 }
 
-// Unimplemented value
-type PositionUpdateRelatives = unknown;
+/**
+ * Combine values from {@link PositionUpdateRelatives_bitflags} using bitwise OR.
+ * @example
+ * ```ts
+ *   const abc = PositionUpdateRelatives_bitflags.a | PositionUpdateRelatives_bitflags.b | PositionUpdateRelatives_bitflags.c;
+ * ```
+ *
+ * Check if value contains data using bitwise AND:
+ * @example 
+ * ```ts
+ *   // This checks if the variable contains something and something2
+ *   const containsSomething = (value & (PositionUpdateRelatives_bitflags.something | PositionUpdateRelatives_bitflags.something2)) !== 0;
+ * ```
+*/
+type PositionUpdateRelatives = PositionUpdateRelatives_bitflags;
 interface packet_position {
     teleportId: varint;
     x: f64;
@@ -634,8 +660,21 @@ interface packet_recipe_book_add {
     craftingRequirements?: IDSet[];
 }
 
-    // Unimplemented value
-    flags: unknown;
+    /**
+     * Combine values from {@link packet_recipe_book_add_entries_flags_bitflags} using bitwise OR.
+     * @example
+     * ```ts
+     *   const abc = packet_recipe_book_add_entries_flags_bitflags.a | packet_recipe_book_add_entries_flags_bitflags.b | packet_recipe_book_add_entries_flags_bitflags.c;
+     * ```
+     *
+     * Check if value contains data using bitwise AND:
+     * @example 
+     * ```ts
+     *   // This checks if the variable contains something and something2
+     *   const containsSomething = (value & (packet_recipe_book_add_entries_flags_bitflags.something | packet_recipe_book_add_entries_flags_bitflags.something2)) !== 0;
+     * ```
+    */
+    flags: packet_recipe_book_add_entries_flags_bitflags;
 }
 
     replace: bool;
@@ -811,27 +850,6 @@ interface packet_set_player_inventory {
 interface packet_teams {
     team: string;
     mode: packet_teams_mode;
-    undefined: undefined  | 
-{
-    name: anonymousNbt;
-    // Unimplemented value
-    flags: unknown;
-    nameTagVisibility: add_nameTagVisibility;
-    collisionRule: add_collisionRule;
-    formatting: varint;
-    prefix: anonymousNbt;
-    suffix: anonymousNbt;
-} | 
-{
-    name: anonymousNbt;
-    // Unimplemented value
-    flags: unknown;
-    nameTagVisibility: change_nameTagVisibility;
-    collisionRule: change_collisionRule;
-    formatting: varint;
-    prefix: anonymousNbt;
-    suffix: anonymousNbt;
-};
     players: undefined ;
 }
 
@@ -1039,13 +1057,6 @@ interface packet_tracked_waypoint {
     operation: packet_tracked_waypoint_operation;
     waypoint: {
     hasUUID: bool;
-    undefined:   | 
-{
-    uuid: UUID;
-} | 
-{
-    id: string;
-};
     icon: {
     style: string;
     color?: {
