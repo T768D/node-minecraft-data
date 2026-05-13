@@ -222,10 +222,8 @@ export interface packet_update_attributes {
     uuid: UUID;
     amount: f64;
     operation: i8;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_map_chunk {
@@ -243,8 +241,7 @@ export interface packet_multi_block_change {
     horizontalPos: u8;
     y: u8;
     blockId: varint;
-}
-
+};
 }
 
 export interface packet_block_change {
@@ -271,8 +268,7 @@ export interface packet_map_chunk_bulk {
     x: i32;
     z: i32;
     bitMap: u16;
-}
-
+};
     data: restBuffer;
 }
 
@@ -285,8 +281,7 @@ export interface packet_explosion {
     x: i8;
     y: i8;
     z: i8;
-}
-
+};
     playerMotionX: f32;
     playerMotionY: f32;
     playerMotionZ: f32;
@@ -385,8 +380,7 @@ export interface packet_map {
     directionAndType: i8;
     x: i8;
     z: i8;
-}
-
+};
     columns: i8;
     rows: undefined | i8 ;
     x: undefined | i8 ;
@@ -408,16 +402,14 @@ export interface packet_statistics {
     entries: {
     name: string;
     value: varint;
-}
-
+};
 }
 
 export interface packet_player_info {
     action: packet_player_info_action;
     data: {
     uuid: UUID;
-}
-
+};
 }
 
 export interface packet_abilities {

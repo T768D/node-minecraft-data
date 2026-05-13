@@ -4,8 +4,7 @@ export interface packet_login_start {
     timestamp: i64;
     publicKey: Buffer;
     signature: Buffer;
-}
-
+};
 }
 
 export interface packet_encryption_begin {

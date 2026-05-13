@@ -42,8 +42,7 @@ export interface packet_tags {
     tags: {
     tagType: string;
     tags: tags;
-}
-
+};
 }
 
 export interface packet {

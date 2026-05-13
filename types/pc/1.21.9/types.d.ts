@@ -29,6 +29,8 @@ type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
 type lpVec3 = { x: number; y: number; z: number };
 type ByteArray = Buffer;
+
+
 interface vec2f {
     x: f32;
     y: f32;
@@ -67,6 +69,8 @@ interface vec3i32 {
 
 // Unimplemented value
 type IDSet = unknown;
+
+
 type ContainerID = varint;
 interface SlotComponent {
     type: SlotComponentType;
@@ -75,15 +79,13 @@ interface SlotComponent {
     enchantments: {
     id: varint;
     level: varint;
-}
-
+};
 } | 
 {
     enchantments: {
     id: varint;
     level: varint;
-}
-
+};
 } | 
 {
     predicates: ItemBlockPredicate[];
@@ -109,14 +111,12 @@ interface SlotComponent {
     type?: IDSet;
     base: f32;
     factor: f32;
-}
-
+};
     itemDamage: {
     threshold: f32;
     base: f32;
     factor: f32;
-}
-
+};
     bypassedBy?: string;
     blockSound?: ItemSoundHolder;
     disableSound?: ItemSoundHolder;
@@ -142,8 +142,7 @@ interface SlotComponent {
     blocks: IDSet;
     speed?: f32;
     correctDropForBlocks?: bool;
-}
-
+};
     defaultMiningSpeed: f32;
     damagePerBlock: varint;
     canDestroyBlocksInCreative: bool;
@@ -187,8 +186,7 @@ interface SlotComponent {
     effects: {
     effect: varint;
     duration: varint;
-}
-
+};
 } | 
 {
     pages: ItemBookPage[];
@@ -248,16 +246,14 @@ interface SlotComponent {
     properties: {
     name: string;
     value: string;
-}
-
+};
 } | 
 {
     bees: {
     nbtData: anonymousNbt;
     ticksInHive: varint;
     minTicksInHive: varint;
-}
-
+};
 };
 }
 
@@ -268,6 +264,8 @@ interface ItemSoundEvent {
 
 // Unimplemented value
 type ItemSoundHolder = unknown;
+
+
 interface ItemFireworkExplosion {
     shape: ItemFireworkExplosion_shape;
     colors: i32[];
@@ -304,6 +302,8 @@ interface ItemBlockProperty {
 }
 
 type ExactComponentMatcher = SlotComponent[];
+
+
 interface DataComponentMatchers {
     exactMatchers: ExactComponentMatcher;
     partialMatchers: varint[];
@@ -335,8 +335,7 @@ interface ArmorTrimMaterial {
     overrideArmorAssets: {
     key: string;
     value: string;
-}
-
+};
     description: anonymousNbt;
 }
 
@@ -390,12 +389,10 @@ interface HashedSlot {
     components: {
     type: SlotComponentType;
     hash: i32;
-}
-
+};
     removeComponents: {
     type: SlotComponentType;
-}
-
+};
 }
 
 interface RespawnData {
@@ -416,8 +413,7 @@ interface DebugStructureInfo {
     boundingBoxMin: position;
     boundingBoxMax: position;
     isStart: bool;
-}
-
+};
 }
 
 interface Node {
@@ -565,6 +561,8 @@ interface Particle {
 }
 
 type ingredient = Slot[];
+
+
 /**
  * This is a bitfield
  * Format: (name : bits a-b : signed)
@@ -573,6 +571,8 @@ type ingredient = Slot[];
  * y : 52-63 : true
 */
 type position = number;
+
+
 interface packedChunkPos {
     z: i32;
     x: i32;
@@ -581,7 +581,8 @@ interface packedChunkPos {
 type previousMessages = {
     id: varint;
     signature: undefined ;
-}
+};
+
 
 interface entityMetadataEntry {
     key: u8;
@@ -609,10 +610,13 @@ interface EntityMetadataPaintingVariant {
 
 // Unimplemented value
 type entityMetadata = unknown;
+
+
 type tags = {
     tagName: string;
     entries: varint[];
-}
+};
+
 
 interface chunkBlockEntity {
     y: i16;
@@ -626,9 +630,9 @@ type chat_session = {
     expireTime: i64;
     keyBytes: Buffer;
     keySignature: Buffer;
-}
+};
+};
 
-}
 
 interface game_profile_name_prop {
     name: string;
@@ -793,16 +797,14 @@ interface packet_common_select_known_packs {
     namespace: string;
     id: string;
     version: string;
-}
-
+};
 }
 
 interface packet_common_custom_report_details {
     details: {
     key: string;
     value: string;
-}
-
+};
 }
 
 interface packet_common_remove_resource_pack {
@@ -823,8 +825,7 @@ interface packet_common_server_links {
     knownType: ServerLinkType ;
     unknownType: anonymousNbt ;
     link: string;
-}
-
+};
 }
 
 interface packet_common_clear_dialog {

@@ -9,14 +9,12 @@ export interface packet_prepare_crafting_grid {
     item: slot;
     craftingSlot: u8;
     playerSlot: u8;
-}
-
+};
     prepareEntry: {
     item: slot;
     craftingSlot: u8;
     playerSlot: u8;
-}
-
+};
 }
 
 export interface packet_tab_complete {

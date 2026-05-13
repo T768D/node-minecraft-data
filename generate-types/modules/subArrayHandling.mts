@@ -60,6 +60,10 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		if (result.declaration === "type")
 			assignSymbol += " =";
 
+		// only top level type = k can have ; after them, interfaces cannot
+		if (result.declaration !== "interface")
+			result.value += ";\n";
+
 		if (!isAmbientFile)
 			// @ts-expect-error not bothered to fix
 			result.declaration = "export " + result.declaration;
@@ -67,20 +71,22 @@ export function subArrayHandling(name: string, subTypeType: string, subTypeData:
 		if (result.comment)
 			returnVal += result.comment.join("\n") + "\n";
 
-		return returnVal + `${result.declaration} ${name}${assignSymbol} ${result.value}`;
+
+		return returnVal + `${result.declaration} ${name}${assignSymbol} ${result.value}\n\n`;
 	}
 
 	else if (type === "nested") {
 		if (result.comment)
 			returnVal += "    " + result.comment.join("\n    ") + "\n";
 
+		result.value += ";\n";
+
 		return returnVal + `    ${name}${result.isOptional ? "?" : ""}: ${result.value}`;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-	else if (type === "valueOnly") {
+	else if (type === "valueOnly")
 		return result.value;
-	}
 
 	else
 		throw new Error("shouldnt happen");
@@ -114,18 +120,18 @@ function subArrayHandlingHelper(
 		if (typeof subTypeData !== "object" || Array.isArray(subTypeData)) {
 			unhandledType(subTypeData, "invalid buffer object");
 			return {
-				value: "Buffer;\n"
+				value: "Buffer"
 			};
 		}
 
 		if (subTypeData && "count" in subTypeData && typeof subTypeData.count === "string")
 			return {
 				comment: [`// Count: ${subTypeData.count}`],
-				value: "Buffer;\n"
+				value: "Buffer"
 			};
 
 		return {
-			value: "Buffer;\n"
+			value: "Buffer"
 		};
 	}
 
@@ -168,18 +174,18 @@ function subArrayHandlingHelper(
 				nestedVariations += " | \n" + parseContainer(value[1], key).trim();
 
 			else if (tempSubTypeData.default)
-				console.error("Unhandled subTypeData: ", tempSubTypeData);
+				console.error("Unhandled subTypeData: ", JSON.stringify(tempSubTypeData, null, 4));
 		}
 
 		// sometimes fields can be a empty object
 		if (variations.size === 0 && nestedVariations.length === 0)
 			return {
-				value: "undefined;\n"
+				value: "undefined"
 			};
 
 		// order the variations the ones from parseContainer go at the bottom
 		return {
-			value: Array.from(variations).join(" | ") + " " + nestedVariations + ";\n"
+			value: Array.from(variations).join(" | ") + " " + nestedVariations
 		};
 	}
 
@@ -201,7 +207,7 @@ function subArrayHandlingHelper(
 		if (!calledFromTopLevel)
 			return {
 				declaration: "declare const enum",
-				value: parseEnum(longNameForEnum, subTypeData.mappings!) + ";\n"
+				value: parseEnum(longNameForEnum, subTypeData.mappings!)
 			};
 
 		parseEnum(longNameForEnum, subTypeData.mappings!);
@@ -213,7 +219,7 @@ function subArrayHandlingHelper(
 		if (typeof subTypeData === "string")
 			return {
 				isOptional: true,
-				value: subTypeData + ";\n"
+				value: subTypeData
 			};
 
 		if (typeof subTypeData === "object" && Array.isArray(subTypeData) && typeof subTypeData[0] === "string") {
@@ -241,7 +247,7 @@ function subArrayHandlingHelper(
 
 		if (typeof subTypeData.type === "string")
 			return {
-				value: `${subTypeData.type}[];\n`
+				value: `${subTypeData.type}[]`
 			};
 
 		if (typeof subTypeData.type === "object" && Array.isArray(subTypeData.type) && typeof subTypeData.type[0] === "string")
@@ -251,7 +257,7 @@ function subArrayHandlingHelper(
 
 		unhandledType(subTypeData, "subTypeData is not a valid array 2");
 		return {
-			value: "unknown[]"
+			value: "unknown[]",
 		};
 	}
 
@@ -261,13 +267,13 @@ function subArrayHandlingHelper(
 			unhandledType(subTypeData, "subTypeData is not a valid bitfield! Unable to generate comment!");
 			return {
 				comment: ["/** Unable to generate bitfield comment from data */"],
-				value: "number"
+				value: "number",
 			};
 		}
 
 		return {
 			comment: getBitFieldMsg(subTypeData),
-			value: "number;\n"
+			value: "number"
 		};
 	}
 
@@ -304,7 +310,7 @@ function subArrayHandlingHelper(
 				" * ```",
 				"*/"
 			],
-			value: `${newName};\n`
+			value: newName
 		};
 	}
 
@@ -312,6 +318,6 @@ function subArrayHandlingHelper(
 	console.error(`Unimplemented!\n realType: ${subTypeType}\n value: `, subTypeData);
 	return {
 		comment: ["// Unimplemented value"],
-		value: "unknown;\n"
+		value: "unknown"
 	};
 }

@@ -14,8 +14,7 @@ export interface packet_chat_command {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     messageCount: varint;
     acknowledged: Buffer;
 }
@@ -131,8 +130,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: slot;
-}
-
+};
     cursorItem: slot;
 }
 

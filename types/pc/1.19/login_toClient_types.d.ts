@@ -15,8 +15,7 @@ export interface packet_success {
     name: string;
     value: string;
     signature?: string;
-}
-
+};
 }
 
 export interface packet_compress {

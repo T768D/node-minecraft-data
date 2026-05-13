@@ -107,8 +107,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: slot;
-}
-
+};
     cursorItem: slot;
 }
 

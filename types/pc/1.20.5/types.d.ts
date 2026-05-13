@@ -28,6 +28,8 @@ type anonOptionalNbt = unknown | null;
 type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
 type ByteArray = Buffer;
+
+
 interface vec3f {
     x: f32;
     y: f32;
@@ -55,6 +57,8 @@ interface vec3i16 {
 
 // Unimplemented value
 type IDSet = unknown;
+
+
 type ContainerID = u8;
 interface SlotComponent {
     type: SlotComponentType;
@@ -63,8 +67,7 @@ interface SlotComponent {
     enchantments: {
     id: varint;
     level: varint;
-}
-
+};
     showTooltip: bool;
 } | 
 {
@@ -83,8 +86,7 @@ interface SlotComponent {
     value: f64;
     operation: attribute_modifiers_attributes_operation;
     slot: attribute_modifiers_attributes_slot;
-}
-
+};
     showTooltip: bool;
 } | 
 {
@@ -96,16 +98,14 @@ interface SlotComponent {
     effects: {
     effect: varint;
     probability: f32;
-}
-
+};
 } | 
 {
     rules: {
     blocks: IDSet;
     speed?: f32;
     correctDropForBlocks?: bool;
-}
-
+};
     defaultMiningSpeed: f32;
     damagePerBlock: varint;
 } | 
@@ -113,8 +113,7 @@ interface SlotComponent {
     enchantments: {
     id: varint;
     level: varint;
-}
-
+};
     showInTooltip: bool;
 } | 
 {
@@ -137,8 +136,7 @@ interface SlotComponent {
     effects: {
     effect: varint;
     duration: varint;
-}
-
+};
 } | 
 {
     pages: ItemBookPage[];
@@ -162,8 +160,7 @@ interface SlotComponent {
     globalPosition?: {
     dimension: string;
     position: position;
-}
-
+};
     tracked: bool;
 } | 
 {
@@ -177,8 +174,7 @@ interface SlotComponent {
     name: string;
     value: string;
     signature?: string;
-}
-
+};
 } | 
 {
     layers: BannerPatternLayer[];
@@ -193,16 +189,14 @@ interface SlotComponent {
     properties: {
     name: string;
     value: string;
-}
-
+};
 } | 
 {
     bees: {
     nbtData: anonymousNbt;
     ticksInHive: varint;
     minTicksInHive: varint;
-}
-
+};
 };
 }
 
@@ -213,6 +207,8 @@ interface ItemSoundEvent {
 
 // Unimplemented value
 type ItemSoundHolder = unknown;
+
+
 interface ItemFireworkExplosion {
     shape: ItemFireworkExplosion_shape;
     colors: i32[];
@@ -270,8 +266,7 @@ interface ArmorTrimMaterial {
     overrideArmorAssets: {
     key: string;
     value: string;
-}
-
+};
     description: anonymousNbt;
 }
 
@@ -334,6 +329,8 @@ interface Particle {
 }
 
 type ingredient = Slot[];
+
+
 /**
  * This is a bitfield
  * Format: (name : bits a-b : signed)
@@ -342,6 +339,8 @@ type ingredient = Slot[];
  * y : 52-63 : true
 */
 type position = number;
+
+
 interface packedChunkPos {
     z: i32;
     x: i32;
@@ -350,7 +349,8 @@ interface packedChunkPos {
 type previousMessages = {
     id: varint;
     signature: undefined ;
-}
+};
+
 
 interface entityMetadataEntry {
     key: u8;
@@ -385,6 +385,8 @@ interface EntityMetadataWolfVariant {
 
 // Unimplemented value
 type entityMetadata = unknown;
+
+
 interface minecraft_simple_recipe_format {
     category: varint;
 }
@@ -401,7 +403,8 @@ interface minecraft_smelting_format {
 type tags = {
     tagName: string;
     entries: varint[];
-}
+};
+
 
 interface chunkBlockEntity {
     y: i16;
@@ -415,9 +418,9 @@ type chat_session = {
     expireTime: i64;
     keyBytes: Buffer;
     keySignature: Buffer;
-}
+};
+};
 
-}
 
 interface game_profile {
     name: string;
@@ -425,8 +428,7 @@ interface game_profile {
     name: string;
     value: string;
     signature?: string;
-}
-
+};
 }
 
 interface command_node {
@@ -552,8 +554,7 @@ interface packet_common_select_known_packs {
     namespace: string;
     id: string;
     version: string;
-}
-
+};
 }
 
 interface packet_common_remove_resource_pack {

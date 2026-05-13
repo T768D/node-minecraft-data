@@ -60,8 +60,7 @@ export interface packet_statistics {
     categoryId: varint;
     statisticId: varint;
     value: varint;
-}
-
+};
 }
 
 export interface packet_advancements {
@@ -87,28 +86,22 @@ export interface packet_advancements {
     backgroundTexture: string | undefined ;
     xCord: f32;
     yCord: f32;
-}
-
+};
     criteria: {
     key: string;
     value: void;
-}
-
+};
     requirements: string[];
-}
-
-}
-
+};
+};
     identifiers: string[];
     progressMapping: {
     key: string;
     value: {
     criterionIdentifier: string;
     criterionProgress?: i64;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_block_break_animation {
@@ -157,8 +150,7 @@ export interface packet_tab_complete {
     matches: {
     match: string;
     tooltip?: string;
-}
-
+};
 }
 
 export interface packet_declare_commands {
@@ -268,8 +260,7 @@ export interface packet_explosion {
     x: i8;
     y: i8;
     z: i8;
-}
-
+};
     playerMotionX: f32;
     playerMotionY: f32;
     playerMotionZ: f32;
@@ -373,8 +364,7 @@ export interface packet_map {
     z: i8;
     direction: u8;
     displayName?: string;
-}
-
+};
     columns: u8;
     rows: undefined | u8 ;
     x: undefined | u8 ;
@@ -395,8 +385,7 @@ export interface packet_trade_list {
     specialPrice: i32;
     priceMultiplier: f32;
     demand: i32;
-}
-
+};
     villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
@@ -473,8 +462,7 @@ export interface packet_player_info {
     action: packet_player_info_action;
     data: {
     uuid: UUID;
-}
-
+};
 }
 
 export interface packet_position {
@@ -685,10 +673,8 @@ export interface packet_entity_update_attributes {
     uuid: UUID;
     amount: f64;
     operation: i8;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_entity_effect {
@@ -730,16 +716,14 @@ export interface packet_declare_recipes {
     addition: ingredient;
     result: slot;
 };
-}
-
+};
 }
 
 export interface packet_tags {
     tags: {
     tagType: string;
     tags: tags;
-}
-
+};
 }
 
 export interface packet_acknowledge_player_digging {

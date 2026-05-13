@@ -14,8 +14,7 @@ export interface packet_chat_command {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     signedPreview: bool;
 }
 
@@ -130,8 +129,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: slot;
-}
-
+};
     cursorItem: slot;
 }
 

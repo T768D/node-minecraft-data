@@ -14,15 +14,13 @@ export interface packet_chat_command {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     signedPreview: bool;
     previousMessages: previousMessages;
     lastRejectedMessage?: {
     sender: UUID;
     signature: Buffer;
-}
-
+};
 }
 
 export interface packet_chat_message {
@@ -35,8 +33,7 @@ export interface packet_chat_message {
     lastRejectedMessage?: {
     sender: UUID;
     signature: Buffer;
-}
-
+};
 }
 
 export interface packet_chat_preview {
@@ -53,8 +50,7 @@ export interface packet_message_acknowledgement {
     lastRejectedMessage?: {
     sender: UUID;
     signature: Buffer;
-}
-
+};
 }
 
 export interface packet_edit_book {
@@ -151,8 +147,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: slot;
-}
-
+};
     cursorItem: slot;
 }
 

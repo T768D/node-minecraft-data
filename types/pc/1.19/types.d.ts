@@ -25,6 +25,8 @@ type restBuffer = Buffer;
 // Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type nbt = unknown;// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type optionalNbt = unknown;type ByteArray = Buffer;
+
+
 interface vec3i16 {
     x: i16;
     y: i16;
@@ -82,7 +84,11 @@ type particleData = undefined  |
 {
     delayInTicksBeforeShown: varint;
 };
+
+
 type ingredient = slot[];
+
+
 /**
  * This is a bitfield
  * Format: (name : bits a-b : signed)
@@ -91,6 +97,8 @@ type ingredient = slot[];
  * y : 52-63 : true
 */
 type position = number;
+
+
 type entityMetadataItem = i8 | varint | f32 | string | slot | bool | position | nbt | particle | optvarint  | 
 {
     pitch: f32;
@@ -102,8 +110,12 @@ type entityMetadataItem = i8 | varint | f32 | string | slot | bool | position | 
     villagerProfession: varint;
     level: varint;
 };
+
+
 // Unimplemented value
 type entityMetadata = unknown;
+
+
 interface minecraft_smelting_format {
     group: string;
     ingredient: ingredient;
@@ -115,7 +127,8 @@ interface minecraft_smelting_format {
 type tags = {
     tagName: string;
     entries: varint[];
-}
+};
+
 
 interface chunkBlockEntity {
     y: i16;

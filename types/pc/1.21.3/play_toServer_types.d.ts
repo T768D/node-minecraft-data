@@ -31,8 +31,7 @@ export interface packet_chat_command_signed {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     messageCount: varint;
     acknowledged: Buffer;
 }
@@ -86,8 +85,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: Slot;
-}
-
+};
     cursorItem: Slot;
 }
 
@@ -160,6 +158,8 @@ export interface packet_lock_difficulty {
  * ```
 */
 export type MovementFlags = MovementFlags_bitflags;
+
+
 export interface packet_position {
     x: f64;
     y: f64;

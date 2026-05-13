@@ -22,6 +22,8 @@ type restBuffer = Buffer;
 // Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type nbt = unknown;// Unhandled type when generating typescript declaration file. This type will default to unknown for type saftey
 type optionalNbt = unknown;type ByteArray = Buffer;
+
+
 interface vec3i16 {
     x: i16;
     y: i16;
@@ -40,6 +42,8 @@ interface slot {
  * z : 38-63 : true
 */
 type position = number;
+
+
 type entityMetadataItem = i8 | i16 | i32 | f32 | string | slot  | 
 {
     x: i32;
@@ -51,5 +55,7 @@ type entityMetadataItem = i8 | i16 | i32 | f32 | string | slot  |
     yaw: f32;
     roll: f32;
 };
+
+
 // Unimplemented value
 type entityMetadata = unknown;

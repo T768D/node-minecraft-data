@@ -70,8 +70,7 @@ export interface packet_statistics {
     categoryId: varint;
     statisticId: varint;
     value: varint;
-}
-
+};
 }
 
 export interface packet_advancements {
@@ -97,28 +96,22 @@ export interface packet_advancements {
     backgroundTexture: string | undefined ;
     xCord: f32;
     yCord: f32;
-}
-
+};
     criteria: {
     key: string;
     value: void;
-}
-
+};
     requirements: string[];
-}
-
-}
-
+};
+};
     identifiers: string[];
     progressMapping: {
     key: string;
     value: {
     criterionIdentifier: string;
     criterionProgress?: i64;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_block_break_animation {
@@ -167,8 +160,7 @@ export interface packet_tab_complete {
     matches: {
     match: string;
     tooltip?: string;
-}
-
+};
 }
 
 export interface packet_declare_commands {
@@ -203,8 +195,7 @@ export interface packet_multi_block_change {
     horizontalPos: u8;
     y: u8;
     blockId: varint;
-}
-
+};
 }
 
 export interface packet_transaction {
@@ -278,8 +269,7 @@ export interface packet_explosion {
     x: i8;
     y: i8;
     z: i8;
-}
-
+};
     playerMotionX: f32;
     playerMotionY: f32;
     playerMotionZ: f32;
@@ -368,8 +358,7 @@ export interface packet_map {
     z: i8;
     direction: u8;
     displayName?: string;
-}
-
+};
     columns: i8;
     rows: undefined | i8 ;
     x: undefined | i8 ;
@@ -389,8 +378,7 @@ export interface packet_trade_list {
     xp: i32;
     specialPrice: i32;
     priceMultiplier: f32;
-}
-
+};
     villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
@@ -464,8 +452,7 @@ export interface packet_player_info {
     action: packet_player_info_action;
     data: {
     uuid: UUID;
-}
-
+};
 }
 
 export interface packet_position {
@@ -684,10 +671,8 @@ export interface packet_entity_update_attributes {
     uuid: UUID;
     amount: f64;
     operation: i8;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_entity_effect {
@@ -724,8 +709,7 @@ export interface packet_declare_recipes {
     ingredient: ingredient;
     result: slot;
 };
-}
-
+};
 }
 
 export interface packet_tags {

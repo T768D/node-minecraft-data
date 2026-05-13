@@ -60,8 +60,7 @@ export interface SpawnInfo {
     death?: {
     dimensionName: string;
     location: position;
-}
-
+};
     portalCooldown: varint;
     seaLevel: varint;
 }
@@ -98,8 +97,7 @@ export interface packet_statistics {
     categoryId: varint;
     statisticId: varint;
     value: varint;
-}
-
+};
 }
 
 export interface packet_acknowledge_player_digging {
@@ -156,8 +154,7 @@ export interface packet_chunk_biomes {
     biomes: {
     position: packedChunkPos;
     data: ByteArray;
-}
-
+};
 }
 
 export interface packet_clear_titles {
@@ -171,8 +168,7 @@ export interface packet_tab_complete {
     matches: {
     match: string;
     tooltip?: anonymousNbt;
-}
-
+};
 }
 
 export interface packet_declare_commands {
@@ -254,6 +250,8 @@ export interface ChatTypes {
 
 // Unimplemented value
 export type ChatTypesHolder = unknown;
+
+
 export interface packet_profileless_chat {
     message: anonymousNbt;
     type: ChatTypesHolder;
@@ -394,8 +392,7 @@ export interface packet_map {
     z: i8;
     direction: u8;
     displayName?: anonymousNbt;
-}
-
+};
     columns: u8;
     rows: undefined | u8 ;
     x: undefined | u8 ;
@@ -411,16 +408,14 @@ export interface packet_trade_list {
     itemCount: varint;
     addedComponentCount: varint;
     components: SlotComponent[];
-}
-
+};
     outputItem: Slot;
     inputItem2?: {
     itemId: varint;
     itemCount: varint;
     addedComponentCount: varint;
     components: SlotComponent[];
-}
-
+};
     tradeDisabled: bool;
     nbTradeUses: i32;
     maximumNbTradeUses: i32;
@@ -428,8 +423,7 @@ export interface packet_trade_list {
     specialPrice: i32;
     priceMultiplier: f32;
     demand: i32;
-}
-
+};
     villagerLevel: varint;
     experience: varint;
     isRegularVillager: bool;
@@ -462,8 +456,7 @@ export interface packet_move_minecart {
     yaw: f32;
     pitch: f32;
     weight: f32;
-}
-
+};
 }
 
 export interface packet_entity_look {
@@ -573,8 +566,7 @@ export interface packet_player_info {
     displayName: undefined ;
     listPriority: varint | undefined ;
     showHat: bool | undefined ;
-}
-
+};
 }
 
 export interface packet_face_player {
@@ -602,6 +594,8 @@ export interface packet_face_player {
  * ```
 */
 export type PositionUpdateRelatives = PositionUpdateRelatives_bitflags;
+
+
 export interface packet_position {
     teleportId: varint;
     x: f64;
@@ -628,8 +622,7 @@ export interface packet_recipe_book_add {
     group: optvarint;
     category: packet_recipe_book_add_entries_recipe_category;
     craftingRequirements?: IDSet[];
-}
-
+};
     /**
      * Combine values from {@link packet_recipe_book_add_entries_flags_bitflags} using bitwise OR.
      * @example
@@ -645,8 +638,7 @@ export interface packet_recipe_book_add {
      * ```
     */
     flags: packet_recipe_book_add_entries_flags_bitflags;
-}
-
+};
     replace: bool;
 }
 
@@ -958,24 +950,19 @@ export interface packet_advancements {
     backgroundTexture: string | undefined ;
     xCord: f32;
     yCord: f32;
-}
-
+};
     requirements: string[];
     sendsTelemtryData: bool;
-}
-
-}
-
+};
+};
     identifiers: string[];
     progressMapping: {
     key: string;
     value: {
     criterionIdentifier: string;
     criterionProgress?: i64;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_entity_update_attributes {
@@ -987,10 +974,8 @@ export interface packet_entity_update_attributes {
     uuid: string;
     amount: f64;
     operation: i8;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_entity_effect {
@@ -1005,21 +990,18 @@ export interface packet_declare_recipes {
     recipes: {
     name: string;
     items: varint[];
-}
-
+};
     stoneCutterRecipes: {
     input: IDSet;
     slotDisplay: SlotDisplay;
-}
-
+};
 }
 
 export interface packet_tags {
     tags: {
     tagType: string;
     tags: tags;
-}
-
+};
 }
 
 export interface packet_set_projectile_power {

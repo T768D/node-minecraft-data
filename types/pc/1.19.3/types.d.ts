@@ -28,6 +28,8 @@ type nbt = unknown;// Unhandled type when generating typescript declaration file
 type optionalNbt = unknown;type registryEntryHolder = unknown;
 type registryEntryHolderSet = unknown[];
 type ByteArray = Buffer;
+
+
 interface vec3i16 {
     x: i16;
     y: i16;
@@ -45,6 +47,8 @@ interface ItemSoundEvent {
 
 // Unimplemented value
 type ItemSoundHolder = unknown;
+
+
 interface particle {
     particleId: varint;
     // Unimplemented value
@@ -92,7 +96,11 @@ type particleData = undefined  |
 {
     delayInTicksBeforeShown: varint;
 };
+
+
 type ingredient = slot[];
+
+
 /**
  * This is a bitfield
  * Format: (name : bits a-b : signed)
@@ -101,10 +109,13 @@ type ingredient = slot[];
  * y : 52-63 : true
 */
 type position = number;
+
+
 type previousMessages = {
     id: varint;
     signature: undefined ;
-}
+};
+
 
 type entityMetadataItem = i8 | varint | varlong | f32 | string | slot | bool | position | nbt | particle | optvarint  | 
 {
@@ -117,8 +128,12 @@ type entityMetadataItem = i8 | varint | varlong | f32 | string | slot | bool | p
     villagerProfession: varint;
     level: varint;
 };
+
+
 // Unimplemented value
 type entityMetadata = unknown;
+
+
 interface minecraft_simple_recipe_format {
     category: varint;
 }
@@ -135,7 +150,8 @@ interface minecraft_smelting_format {
 type tags = {
     tagName: string;
     entries: varint[];
-}
+};
+
 
 interface chunkBlockEntity {
     y: i16;
@@ -149,9 +165,9 @@ type chat_session = {
     expireTime: i64;
     keyBytes: Buffer;
     keySignature: Buffer;
-}
+};
+};
 
-}
 
 interface game_profile {
     name: string;
@@ -159,8 +175,7 @@ interface game_profile {
     name: string;
     value: string;
     signature?: string;
-}
-
+};
 }
 
 interface command_node {

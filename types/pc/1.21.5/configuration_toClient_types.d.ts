@@ -26,8 +26,7 @@ export interface packet_registry_data {
     entries: {
     key: string;
     value?: anonymousNbt;
-}
-
+};
 }
 
 export interface packet_feature_flags {
@@ -38,8 +37,7 @@ export interface packet_tags {
     tags: {
     tagType: string;
     tags: tags;
-}
-
+};
 }
 
 export interface packet {

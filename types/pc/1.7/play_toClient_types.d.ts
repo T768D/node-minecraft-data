@@ -74,8 +74,7 @@ export interface packet_named_entity_spawn {
     name: string;
     value: string;
     signature: string;
-}
-
+};
     x: i32;
     y: i32;
     z: i32;
@@ -103,8 +102,7 @@ export interface packet_spawn_entity {
     velocityX: undefined | i16 ;
     velocityY: undefined | i16 ;
     velocityZ: undefined | i16 ;
-}
-
+};
 }
 
 export interface packet_spawn_entity_living {
@@ -227,10 +225,8 @@ export interface packet_update_attributes {
     uuid: UUID;
     amount: f64;
     operation: i8;
-}
-
-}
-
+};
+};
 }
 
 export interface packet_map_chunk {
@@ -250,8 +246,7 @@ export interface packet_multi_block_change {
     dataLength: i32;
     records: {
     y: u8;
-}
-
+};
 }
 
 export interface packet_block_change {
@@ -286,8 +281,7 @@ export interface packet_map_chunk_bulk {
     z: i32;
     bitMap: u16;
     addBitMap: u16;
-}
-
+};
 }
 
 export interface packet_explosion {
@@ -299,8 +293,7 @@ export interface packet_explosion {
     x: i8;
     y: i8;
     z: i8;
-}
-
+};
     playerMotionX: f32;
     playerMotionY: f32;
     playerMotionZ: f32;
@@ -410,8 +403,7 @@ export interface packet_statistics {
     entries: {
     name: string;
     value: varint;
-}
-
+};
 }
 
 export interface packet_player_info {

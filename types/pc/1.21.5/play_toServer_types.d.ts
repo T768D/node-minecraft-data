@@ -31,8 +31,7 @@ export interface packet_chat_command_signed {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     messageCount: varint;
     acknowledged: Buffer;
     checksum: i8;
@@ -88,8 +87,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item?: HashedSlot;
-}
-
+};
     cursorItem?: HashedSlot;
 }
 
@@ -162,6 +160,8 @@ export interface packet_lock_difficulty {
  * ```
 */
 export type MovementFlags = MovementFlags_bitflags;
+
+
 export interface packet_position {
     x: f64;
     y: f64;
@@ -382,8 +382,7 @@ export interface packet_test_instance_block_action {
     ignoreEntities: bool;
     status: varint;
     errorMessage?: anonymousNbt;
-}
-
+};
 }
 
 export interface packet_block_place {

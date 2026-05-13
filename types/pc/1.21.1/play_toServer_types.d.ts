@@ -26,8 +26,7 @@ export interface packet_chat_command_signed {
     argumentSignatures: {
     argumentName: string;
     signature: Buffer;
-}
-
+};
     messageCount: varint;
     acknowledged: Buffer;
 }
@@ -78,8 +77,7 @@ export interface packet_window_click {
     changedSlots: {
     location: i16;
     item: Slot;
-}
-
+};
     cursorItem: Slot;
 }
 

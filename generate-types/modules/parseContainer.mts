@@ -59,5 +59,5 @@ export function parseContainer(container: unknown[], containerName: string): str
 		}
 	}
 
-	return tempOutput + "}\n\n";
+	return tempOutput + "}";
 }
