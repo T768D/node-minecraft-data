@@ -206,7 +206,7 @@ export interface packet_custom_payload {
 
 export interface packet_hide_message {
     id: varint;
-    signature: undefined ;
+    signature: undefined  | Buffer;
 }
 
 export interface packet_kick_disconnect {
@@ -346,7 +346,7 @@ export interface packet_map {
     rows: undefined | u8 ;
     x: undefined | u8 ;
     y: undefined | u8 ;
-    data: undefined ;
+    data: undefined  | Buffer;
 }
 
 export interface packet_trade_list {
@@ -432,7 +432,7 @@ export interface packet_player_chat {
     previousMessages: previousMessages;
     unsignedChatContent?: string;
     filterType: varint;
-    filterTypeMask: undefined ;
+    filterTypeMask: undefined  | i64[];
     type: varint;
     networkName: string;
     networkTargetName?: string;
@@ -477,7 +477,7 @@ export interface packet_player_info {
     gamemode: varint | undefined ;
     listed: varint | undefined ;
     latency: varint | undefined ;
-    displayName: undefined ;
+    displayName: undefined  | string;
 };
 }
 
@@ -502,7 +502,7 @@ export interface packet_unlock_recipes {
     smokerBookOpen: bool;
     filteringSmoker: bool;
     recipes1: string[];
-    recipes2: undefined ;
+    recipes2: undefined  | string[];
 }
 
 export interface packet_entity_destroy {
@@ -619,7 +619,7 @@ export interface packet_teams {
     formatting: varint | undefined ;
     prefix: string | undefined ;
     suffix: string | undefined ;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_scoreboard_score {

@@ -49,7 +49,7 @@ type entityMetadataItem = i8 | varint | f32 | string | slot | bool | position  |
     pitch: f32;
     yaw: f32;
     roll: f32;
-};
+} | position | UUID;
 
 
 // Unimplemented value

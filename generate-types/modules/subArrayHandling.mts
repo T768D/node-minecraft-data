@@ -105,7 +105,6 @@ function subArrayHandlingHelper(
 	comment?: string[];
 } {
 
-	// todo, handle other types of type[1]
 	if (subTypeType === "container" && Array.isArray(subTypeData)) {
 		// parseContainer only returns object, does not declare interface or type
 		// parseContainer already returns newlines so no need to add them
@@ -155,11 +154,11 @@ function subArrayHandlingHelper(
 		*/
 		const variations = new Set<string>();
 		let nestedVariations = "";
-		const fields = Object.entries(tempSubTypeData.fields);
+		const fields = Object.values(tempSubTypeData.fields);
 		// just adds the default value onto fields so it can be handled together
-		fields.push([`${longNameForEnum}_default`, tempSubTypeData.default]);
+		fields.push(tempSubTypeData.default);
 
-		for (const [key, value] of fields) {
+		for (const value of fields) {
 			if (typeof value === "string") {
 				if (value === "void")
 					variations.add("undefined");
@@ -167,11 +166,13 @@ function subArrayHandlingHelper(
 					variations.add(value);
 			}
 
-			// TODO MAKE THIS A RECURSIVE CALL
-
-			// switches can have nested containers in them
-			else if (Array.isArray(value) && value[0] === "container" && Array.isArray(value[1]))
-				nestedVariations += " | \n" + parseContainer(value[1], key).trim();
+			else if (Array.isArray(value) && typeof value[0] === "string") {
+				const result = subArrayHandling(name, value[0], value[1], "valueOnly", false, longNameForEnum);
+				if (result.length > 20)
+					nestedVariations += " | \n" + result;
+				else
+					nestedVariations += " | " + result;
+			}
 
 			else if (tempSubTypeData.default)
 				console.error("Unhandled subTypeData: ", JSON.stringify(tempSubTypeData, null, 4));

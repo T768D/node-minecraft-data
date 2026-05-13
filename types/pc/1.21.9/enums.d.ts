@@ -99,7 +99,40 @@ declare const enum SlotComponentType {
     "shulker_color" = 95,
 }
 
-declare const enum consumable_animation {
+declare const enum SlotComponent_data {
+    "common" = 0,
+    "uncommon" = 1,
+    "rare" = 2,
+    "epic" = 3,
+}
+
+declare const enum SlotComponent_data_operation {
+    "add" = 0,
+    "multiply_base" = 1,
+    "multiply_total" = 2,
+}
+
+declare const enum SlotComponent_data_slot {
+    "any" = 0,
+    "main_hand" = 1,
+    "off_hand" = 2,
+    "hand" = 3,
+    "feet" = 4,
+    "legs" = 5,
+    "chest" = 6,
+    "head" = 7,
+    "armor" = 8,
+    "body" = 9,
+    "saddle" = 10,
+}
+
+declare const enum SlotComponent_data_display_type {
+    "default" = 0,
+    "hidden" = 1,
+    "override" = 2,
+}
+
+declare const enum SlotComponent_data_animation {
     "none" = 0,
     "eat" = 1,
     "drink" = 2,
@@ -113,7 +146,7 @@ declare const enum consumable_animation {
     "bundle" = 10,
 }
 
-declare const enum equippable_slot {
+declare const enum SlotComponent_data_slot_2 {
     "main_hand" = 0,
     "off_hand" = 1,
     "feet" = 2,
@@ -306,7 +339,7 @@ declare const enum Particle_type {
     "firefly" = 114,
 }
 
-declare const enum vibration_positionType {
+declare const enum Particle_data_positionType {
     "block" = 0,
     "entity" = 1,
 }
@@ -375,7 +408,7 @@ declare const enum PlayerSkinPatch_model {
     "slim" = 1,
 }
 
-declare const enum a2_parser {
+declare const enum command_node_extraNodeData_parser {
     "brigadier:bool" = 0,
     "brigadier:float" = 1,
     "brigadier:double" = 2,
@@ -433,6 +466,12 @@ declare const enum a2_parser {
     "minecraft:loot_modifier" = 54,
     "minecraft:dialog" = 55,
     "minecraft:uuid" = 56,
+}
+
+declare const enum command_node_extraNodeData_properties {
+    "SINGLE_WORD" = 0,
+    "QUOTABLE_PHRASE" = 1,
+    "GREEDY_PHRASE" = 2,
 }
 
 declare const enum packet_common_settings_particleStatus {

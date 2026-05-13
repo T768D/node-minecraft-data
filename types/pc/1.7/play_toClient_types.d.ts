@@ -447,7 +447,7 @@ export interface packet_scoreboard_team {
     prefix: string | undefined ;
     suffix: string | undefined ;
     friendlyFire: i8 | undefined ;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_custom_payload {

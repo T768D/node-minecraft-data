@@ -314,7 +314,7 @@ export interface packet_world_particles {
     offsetZ: f32;
     particleData: f32;
     particles: i32;
-    data: undefined ;
+    data: undefined  | varint[] | varint[] | varint[];
 }
 
 export interface packet_game_state_change {
@@ -385,7 +385,7 @@ export interface packet_map {
     rows: undefined | i8 ;
     x: undefined | i8 ;
     y: undefined | i8 ;
-    data: undefined ;
+    data: undefined  | Buffer;
 }
 
 export interface packet_tile_entity_data {
@@ -450,7 +450,7 @@ export interface packet_scoreboard_team {
     friendlyFire: i8 | undefined ;
     nameTagVisibility: string | undefined ;
     color: i8 | undefined ;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_custom_payload {

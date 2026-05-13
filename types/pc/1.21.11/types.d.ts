@@ -82,8 +82,8 @@ interface SlotComponent {
 } | 
 {
     hasHolder: bool;
-    damageType: string ;
-} | 
+    damageType: string  | unknown;
+} | anonymousNbt[] | SlotComponent_data | 
 {
     enchantments: {
     id: varint;
@@ -101,6 +101,17 @@ interface SlotComponent {
 } | 
 {
     predicates: ItemBlockPredicate[];
+} | 
+{
+    typeId: varint;
+    name: string;
+    value: f64;
+    operation: SlotComponent_data_operation;
+    slot: SlotComponent_data_slot;
+    display: {
+    type: SlotComponent_data_display_type;
+    component: anonymousNbt ;
+};
 } | 
 {
     floats: f32[];
@@ -137,7 +148,7 @@ interface SlotComponent {
 } | 
 {
     consume_seconds: f32;
-    animation: consumable_animation;
+    animation: SlotComponent_data_animation;
     sound: ItemSoundHolder;
     makes_particles: bool;
     effects: ItemConsumeEffect[];
@@ -169,7 +180,7 @@ interface SlotComponent {
     mobFactor: f32;
 } | 
 {
-    slot: equippable_slot;
+    slot: SlotComponent_data_slot_2;
     sound: ItemSoundHolder;
     model?: string;
     cameraOverlay?: string;
@@ -205,7 +216,7 @@ interface SlotComponent {
     hitSound?: ItemSoundHolder;
 } | 
 {
-    type: swing_animation_type;
+    type: SlotComponent_data_type;
     duration: varint;
 } | 
 {
@@ -253,15 +264,15 @@ interface SlotComponent {
 } | 
 {
     hasHolder: bool;
-    data: string ;
+    data: string  | unknown;
 } | 
 {
     hasHolder: bool;
-    material: string ;
+    material: string  | unknown;
 } | 
 {
     hasHolder: bool;
-    song: string ;
+    song: string  | unknown;
 } | 
 {
     globalPosition?: GlobalPos;
@@ -292,7 +303,7 @@ interface SlotComponent {
     ticksInHive: varint;
     minTicksInHive: varint;
 };
-};
+} | unknown | unknown | unknown;
 }
 
 interface ItemSoundEvent {
@@ -532,8 +543,7 @@ interface DebugSubscriptionEvent {
 {
     path: Path;
     maxNodeDistance: f32;
-} | 
-{
+} | {
     id: varint;
 } | 
 {
@@ -587,7 +597,7 @@ interface Particle {
     toBlue: f32;
 } | 
 {
-    positionType: vibration_positionType;
+    positionType: Particle_data_positionType;
     position: position  | 
 {
     entityId: varint;
@@ -598,8 +608,7 @@ interface Particle {
 {
     target: vec3f64;
     color: u8;
-} | 
-{
+} | {
     power: f32;
 } | 
 {
@@ -632,24 +641,25 @@ interface packedChunkPos {
 
 type previousMessages = {
     id: varint;
-    signature: undefined ;
+    signature: undefined  | Buffer;
 };
 
 
 interface entityMetadataEntry {
     key: u8;
     type: entityMetadataEntry_type;
-    value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f | ResolvableProfile  | 
+    value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f | ResolvableProfile  | anonymousNbt | 
 {
     pitch: f32;
     yaw: f32;
     roll: f32;
-} | 
+} | position | UUID | Particle[] | 
 {
     villagerType: varint;
     villagerProfession: varint;
     level: varint;
-};
+} | GlobalPos | unknown | 
+entityMetadataEntry_value;
 }
 
 interface EntityMetadataPaintingVariant {
@@ -741,7 +751,7 @@ interface command_node {
 } | 
 {
     name: string;
-    parser: a2_parser;
+    parser: command_node_extraNodeData_parser;
     properties: undefined  | 
 {
     /**
@@ -791,7 +801,7 @@ interface command_node {
     min: i64 | undefined ;
     max: i64 | undefined ;
 } | 
-{
+command_node_extraNodeData_properties | number | number | {
     min: i32;
 } | 
 {

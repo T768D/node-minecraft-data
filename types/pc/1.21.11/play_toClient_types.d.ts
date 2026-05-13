@@ -10,7 +10,7 @@ export interface SlotDisplay {
 {
     input: SlotDisplay;
     remainder: SlotDisplay;
-};
+} | SlotDisplay[];
 }
 
 export interface RecipeDisplay {
@@ -239,7 +239,7 @@ export interface packet_debug_sample {
 
 export interface packet_hide_message {
     id: varint;
-    signature: undefined ;
+    signature: undefined  | Buffer;
 }
 
 export interface packet_kick_disconnect {
@@ -426,7 +426,7 @@ export interface packet_map {
     rows: undefined | u8 ;
     x: undefined | u8 ;
     y: undefined | u8 ;
-    data: undefined ;
+    data: undefined  | Buffer;
 }
 
 export interface packet_trade_list {
@@ -546,7 +546,7 @@ export interface packet_player_chat {
     previousMessages: previousMessages;
     unsignedChatContent?: anonymousNbt;
     filterType: varint;
-    filterTypeMask: undefined ;
+    filterTypeMask: undefined  | i64[];
     type: ChatTypesHolder;
     networkName: anonymousNbt;
     networkTargetName?: anonymousNbt;
@@ -591,7 +591,7 @@ export interface packet_player_info {
     gamemode: varint | undefined ;
     listed: varint | undefined ;
     latency: varint | undefined ;
-    displayName: undefined ;
+    displayName: undefined  | anonymousNbt;
     listPriority: varint | undefined ;
     showHat: bool | undefined ;
 };
@@ -825,8 +825,10 @@ export interface packet_scoreboard_objective {
     action: i8;
     displayText: anonymousNbt | undefined ;
     type: varint | undefined ;
-    number_format: undefined ;
-    styling: undefined ;
+    number_format: undefined  | varint | varint;
+    styling: undefined  | 
+anonymousNbt | undefined  | 
+anonymousNbt | undefined ;
 }
 
 export interface packet_set_passengers {
@@ -842,7 +844,7 @@ export interface packet_set_player_inventory {
 export interface packet_teams {
     team: string;
     mode: packet_teams_mode;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_scoreboard_score {

@@ -67,7 +67,7 @@ type IDSet = unknown;
 type ContainerID = u8;
 interface SlotComponent {
     type: SlotComponentType;
-    data: anonymousNbt | varint | bool | undefined | i32 | ItemFireworkExplosion | string  | 
+    data: anonymousNbt | varint | bool | undefined | i32 | ItemFireworkExplosion | string  | anonOptionalNbt[] | SlotComponent_data | 
 {
     enchantments: {
     id: varint;
@@ -88,8 +88,8 @@ interface SlotComponent {
     typeId: varint;
     name: string;
     value: f64;
-    operation: attribute_modifiers_attributes_operation;
-    slot: attribute_modifiers_attributes_slot;
+    operation: SlotComponent_data_attributes_operation;
+    slot: SlotComponent_data_attributes_slot;
 };
     showTooltip: bool;
 } | 
@@ -159,10 +159,10 @@ interface SlotComponent {
     // Unimplemented value
     pattern: unknown;
     showInTooltip: bool;
-} | 
+} | unknown | 
 {
     hasHolder: bool;
-    song: string ;
+    song: string  | unknown;
     showInTooltip: bool;
 } | 
 {
@@ -334,7 +334,7 @@ interface Particle {
     toBlue: f32;
 } | 
 {
-    positionType: vibration_positionType;
+    positionType: Particle_data_positionType;
     position: position  | 
 {
     entityId: varint;
@@ -364,24 +364,24 @@ interface packedChunkPos {
 
 type previousMessages = {
     id: varint;
-    signature: undefined ;
+    signature: undefined  | Buffer;
 };
 
 
 interface entityMetadataEntry {
     key: u8;
     type: entityMetadataEntry_type;
-    value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f  | 
+    value: i8 | varint | varlong | f32 | string | anonymousNbt | Slot | bool | position | optvarint | Particle | vec3f | vec4f  | anonymousNbt | 
 {
     pitch: f32;
     yaw: f32;
     roll: f32;
-} | 
+} | position | UUID | Particle[] | 
 {
     villagerType: varint;
     villagerProfession: varint;
     level: varint;
-};
+} | unknown | string | unknown;
 }
 
 interface EntityMetadataPaintingVariant {
@@ -466,7 +466,7 @@ interface command_node {
 } | 
 {
     name: string;
-    parser: a2_parser;
+    parser: command_node_extraNodeData_parser;
     properties: undefined  | 
 {
     /**
@@ -516,7 +516,7 @@ interface command_node {
     min: i64 | undefined ;
     max: i64 | undefined ;
 } | 
-{
+command_node_extraNodeData_properties | number | number | {
     min: i32;
 } | 
 {

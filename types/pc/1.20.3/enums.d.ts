@@ -125,7 +125,7 @@ declare const enum soundSource {
     "voice" = 9,
 }
 
-declare const enum a2_parser {
+declare const enum command_node_extraNodeData_parser {
     "brigadier:bool" = 0,
     "brigadier:float" = 1,
     "brigadier:double" = 2,
@@ -176,6 +176,12 @@ declare const enum a2_parser {
     "minecraft:template_rotation" = 47,
     "minecraft:heightmap" = 48,
     "minecraft:uuid" = 49,
+}
+
+declare const enum command_node_extraNodeData_properties {
+    "SINGLE_WORD" = 0,
+    "QUOTABLE_PHRASE" = 1,
+    "GREEDY_PHRASE" = 2,
 }
 
 declare const enum packet_name {

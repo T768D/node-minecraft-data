@@ -82,8 +82,7 @@ type particleData = undefined  |
 } | 
 {
     rotation: f32;
-} | 
-{
+} | {
     item: slot;
 } | 
 {
@@ -113,21 +112,21 @@ type position = number;
 
 type previousMessages = {
     id: varint;
-    signature: undefined ;
+    signature: undefined  | Buffer;
 };
 
 
-type entityMetadataItem = i8 | varint | varlong | f32 | string | slot | bool | position | nbt | particle | optvarint  | 
+type entityMetadataItem = i8 | varint | varlong | f32 | string | slot | bool | position | nbt | particle | optvarint  | string | 
 {
     pitch: f32;
     yaw: f32;
     roll: f32;
-} | 
+} | position | UUID | 
 {
     villagerType: varint;
     villagerProfession: varint;
     level: varint;
-};
+} | string;
 
 
 // Unimplemented value
@@ -197,7 +196,7 @@ interface command_node {
 } | 
 {
     name: string;
-    parser: a2_parser;
+    parser: command_node_extraNodeData_parser;
     properties: undefined  | 
 {
     /**
@@ -247,6 +246,7 @@ interface command_node {
     min: i64 | undefined ;
     max: i64 | undefined ;
 } | 
+command_node_extraNodeData_properties | number | number | 
 {
     registry: string;
 } | 

@@ -6,7 +6,7 @@ declare global {
 	interface ObjectConstructor {
 		entries<T>(object: T): [keyof T, T[keyof T]][];
 		keys<T>(object: T): (keyof T)[];
-		values<T>(object: T): T[keyof T];
+		values<T>(object: T): (T[keyof T])[];
 	}
 
 	interface ReadonlyArray<T> {

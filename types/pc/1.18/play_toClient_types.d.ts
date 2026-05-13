@@ -369,7 +369,7 @@ export interface packet_map {
     rows: undefined | u8 ;
     x: undefined | u8 ;
     y: undefined | u8 ;
-    data: undefined ;
+    data: undefined  | Buffer;
 }
 
 export interface packet_trade_list {
@@ -487,7 +487,7 @@ export interface packet_unlock_recipes {
     smokerBookOpen: bool;
     filteringSmoker: bool;
     recipes1: string[];
-    recipes2: undefined ;
+    recipes2: undefined  | string[];
 }
 
 export interface packet_entity_destroy {
@@ -599,7 +599,7 @@ export interface packet_teams {
     formatting: varint | undefined ;
     prefix: string | undefined ;
     suffix: string | undefined ;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_scoreboard_score {

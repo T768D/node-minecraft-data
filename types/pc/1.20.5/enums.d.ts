@@ -59,13 +59,20 @@ declare const enum SlotComponentType {
     "container_loot" = 55,
 }
 
-declare const enum attribute_modifiers_attributes_operation {
+declare const enum SlotComponent_data {
+    "common" = 0,
+    "uncommon" = 1,
+    "rare" = 2,
+    "epic" = 3,
+}
+
+declare const enum SlotComponent_data_attributes_operation {
     "add" = 0,
     "multiply_base" = 1,
     "multiply_total" = 2,
 }
 
-declare const enum attribute_modifiers_attributes_slot {
+declare const enum SlotComponent_data_attributes_slot {
     "any" = 0,
     "main_hand" = 1,
     "off_hand" = 2,
@@ -198,7 +205,7 @@ declare const enum Particle_type {
     "trial_omen" = 108,
 }
 
-declare const enum vibration_positionType {
+declare const enum Particle_data_positionType {
     "block" = 0,
     "entity" = 1,
 }
@@ -250,7 +257,7 @@ declare const enum entityMetadataEntry_type {
     "quaternion" = 30,
 }
 
-declare const enum a2_parser {
+declare const enum command_node_extraNodeData_parser {
     "brigadier:bool" = 0,
     "brigadier:float" = 1,
     "brigadier:double" = 2,
@@ -305,6 +312,12 @@ declare const enum a2_parser {
     "minecraft:loot_predicate" = 51,
     "minecraft:loot_modifier" = 52,
     "minecraft:uuid" = 53,
+}
+
+declare const enum command_node_extraNodeData_properties {
+    "SINGLE_WORD" = 0,
+    "QUOTABLE_PHRASE" = 1,
+    "GREEDY_PHRASE" = 2,
 }
 
 declare const enum packet_name {

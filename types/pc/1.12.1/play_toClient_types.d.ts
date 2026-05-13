@@ -290,7 +290,7 @@ export interface packet_world_particles {
     offsetZ: f32;
     particleData: f32;
     particles: i32;
-    data: undefined ;
+    data: undefined  | varint[] | varint[] | varint[];
 }
 
 export interface packet_login {
@@ -316,7 +316,7 @@ export interface packet_map {
     rows: undefined | i8 ;
     x: undefined | i8 ;
     y: undefined | i8 ;
-    data: undefined ;
+    data: undefined  | Buffer;
 }
 
 export interface packet_rel_entity_move {
@@ -406,7 +406,7 @@ export interface packet_unlock_recipes {
     craftingBookOpen: bool;
     filteringCraftable: bool;
     recipes1: varint[];
-    recipes2: undefined ;
+    recipes2: undefined  | varint[];
 }
 
 export interface packet_entity_destroy {
@@ -516,7 +516,7 @@ export interface packet_teams {
     nameTagVisibility: string | undefined ;
     collisionRule: string | undefined ;
     color: i8 | undefined ;
-    players: undefined ;
+    players: undefined  | string[] | string[] | string[];
 }
 
 export interface packet_scoreboard_score {
